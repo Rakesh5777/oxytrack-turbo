@@ -11,13 +11,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@oxytrack/database": "*",
     "@oxytrack/common": "*",
-    "express": "^4.18.2"
+    "@oxytrack/database": "*",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.5",
     "@types/node": "^20.11.19",
     "cors": "^2.8.5",
     "typescript": "^5.3.3"
