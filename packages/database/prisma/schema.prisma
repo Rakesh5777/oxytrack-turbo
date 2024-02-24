@@ -19,6 +19,7 @@ model MasterUsers {
   password     String
   firstName    String
   lastName     String
+  username     String
   mobileNumber String
   active       Boolean @default(true)
 }

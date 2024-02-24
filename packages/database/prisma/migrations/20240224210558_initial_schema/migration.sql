@@ -1,15 +1,19 @@
-/*
-  Warnings:
-
-  - Added the required column `mobileNumber` to the `MasterUsers` table without a default value. This is not possible if the table is not empty.
-
-*/
 -- CreateEnum
 CREATE TYPE "CustomerType" AS ENUM ('HOSPITAL', 'AMBULANCE', 'LABORATORY', 'HOUSEHOLD');
 
--- AlterTable
-ALTER TABLE "MasterUsers" ADD COLUMN     "active" BOOLEAN NOT NULL DEFAULT true,
-ADD COLUMN     "mobileNumber" INTEGER NOT NULL;
+-- CreateTable
+CREATE TABLE "MasterUsers" (
+    "id" SERIAL NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "mobileNumber" TEXT NOT NULL,
+    "active" BOOLEAN NOT NULL DEFAULT true,
+
+    CONSTRAINT "MasterUsers_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Hospitals" (
@@ -63,7 +67,7 @@ CREATE TABLE "HouseHoldCustomer" (
 CREATE TABLE "ContactPerson" (
     "id" SERIAL NOT NULL,
     "contactName" TEXT NOT NULL,
-    "mobileNumber" INTEGER NOT NULL,
+    "mobileNumber" TEXT NOT NULL,
     "active" BOOLEAN NOT NULL DEFAULT true,
 
     CONSTRAINT "ContactPerson_pkey" PRIMARY KEY ("id")
@@ -78,6 +82,9 @@ CREATE TABLE "ContactPersonToCustomer" (
 
     CONSTRAINT "ContactPersonToCustomer_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "MasterUsers_email_key" ON "MasterUsers"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Hospitals_hospitalName_key" ON "Hospitals"("hospitalName");
