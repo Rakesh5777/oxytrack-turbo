@@ -1,0 +1,15 @@
+{
+  "name": "@oxytrack/common",
+  "version": "1.0.0",
+  "main": "./src/schema.ts",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "zod": "^3.22.4"
+  }
+}

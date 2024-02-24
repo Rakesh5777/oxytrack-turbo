@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model MasterUsers {
+  id           Int     @id @default(autoincrement())
+  email        String  @unique
+  password     String
+  firstName    String
+  lastName     String
+  mobileNumber String
+  active       Boolean @default(true)
+}
+
+enum CustomerType {
+  HOSPITAL
+  AMBULANCE
+  LABORATORY
+  HOUSEHOLD
+}
+
+model Hospitals {
+  id              Int     @id @default(autoincrement())
+  hospitalName    String  @unique
+  hospitalAddress String
+  emailAddress    String?
+  description     String?
+  active          Boolean @default(true)
+}
+
+model Ambulance {
+  id              Int     @id @default(autoincrement())
+  ambulanceName   String  @unique
+  ambulanceNumber String  @unique
+  emailAddress    String?
+  description     String?
+  active          Boolean @default(true)
+}
+
+model Laboratories {
+  id           Int     @id @default(autoincrement())
+  labName      String  @unique
+  labAddress   String
+  emailAddress String?
+  description  String?
+  active       Boolean @default(true)
+}
+
+model HouseHoldCustomer {
+  id           Int     @id @default(autoincrement())
+  customerName String  @unique
+  address      String
+  emailAddress String?
+  description  String?
+  active       Boolean @default(true)
+}
+
+model ContactPerson {
+  id                      Int                       @id @default(autoincrement())
+  contactName             String
+  mobileNumber            String                    @unique
+  active                  Boolean                   @default(true)
+  contactPersonToCustomer ContactPersonToCustomer[]
+}
+
+model ContactPersonToCustomer {
+  id              Int           @id @default(autoincrement())
+  contactPersonId Int
+  customerId      Int
+  customer        CustomerType
+  contactPerson   ContactPerson @relation(fields: [contactPersonId], references: [id])
+}
