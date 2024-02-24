@@ -10,7 +10,7 @@ export const validate = (schema: z.Schema) => (req: any, res: any, next: () => v
 };
 
 export const signInSchema = z.object({
-    userName: z.string().email(),
+    username: z.string().email(),
     password: z.string()
 }).strict();
 
