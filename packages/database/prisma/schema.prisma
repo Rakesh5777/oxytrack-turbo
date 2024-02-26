@@ -32,39 +32,43 @@ enum CustomerType {
 }
 
 model Hospitals {
-  id              Int     @id @default(autoincrement())
-  hospitalName    String  @unique
+  id              Int      @id @default(autoincrement())
+  hospitalName    String   @unique
   hospitalAddress String
   emailAddress    String?
   description     String?
-  active          Boolean @default(true)
+  active          Boolean  @default(true)
+  createdAt       DateTime @default(now())
 }
 
 model Ambulance {
-  id              Int     @id @default(autoincrement())
-  ambulanceName   String  @unique
-  ambulanceNumber String  @unique
+  id              Int      @id @default(autoincrement())
+  ambulanceName   String   @unique
+  ambulanceNumber String   @unique
   emailAddress    String?
   description     String?
-  active          Boolean @default(true)
+  active          Boolean  @default(true)
+  createdAt       DateTime @default(now())
 }
 
 model Laboratories {
-  id           Int     @id @default(autoincrement())
-  labName      String  @unique
+  id           Int      @id @default(autoincrement())
+  labName      String   @unique
   labAddress   String
   emailAddress String?
   description  String?
-  active       Boolean @default(true)
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
 }
 
 model HouseHoldCustomer {
-  id           Int     @id @default(autoincrement())
-  customerName String  @unique
+  id           Int      @id @default(autoincrement())
+  customerName String   @unique
   address      String
   emailAddress String?
   description  String?
-  active       Boolean @default(true)
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
 }
 
 model ContactPerson {
@@ -73,6 +77,7 @@ model ContactPerson {
   mobileNumber            String                    @unique
   active                  Boolean                   @default(true)
   contactPersonToCustomer ContactPersonToCustomer[]
+  createdAt               DateTime                  @default(now())
 }
 
 model ContactPersonToCustomer {

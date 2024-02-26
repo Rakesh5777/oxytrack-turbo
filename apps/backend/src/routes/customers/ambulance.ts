@@ -1,10 +1,12 @@
+import { createAmbulanceSchema } from '@oxytrack/common';
 import Express from 'express';
-import { validateUser } from '../../utils/middlewares';
+import { createAmbulanceHandler } from '../../controllers/customers/ambulance.controller';
+import { asyncWrapper, validateReq } from '../../utils/middlewares';
 
 const ambulanceRouter = Express.Router();
 
-ambulanceRouter.get('/check', validateUser, (req, res) => {
-    res.json({ username: req.username, id: req.id });
-});
+ambulanceRouter.post('/create', validateReq(createAmbulanceSchema), asyncWrapper(createAmbulanceHandler));
+
+
 
 export default ambulanceRouter;

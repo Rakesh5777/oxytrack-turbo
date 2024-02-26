@@ -11,8 +11,12 @@
       "cache": false
     },
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^db:generate"],
       "outputs": ["dist/**", "build/**"]
+    },
+    "dev": {
+      "dependsOn": ["^db:generate"],
+      "cache": false
     },
     "lint": {
       "dependsOn": ["^lint"]

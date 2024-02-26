@@ -1,0 +1,28 @@
+post: 
+  summary: Master User Sign In
+  operationId: masterUserSignIn
+  requestBody: 
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/masterUser/masterSignIn.yaml"
+  responses:
+    "200":
+      description: Master User Sign In
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/masterUser/masterSignIn.yaml"
+    "401":
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "../../../src/schemas/common/ErrorResponse.yaml"
+    "500":
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../src/schemas/common/ErrorResponse.yaml"

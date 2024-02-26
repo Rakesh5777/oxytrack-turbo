@@ -1,13 +1,6 @@
 import { z } from 'zod'
 
-export const validate = (schema: z.Schema) => (req: any, res: any, next: () => void) => {
-    try {
-        schema.parse(req.body);
-        next();
-    } catch (error: any) {
-        res.status(400).json({ error: error.errors });
-    }
-};
+export * from 'zod';
 
 export const signInSchema = z.object({
     username: z.string(),
@@ -15,3 +8,22 @@ export const signInSchema = z.object({
 }).strict();
 
 export type SignInModel = z.infer<typeof signInSchema>;
+
+export const contactPersonSchema = z.object({
+    contactName: z.string(),
+    mobileNumber: z.string(),
+    active: z.boolean().optional()
+}).strict();
+
+export type ContactPersonModel = z.infer<typeof contactPersonSchema>;
+
+export const createAmbulanceSchema = z.object({
+    ambulanceName: z.string(),
+    ambulanceNumber: z.string(),
+    emailAddress: z.string().email().optional(),
+    description: z.string(),
+    contactPersons: z.array(contactPersonSchema),
+    active: z.boolean().optional()
+}).strict();
+
+export type CreateAmbulanceModel = z.infer<typeof createAmbulanceSchema>;
