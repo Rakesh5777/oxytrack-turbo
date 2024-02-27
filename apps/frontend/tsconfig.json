@@ -1,12 +1,5 @@
 {
-  "extends": "@oxytrack/typescript-config/base.json",
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
-  },
+  "extends": "@oxytrack/typescript-config/react-library.json",
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
