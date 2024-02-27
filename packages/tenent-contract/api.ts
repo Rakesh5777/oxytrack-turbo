@@ -158,7 +158,7 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         createAmbulance: async (createAmbulance: CreateAmbulance, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'createAmbulance' is not null or undefined
             assertParamExists('createAmbulance', 'createAmbulance', createAmbulance)
-            const localVarPath = `/customer/ambulance`;
+            const localVarPath = `/customer/ambulance/create`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;

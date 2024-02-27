@@ -2,25 +2,16 @@ import express, { NextFunction, Request, Response } from 'express';
 import rootRouter from './routes/routes';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import yamljs from 'yamljs';
+import { specYamlPath } from '@oxytrack/tenent-contract/specYamlPath';
 
 dotenv.config();
 
 const app = express();
 const port = 3000;
 
-const options = {
-    definition: {
-        openapi: '3.0.0',
-        info: {
-            title: 'Express API with Swagger',
-            version: '1.0.0',
-        },
-    },
-    apis: ['**/*.ts',], // path to your API files
-};
-const swaggerSpec = swaggerJsDoc(options);
+const swaggerSpec = yamljs.load(specYamlPath);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(cors());

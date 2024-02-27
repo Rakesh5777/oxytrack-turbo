@@ -8,5 +8,5 @@ components:
 paths:
   /masterUser/signIn:
     $ref: "./paths/masterUser/masterSignIn.yaml"
-  /customer/ambulance:
-    $ref: "./paths/customers/ambulance/ambulance.yaml"
+  /customer/ambulance/create:
+    $ref: "./paths/customers/ambulance/ambulanceCreate.yaml"
