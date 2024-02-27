@@ -1,0 +1,37 @@
+type: object
+required: 
+  - id
+  - ambulanceName
+  - ambulanceNumber
+  - emailAddress
+  - description
+  - contactPersons
+  - createdAt
+properties:
+  id:
+    description: Id of the ambulance
+    type: number
+  ambulanceName:
+    description: Name of the ambulance
+    type: string
+  ambulanceNumber:
+    description: Number of the ambulance
+    type: string
+  emailAddress:
+    description: Email address of the ambulance
+    type: string
+  description:
+    description: Description of the ambulance
+    type: string
+  contactPersons:
+    description: list of contact persons rakesh
+    type: array
+    items:
+      $ref: './../contactPerson.yaml'
+  createdAt:
+    description: Created date of the ambulance
+    type: string
+    format: date-time
+  active:
+    description: Status of the ambulance
+    type: boolean

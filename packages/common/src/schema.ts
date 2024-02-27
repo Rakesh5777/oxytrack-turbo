@@ -18,6 +18,6 @@ export const createAmbulanceSchema = z.object({
     ambulanceNumber: z.string(),
     emailAddress: z.string().email().optional(),
     description: z.string(),
-    contactPersons: z.array(contactPersonSchema),
+    contactPersons: z.array(contactPersonSchema).min(1),
     active: z.boolean().optional()
 }).strict();

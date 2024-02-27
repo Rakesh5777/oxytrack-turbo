@@ -30,6 +30,12 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerM
  */
 export interface ContactPerson {
     /**
+     * Id of the contact person
+     * @type {number}
+     * @memberof ContactPerson
+     */
+    'id'?: number;
+    /**
      * Name of the contact person
      * @type {string}
      * @memberof ContactPerson
@@ -94,6 +100,61 @@ export interface CreateAmbulance {
 /**
  * 
  * @export
+ * @interface CreateAmbulance201Response
+ */
+export interface CreateAmbulance201Response {
+    /**
+     * Id of the ambulance
+     * @type {number}
+     * @memberof CreateAmbulance201Response
+     */
+    'id': number;
+    /**
+     * Name of the ambulance
+     * @type {string}
+     * @memberof CreateAmbulance201Response
+     */
+    'ambulanceName': string;
+    /**
+     * Number of the ambulance
+     * @type {string}
+     * @memberof CreateAmbulance201Response
+     */
+    'ambulanceNumber': string;
+    /**
+     * Email address of the ambulance
+     * @type {string}
+     * @memberof CreateAmbulance201Response
+     */
+    'emailAddress': string;
+    /**
+     * Description of the ambulance
+     * @type {string}
+     * @memberof CreateAmbulance201Response
+     */
+    'description': string;
+    /**
+     * list of contact persons rakesh
+     * @type {Array<ContactPerson>}
+     * @memberof CreateAmbulance201Response
+     */
+    'contactPersons': Array<ContactPerson>;
+    /**
+     * Created date of the ambulance
+     * @type {Date}
+     * @memberof CreateAmbulance201Response
+     */
+    'createdAt': Date;
+    /**
+     * Status of the ambulance
+     * @type {boolean}
+     * @memberof CreateAmbulance201Response
+     */
+    'active'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface ErrorResponse
  */
 export interface ErrorResponse {
@@ -136,10 +197,10 @@ export interface MasterSignInRequest {
     'password': string;
     /**
      * Date and time of the user creation
-     * @type {string}
+     * @type {Date}
      * @memberof MasterSignInRequest
      */
-    'createdAt'?: string;
+    'createdAt'?: Date;
 }
 
 /**
@@ -241,7 +302,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createAmbulance(createAmbulance: CreateAmbulance, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateAmbulance>> {
+        async createAmbulance(createAmbulance: CreateAmbulance, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateAmbulance201Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createAmbulance(createAmbulance, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['DefaultApi.createAmbulance']?.[localVarOperationServerIndex]?.url;
@@ -277,7 +338,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createAmbulance(createAmbulance: CreateAmbulance, options?: any): AxiosPromise<CreateAmbulance> {
+        createAmbulance(createAmbulance: CreateAmbulance, options?: any): AxiosPromise<CreateAmbulance201Response> {
             return localVarFp.createAmbulance(createAmbulance, options).then((request) => request(axios, basePath));
         },
         /**

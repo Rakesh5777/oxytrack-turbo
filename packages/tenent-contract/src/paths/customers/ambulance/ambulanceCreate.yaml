@@ -15,7 +15,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../../../schemas/customers/ambulance/createAmbulance.yaml"
+            $ref: "../../../schemas/customers/ambulance/createAmbulanceResponse.yaml"
     "409":
       description: ambulance already exists
       content:

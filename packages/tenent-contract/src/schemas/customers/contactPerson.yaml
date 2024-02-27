@@ -3,6 +3,9 @@ required:
 - contactName
 - mobileNumber
 properties:
+  id: 
+    description: Id of the contact person
+    type: number
   contactName:
     description: Name of the contact person
     type: string
