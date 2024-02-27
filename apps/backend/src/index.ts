@@ -5,12 +5,15 @@ import dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
 import yamljs from 'yamljs';
 import { specYamlPath } from '@oxytrack/tenent-contract/specYamlPath';
+import { PrismaClient } from '@oxytrack/database';
 
 dotenv.config();
 
 const app = express();
 const port = 3000;
 const apiVersion = 'v1';
+
+export const prisma = new PrismaClient()
 
 const swaggerSpec = yamljs.load(specYamlPath);
 
@@ -30,4 +33,7 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 
 app.listen(port, () => {
     console.log(`Backend listening at http://localhost:${port}`);
+    prisma.$connect().then(() => {
+        console.log('Connected to the database');
+    });
 });

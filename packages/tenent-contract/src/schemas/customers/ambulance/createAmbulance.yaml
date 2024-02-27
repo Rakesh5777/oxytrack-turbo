@@ -2,8 +2,6 @@ type: object
 required: 
   - ambulanceName
   - ambulanceNumber
-  - emailAddress
-  - description
   - contactPerson
 properties:
   ambulanceName:

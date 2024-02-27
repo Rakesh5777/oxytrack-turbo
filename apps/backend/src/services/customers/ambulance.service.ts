@@ -1,8 +1,9 @@
-import { Ambulance, ContactPerson, CustomerType, PrismaClient } from '@oxytrack/database';
+import { ContactPerson, CustomerType } from '@oxytrack/database';
 import { CreateAmbulance, CreateAmbulance201Response } from '@oxytrack/tenent-contract';
+import { prisma } from './../../index';
 
-const prisma = new PrismaClient()
 export const createAmbulance = async (ambulanceData: CreateAmbulance): Promise<CreateAmbulance201Response> => {
+    //TODO: need to check transactions
     const transaction = await prisma.$transaction(async () => {
         const ambulance = await prisma.ambulance.create({
             data: {
@@ -38,5 +39,5 @@ export const createAmbulance = async (ambulanceData: CreateAmbulance): Promise<C
         return { ...ambulance, contactPersons: contactPersons };
     })
 
-    return transaction as CreateAmbulance201Response;
+    return transaction;
 }

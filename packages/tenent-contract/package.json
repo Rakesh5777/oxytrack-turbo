@@ -1,7 +1,7 @@
 {
   "name": "@oxytrack/tenent-contract",
   "version": "1.0.0",
-  "main": "main.ts",
+  "main": "api.ts",
   "license": "MIT",
   "files": [
     "dist/spec.yaml",
@@ -12,7 +12,8 @@
     "generate-api-client": "swagger-cli bundle ./src/spec.yaml --outfile ./dist/spec.yaml --type yaml & docker run --rm -v \"%cd%:/local\" -v \"%cd%:/tenent_client\" openapitools/openapi-generator-cli generate --type-mappings=DateTime=Date -i /local/dist/spec.yaml -g typescript-axios -o /tenent_client"
   },
   "dependencies": {
-    "swagger-cli": "^4.0.4",
-    "@oxytrack/typescript-config": "*"
+    "@oxytrack/typescript-config": "*",
+    "axios": "^1.6.7",
+    "swagger-cli": "^4.0.4"
   }
 }

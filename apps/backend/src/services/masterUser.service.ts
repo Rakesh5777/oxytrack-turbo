@@ -1,6 +1,4 @@
-import { PrismaClient } from '@oxytrack/database';
-
-const prisma = new PrismaClient()
+import { prisma } from './../index';
 
 export const getMasterUser = async (username: string, password: string) => {
     const user = await prisma.masterUsers.findFirst(

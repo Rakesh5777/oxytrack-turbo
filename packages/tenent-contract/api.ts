@@ -77,13 +77,13 @@ export interface CreateAmbulance {
      * @type {string}
      * @memberof CreateAmbulance
      */
-    'emailAddress': string;
+    'emailAddress'?: string;
     /**
      * Description of the ambulance
      * @type {string}
      * @memberof CreateAmbulance
      */
-    'description': string;
+    'description'?: string;
     /**
      * list of contact persons rakesh
      * @type {Array<ContactPerson>}
@@ -123,16 +123,16 @@ export interface CreateAmbulance201Response {
     'ambulanceNumber': string;
     /**
      * Email address of the ambulance
-     * @type {string}
+     * @type {String | null}
      * @memberof CreateAmbulance201Response
      */
-    'emailAddress': string;
+    'emailAddress'?: String | null;
     /**
      * Description of the ambulance
-     * @type {string}
+     * @type {String | null}
      * @memberof CreateAmbulance201Response
      */
-    'description': string;
+    'description'?: String | null;
     /**
      * list of contact persons rakesh
      * @type {Array<ContactPerson>}
