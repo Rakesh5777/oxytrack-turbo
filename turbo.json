@@ -10,17 +10,19 @@
     "db:migrate": {
       "cache": false
     },
+    "generate-api-client": {
+      "cache": false
+    },
     "build": {
-      "dependsOn": ["^db:generate"],
+      "dependsOn": ["^db:generate", "^generate-api-client"],
       "outputs": ["dist/**", "build/**"]
     },
     "dev": {
-      "dependsOn": ["^db:generate"],
+      "dependsOn": ["^db:generate", "^generate-api-client"],
       "cache": false
     },
     "lint": {
       "dependsOn": ["^lint"]
-    },
-    "dev": {}
+    }
   }
 }
