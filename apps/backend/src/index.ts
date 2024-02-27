@@ -2,7 +2,6 @@ import express, { NextFunction, Request, Response } from 'express';
 import rootRouter from './routes/routes';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { PrismaClient } from '@oxytrack/database';
 import swaggerJsDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
