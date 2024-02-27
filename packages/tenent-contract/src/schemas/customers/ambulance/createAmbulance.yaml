@@ -18,9 +18,11 @@ properties:
   description:
     description: Description of the ambulance
     type: string
-  contactPerson:
-    description: Contact person of the ambulance
-    $ref: './../contactPerson.yaml'
+  contactPersons:
+    description: list of contact persons rakesh
+    type: array
+    items:
+      $ref: './../contactPerson.yaml'
   active:
     description: Status of the ambulance
     type: boolean

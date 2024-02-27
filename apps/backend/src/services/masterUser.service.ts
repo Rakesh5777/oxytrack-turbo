@@ -1,6 +1,3 @@
-import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
-import { SignInModel } from '@oxytrack/common';
 import { PrismaClient } from '@oxytrack/database';
 
 const prisma = new PrismaClient()

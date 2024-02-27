@@ -1,7 +1,9 @@
+import { CreateAmbulance } from '@oxytrack/tenent-contract';
 import { Request, Response } from 'express';
-import { CreateAmbulanceModel } from '@oxytrack/common';
+import { createAmbulance } from '../../services/customers/ambulance.service';
 
-export const createAmbulanceHandler = async (req: Request<{}, {}, CreateAmbulanceModel>, res: Response) => {
+export const createAmbulanceHandler = async (req: Request<{}, {}, CreateAmbulance>, res: Response) => {
     const { ambulanceName, ambulanceNumber, emailAddress, description, contactPersons } = req.body;
-
+    createAmbulance({ ambulanceName, ambulanceNumber, emailAddress, description, contactPersons });
+    return res.json({ message: 'Ambulance created successfully' });
 }

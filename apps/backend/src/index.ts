@@ -10,14 +10,18 @@ dotenv.config();
 
 const app = express();
 const port = 3000;
+const apiVersion = 'v1';
 
 const swaggerSpec = yamljs.load(specYamlPath);
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+
 
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/v1", rootRouter);
+app.use(`/api/${apiVersion}`, rootRouter);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     console.error(err);

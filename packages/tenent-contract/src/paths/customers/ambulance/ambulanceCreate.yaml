@@ -1,6 +1,8 @@
 post: 
   summary: Create Ambulance
   operationId: createAmbulance
+  security:
+    - bearerAuth: []
   requestBody: 
      required: true
      content:

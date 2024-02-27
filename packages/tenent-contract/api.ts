@@ -79,11 +79,11 @@ export interface CreateAmbulance {
      */
     'description': string;
     /**
-     * 
-     * @type {ContactPerson}
+     * list of contact persons rakesh
+     * @type {Array<ContactPerson>}
      * @memberof CreateAmbulance
      */
-    'contactPerson': ContactPerson;
+    'contactPersons'?: Array<ContactPerson>;
     /**
      * Status of the ambulance
      * @type {boolean}
@@ -169,6 +169,10 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
 
 
     

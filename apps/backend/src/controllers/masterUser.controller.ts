@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { SignInModel } from '@oxytrack/common';
 import { getMasterUser } from '../services/masterUser.service';
+import { MasterSignInRequest } from '@oxytrack/tenent-contract';
 
-export const masterSignInHandler = async (req: Request<{}, {}, SignInModel>, res: Response) => {
+export const masterSignInHandler = async (req: Request<{}, {}, MasterSignInRequest>, res: Response) => {
     const { username, password } = req.body;
     const user = await getMasterUser(username, password);
     if (!user) return res.status(401).json({ error: 'Invalid username or password' });

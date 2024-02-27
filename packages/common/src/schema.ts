@@ -7,15 +7,11 @@ export const signInSchema = z.object({
     password: z.string()
 }).strict();
 
-export type SignInModel = z.infer<typeof signInSchema>;
-
 export const contactPersonSchema = z.object({
     contactName: z.string(),
     mobileNumber: z.string(),
     active: z.boolean().optional()
 }).strict();
-
-export type ContactPersonModel = z.infer<typeof contactPersonSchema>;
 
 export const createAmbulanceSchema = z.object({
     ambulanceName: z.string(),
@@ -25,5 +21,3 @@ export const createAmbulanceSchema = z.object({
     contactPersons: z.array(contactPersonSchema),
     active: z.boolean().optional()
 }).strict();
-
-export type CreateAmbulanceModel = z.infer<typeof createAmbulanceSchema>;
