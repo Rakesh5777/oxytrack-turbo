@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Contract for tenant-api
+  title: Oxytrack API
   version: 0.1.0
 components:
   schemas:
