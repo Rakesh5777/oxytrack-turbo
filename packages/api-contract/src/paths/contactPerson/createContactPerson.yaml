@@ -1,0 +1,30 @@
+post:
+  summary: Create Contact Person
+  operationId: createContactPerson
+  security:
+    - bearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "./../../schemas/contactPerson/writableContactPerson.yaml"
+  responses:
+    "201":
+      description: added contact person details
+      content:
+        application/json:
+          schema:
+            $ref: "./../../schemas/contactPerson/writableContactPerson.yaml"
+    "409":
+      description: contact person already exists
+      content:
+        application/json:
+          schema:
+            $ref: "./../../schemas/common/ErrorResponse.yaml"
+    "500":
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "./../../schemas/common/ErrorResponse.yaml"

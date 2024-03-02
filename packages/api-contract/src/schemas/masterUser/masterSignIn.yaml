@@ -1,0 +1,15 @@
+type: object
+required:
+  - username
+  - password
+properties:
+  username:
+    description: username of the master user
+    type: string
+  password:
+    description: password of the user
+    type: string
+  createdAt:
+    description: Date and time of the user creation
+    type: string
+    format: date-time

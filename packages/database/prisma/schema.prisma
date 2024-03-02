@@ -32,7 +32,7 @@ enum CustomerType {
 }
 
 model Hospitals {
-  id              Int      @id @default(autoincrement())
+  id              String   @id @unique @default(dbgenerated("gen_random_uuid()"))
   hospitalName    String   @unique
   hospitalAddress String
   emailAddress    String?
@@ -42,7 +42,7 @@ model Hospitals {
 }
 
 model Ambulance {
-  id              Int      @id @default(autoincrement())
+  id              String   @id @unique @default(dbgenerated("gen_random_uuid()"))
   ambulanceName   String   @unique
   ambulanceNumber String   @unique
   emailAddress    String?

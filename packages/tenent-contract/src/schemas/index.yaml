@@ -1,8 +1,0 @@
-ErrorResponse:
-  $ref: "./common/ErrorResponse.yaml"
-CreateAmbulance:
-  $ref: "./customers/ambulance/createAmbulance.yaml"
-ContactPerson:
-  $ref: "./customers/contactPerson.yaml"
-MasterSignInRequest:
-  $ref: "./masterUser/masterSignIn.yaml"

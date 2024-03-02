@@ -1,0 +1,11 @@
+type: object
+required:
+  - error
+  - message
+properties:
+  error:
+    description: Type of the http error
+    type: any
+  message:
+    description: Detailed description of the error
+    type: string

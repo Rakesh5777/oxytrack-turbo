@@ -1,0 +1,30 @@
+post:
+  summary: Create Ambulance
+  operationId: createAmbulance
+  security:
+    - bearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../../schemas/customers/ambulance/writableAmbulance.yaml"
+  responses:
+    "201":
+      description: added ambulance details
+      content:
+        application/json:
+          schema:
+            $ref: "../../../schemas/customers/ambulance/writableAmbulance.yaml"
+    "409":
+      description: ambulance already exists
+      content:
+        application/json:
+          schema:
+            $ref: "../../../schemas/common/ErrorResponse.yaml"
+    "500":
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "../../../schemas/common/ErrorResponse.yaml"

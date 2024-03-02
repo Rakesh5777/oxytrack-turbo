@@ -1,0 +1,12 @@
+ErrorResponse:
+  $ref: "./common/ErrorResponse.yaml"
+Ambulance:
+  $ref: "./customers/ambulance/ambulance.yaml"
+WritableAmbulance:
+  $ref: "./customers/ambulance/writableAmbulance.yaml"
+ContactPerson:
+  $ref: "./contactPerson/contactPerson.yaml"
+WritableContactPerson:
+  $ref: "./contactPerson/writableContactPerson.yaml"
+MasterSignInRequest:
+  $ref: "./masterUser/masterSignIn.yaml"
