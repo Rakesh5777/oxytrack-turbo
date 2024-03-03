@@ -8,7 +8,6 @@ export const masterSignInHandler = async (
   res: Response,
 ) => {
   const { username, password } = req.body;
-  console.log(username, password);
   const user = await getMasterUser(username, password);
   if (!user)
     return res.status(401).json({ error: "Invalid username or password" });

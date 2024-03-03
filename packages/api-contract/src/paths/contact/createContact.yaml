@@ -1,6 +1,8 @@
 post:
-  summary: Create Contact Person
-  operationId: createContactPerson
+  tags:
+    - Contact
+  summary: Create Contact
+  operationId: createContact
   security:
     - bearerAuth: []
   requestBody:
@@ -8,16 +10,16 @@ post:
     content:
       application/json:
         schema:
-          $ref: "./../../schemas/contactPerson/writableContactPerson.yaml"
+          $ref: "./../../schemas/contact/writableContact.yaml"
   responses:
     "201":
-      description: added contact person details
+      description: added contact  details
       content:
         application/json:
           schema:
-            $ref: "./../../schemas/contactPerson/writableContactPerson.yaml"
+            $ref: "./../../schemas/contact/writableContact.yaml"
     "409":
-      description: contact person already exists
+      description: contact  already exists
       content:
         application/json:
           schema:

@@ -9,7 +9,7 @@ export const signInSchema = z
   })
   .strict();
 
-export const createContactPersonSchema = z
+export const createContactSchema = z
   .object({
     contactName: z.string(),
     mobileNumber: z.string(),
@@ -23,7 +23,7 @@ export const createAmbulanceSchema = z
     ambulanceNumber: z.string(),
     emailAddress: z.string().email().optional(),
     description: z.string(),
-    contactPersonIds: z.array(z.number()).min(1),
+    contactIds: z.array(z.string()).min(1),
     active: z.boolean().optional(),
   })
   .strict();

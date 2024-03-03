@@ -47,10 +47,10 @@ import {
 export interface Ambulance {
   /**
    * Id of the ambulance
-   * @type {number}
+   * @type {string}
    * @memberof Ambulance
    */
-  id: number;
+  id: string;
   /**
    * Name of the ambulance
    * @type {string}
@@ -76,11 +76,11 @@ export interface Ambulance {
    */
   description?: String | null;
   /**
-   * list of contact persons ids
-   * @type {Array<ContactPerson>}
+   * list of contact ids
+   * @type {Array<Contact>}
    * @memberof Ambulance
    */
-  contactPersons: Array<ContactPerson>;
+  contacts?: Array<Contact>;
   /**
    * Created date of the ambulance
    * @type {Date}
@@ -97,31 +97,37 @@ export interface Ambulance {
 /**
  *
  * @export
- * @interface ContactPerson
+ * @interface Contact
  */
-export interface ContactPerson {
+export interface Contact {
   /**
-   * Id of the contact person
-   * @type {number}
-   * @memberof ContactPerson
-   */
-  id?: number;
-  /**
-   * Name of the contact person
+   * Id of the contact
    * @type {string}
-   * @memberof ContactPerson
+   * @memberof Contact
+   */
+  id: string;
+  /**
+   * Name of the contact
+   * @type {string}
+   * @memberof Contact
    */
   contactName: string;
   /**
-   * Mobile number of the contact person
+   * Mobile number of the contact
    * @type {string}
-   * @memberof ContactPerson
+   * @memberof Contact
    */
   mobileNumber: string;
   /**
-   * Status of the contact person
+   * Created date of the contact
+   * @type {Date}
+   * @memberof Contact
+   */
+  createdAt?: Date;
+  /**
+   * Status of the contact
    * @type {boolean}
-   * @memberof ContactPerson
+   * @memberof Contact
    */
   active?: boolean;
 }
@@ -133,10 +139,10 @@ export interface ContactPerson {
 export interface ErrorResponse {
   /**
    * Type of the http error
-   * @type {Any}
+   * @type {string}
    * @memberof ErrorResponse
    */
-  error: Any;
+  error: string;
   /**
    * Detailed description of the error
    * @type {string}
@@ -201,10 +207,10 @@ export interface WritableAmbulance {
   description?: string;
   /**
    * list of contact person ids
-   * @type {Array<number>}
+   * @type {Array<string>}
    * @memberof WritableAmbulance
    */
-  contactPersonIds: Array<number>;
+  contactIds: Array<string>;
   /**
    * Status of the ambulance
    * @type {boolean}
@@ -215,34 +221,34 @@ export interface WritableAmbulance {
 /**
  *
  * @export
- * @interface WritableContactPerson
+ * @interface WritableContact
  */
-export interface WritableContactPerson {
+export interface WritableContact {
   /**
-   * Name of the contact person
+   * Name of the contact
    * @type {string}
-   * @memberof WritableContactPerson
+   * @memberof WritableContact
    */
   contactName: string;
   /**
-   * Mobile number of the contact person
+   * Mobile number of the contact
    * @type {string}
-   * @memberof WritableContactPerson
+   * @memberof WritableContact
    */
   mobileNumber: string;
   /**
-   * Status of the contact person
+   * Status of the contact
    * @type {boolean}
-   * @memberof WritableContactPerson
+   * @memberof WritableContact
    */
   active?: boolean;
 }
 
 /**
- * DefaultApi - axios parameter creator
+ * AmbulanceApi - axios parameter creator
  * @export
  */
-export const DefaultApiAxiosParamCreator = function (
+export const AmbulanceApiAxiosParamCreator = function (
   configuration?: Configuration,
 ) {
   return {
@@ -263,7 +269,7 @@ export const DefaultApiAxiosParamCreator = function (
         "writableAmbulance",
         writableAmbulance,
       );
-      const localVarPath = `/customer/ambulance/create`;
+      const localVarPath = `/customer/ambulance`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
       let baseOptions;
@@ -304,24 +310,126 @@ export const DefaultApiAxiosParamCreator = function (
         options: localVarRequestOptions,
       };
     },
+  };
+};
+
+/**
+ * AmbulanceApi - functional programming interface
+ * @export
+ */
+export const AmbulanceApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator =
+    AmbulanceApiAxiosParamCreator(configuration);
+  return {
     /**
      *
-     * @summary Create Contact Person
-     * @param {WritableContactPerson} writableContactPerson
+     * @summary Create Ambulance
+     * @param {WritableAmbulance} writableAmbulance
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    createContactPerson: async (
-      writableContactPerson: WritableContactPerson,
+    async createAmbulance(
+      writableAmbulance: WritableAmbulance,
+      options?: RawAxiosRequestConfig,
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Ambulance>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.createAmbulance(
+        writableAmbulance,
+        options,
+      );
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap["AmbulanceApi.createAmbulance"]?.[
+          localVarOperationServerIndex
+        ]?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+  };
+};
+
+/**
+ * AmbulanceApi - factory interface
+ * @export
+ */
+export const AmbulanceApiFactory = function (
+  configuration?: Configuration,
+  basePath?: string,
+  axios?: AxiosInstance,
+) {
+  const localVarFp = AmbulanceApiFp(configuration);
+  return {
+    /**
+     *
+     * @summary Create Ambulance
+     * @param {WritableAmbulance} writableAmbulance
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    createAmbulance(
+      writableAmbulance: WritableAmbulance,
+      options?: any,
+    ): AxiosPromise<Ambulance> {
+      return localVarFp
+        .createAmbulance(writableAmbulance, options)
+        .then((request) => request(axios, basePath));
+    },
+  };
+};
+
+/**
+ * AmbulanceApi - object-oriented interface
+ * @export
+ * @class AmbulanceApi
+ * @extends {BaseAPI}
+ */
+export class AmbulanceApi extends BaseAPI {
+  /**
+   *
+   * @summary Create Ambulance
+   * @param {WritableAmbulance} writableAmbulance
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof AmbulanceApi
+   */
+  public createAmbulance(
+    writableAmbulance: WritableAmbulance,
+    options?: RawAxiosRequestConfig,
+  ) {
+    return AmbulanceApiFp(this.configuration)
+      .createAmbulance(writableAmbulance, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+}
+
+/**
+ * ContactApi - axios parameter creator
+ * @export
+ */
+export const ContactApiAxiosParamCreator = function (
+  configuration?: Configuration,
+) {
+  return {
+    /**
+     *
+     * @summary Create Contact
+     * @param {WritableContact} writableContact
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    createContact: async (
+      writableContact: WritableContact,
       options: RawAxiosRequestConfig = {},
     ): Promise<RequestArgs> => {
-      // verify required parameter 'writableContactPerson' is not null or undefined
-      assertParamExists(
-        "createContactPerson",
-        "writableContactPerson",
-        writableContactPerson,
-      );
-      const localVarPath = `/contactPerson/create`;
+      // verify required parameter 'writableContact' is not null or undefined
+      assertParamExists("createContact", "writableContact", writableContact);
+      const localVarPath = `/contacts`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
       let baseOptions;
@@ -352,7 +460,7 @@ export const DefaultApiAxiosParamCreator = function (
         ...options.headers,
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
-        writableContactPerson,
+        writableContact,
         localVarRequestOptions,
         configuration,
       );
@@ -362,6 +470,114 @@ export const DefaultApiAxiosParamCreator = function (
         options: localVarRequestOptions,
       };
     },
+  };
+};
+
+/**
+ * ContactApi - functional programming interface
+ * @export
+ */
+export const ContactApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator = ContactApiAxiosParamCreator(configuration);
+  return {
+    /**
+     *
+     * @summary Create Contact
+     * @param {WritableContact} writableContact
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async createContact(
+      writableContact: WritableContact,
+      options?: RawAxiosRequestConfig,
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string,
+      ) => AxiosPromise<WritableContact>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.createContact(
+        writableContact,
+        options,
+      );
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath =
+        operationServerMap["ContactApi.createContact"]?.[
+          localVarOperationServerIndex
+        ]?.url;
+      return (axios, basePath) =>
+        createRequestFunction(
+          localVarAxiosArgs,
+          globalAxios,
+          BASE_PATH,
+          configuration,
+        )(axios, localVarOperationServerBasePath || basePath);
+    },
+  };
+};
+
+/**
+ * ContactApi - factory interface
+ * @export
+ */
+export const ContactApiFactory = function (
+  configuration?: Configuration,
+  basePath?: string,
+  axios?: AxiosInstance,
+) {
+  const localVarFp = ContactApiFp(configuration);
+  return {
+    /**
+     *
+     * @summary Create Contact
+     * @param {WritableContact} writableContact
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    createContact(
+      writableContact: WritableContact,
+      options?: any,
+    ): AxiosPromise<WritableContact> {
+      return localVarFp
+        .createContact(writableContact, options)
+        .then((request) => request(axios, basePath));
+    },
+  };
+};
+
+/**
+ * ContactApi - object-oriented interface
+ * @export
+ * @class ContactApi
+ * @extends {BaseAPI}
+ */
+export class ContactApi extends BaseAPI {
+  /**
+   *
+   * @summary Create Contact
+   * @param {WritableContact} writableContact
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof ContactApi
+   */
+  public createContact(
+    writableContact: WritableContact,
+    options?: RawAxiosRequestConfig,
+  ) {
+    return ContactApiFp(this.configuration)
+      .createContact(writableContact, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+}
+
+/**
+ * MasterUserApi - axios parameter creator
+ * @export
+ */
+export const MasterUserApiAxiosParamCreator = function (
+  configuration?: Configuration,
+) {
+  return {
     /**
      *
      * @summary Master User Sign In
@@ -420,79 +636,13 @@ export const DefaultApiAxiosParamCreator = function (
 };
 
 /**
- * DefaultApi - functional programming interface
+ * MasterUserApi - functional programming interface
  * @export
  */
-export const DefaultApiFp = function (configuration?: Configuration) {
-  const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration);
+export const MasterUserApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator =
+    MasterUserApiAxiosParamCreator(configuration);
   return {
-    /**
-     *
-     * @summary Create Ambulance
-     * @param {WritableAmbulance} writableAmbulance
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async createAmbulance(
-      writableAmbulance: WritableAmbulance,
-      options?: RawAxiosRequestConfig,
-    ): Promise<
-      (
-        axios?: AxiosInstance,
-        basePath?: string,
-      ) => AxiosPromise<WritableAmbulance>
-    > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.createAmbulance(
-        writableAmbulance,
-        options,
-      );
-      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-      const localVarOperationServerBasePath =
-        operationServerMap["DefaultApi.createAmbulance"]?.[
-          localVarOperationServerIndex
-        ]?.url;
-      return (axios, basePath) =>
-        createRequestFunction(
-          localVarAxiosArgs,
-          globalAxios,
-          BASE_PATH,
-          configuration,
-        )(axios, localVarOperationServerBasePath || basePath);
-    },
-    /**
-     *
-     * @summary Create Contact Person
-     * @param {WritableContactPerson} writableContactPerson
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async createContactPerson(
-      writableContactPerson: WritableContactPerson,
-      options?: RawAxiosRequestConfig,
-    ): Promise<
-      (
-        axios?: AxiosInstance,
-        basePath?: string,
-      ) => AxiosPromise<WritableContactPerson>
-    > {
-      const localVarAxiosArgs =
-        await localVarAxiosParamCreator.createContactPerson(
-          writableContactPerson,
-          options,
-        );
-      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-      const localVarOperationServerBasePath =
-        operationServerMap["DefaultApi.createContactPerson"]?.[
-          localVarOperationServerIndex
-        ]?.url;
-      return (axios, basePath) =>
-        createRequestFunction(
-          localVarAxiosArgs,
-          globalAxios,
-          BASE_PATH,
-          configuration,
-        )(axios, localVarOperationServerBasePath || basePath);
-    },
     /**
      *
      * @summary Master User Sign In
@@ -516,7 +666,7 @@ export const DefaultApiFp = function (configuration?: Configuration) {
         );
       const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
       const localVarOperationServerBasePath =
-        operationServerMap["DefaultApi.masterUserSignIn"]?.[
+        operationServerMap["MasterUserApi.masterUserSignIn"]?.[
           localVarOperationServerIndex
         ]?.url;
       return (axios, basePath) =>
@@ -531,46 +681,16 @@ export const DefaultApiFp = function (configuration?: Configuration) {
 };
 
 /**
- * DefaultApi - factory interface
+ * MasterUserApi - factory interface
  * @export
  */
-export const DefaultApiFactory = function (
+export const MasterUserApiFactory = function (
   configuration?: Configuration,
   basePath?: string,
   axios?: AxiosInstance,
 ) {
-  const localVarFp = DefaultApiFp(configuration);
+  const localVarFp = MasterUserApiFp(configuration);
   return {
-    /**
-     *
-     * @summary Create Ambulance
-     * @param {WritableAmbulance} writableAmbulance
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    createAmbulance(
-      writableAmbulance: WritableAmbulance,
-      options?: any,
-    ): AxiosPromise<WritableAmbulance> {
-      return localVarFp
-        .createAmbulance(writableAmbulance, options)
-        .then((request) => request(axios, basePath));
-    },
-    /**
-     *
-     * @summary Create Contact Person
-     * @param {WritableContactPerson} writableContactPerson
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    createContactPerson(
-      writableContactPerson: WritableContactPerson,
-      options?: any,
-    ): AxiosPromise<WritableContactPerson> {
-      return localVarFp
-        .createContactPerson(writableContactPerson, options)
-        .then((request) => request(axios, basePath));
-    },
     /**
      *
      * @summary Master User Sign In
@@ -590,59 +710,25 @@ export const DefaultApiFactory = function (
 };
 
 /**
- * DefaultApi - object-oriented interface
+ * MasterUserApi - object-oriented interface
  * @export
- * @class DefaultApi
+ * @class MasterUserApi
  * @extends {BaseAPI}
  */
-export class DefaultApi extends BaseAPI {
-  /**
-   *
-   * @summary Create Ambulance
-   * @param {WritableAmbulance} writableAmbulance
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof DefaultApi
-   */
-  public createAmbulance(
-    writableAmbulance: WritableAmbulance,
-    options?: RawAxiosRequestConfig,
-  ) {
-    return DefaultApiFp(this.configuration)
-      .createAmbulance(writableAmbulance, options)
-      .then((request) => request(this.axios, this.basePath));
-  }
-
-  /**
-   *
-   * @summary Create Contact Person
-   * @param {WritableContactPerson} writableContactPerson
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof DefaultApi
-   */
-  public createContactPerson(
-    writableContactPerson: WritableContactPerson,
-    options?: RawAxiosRequestConfig,
-  ) {
-    return DefaultApiFp(this.configuration)
-      .createContactPerson(writableContactPerson, options)
-      .then((request) => request(this.axios, this.basePath));
-  }
-
+export class MasterUserApi extends BaseAPI {
   /**
    *
    * @summary Master User Sign In
    * @param {MasterSignInRequest} masterSignInRequest
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
-   * @memberof DefaultApi
+   * @memberof MasterUserApi
    */
   public masterUserSignIn(
     masterSignInRequest: MasterSignInRequest,
     options?: RawAxiosRequestConfig,
   ) {
-    return DefaultApiFp(this.configuration)
+    return MasterUserApiFp(this.configuration)
       .masterUserSignIn(masterSignInRequest, options)
       .then((request) => request(this.axios, this.basePath));
   }

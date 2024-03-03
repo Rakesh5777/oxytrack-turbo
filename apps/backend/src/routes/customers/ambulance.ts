@@ -6,7 +6,7 @@ import { createAmbulanceSchema } from "@oxytrack/api-contract/zodSchema";
 const ambulanceRouter = Express.Router();
 
 ambulanceRouter.post(
-  "/create",
+  "",
   validateReq(createAmbulanceSchema),
   asyncWrapper(createAmbulanceHandler),
 );

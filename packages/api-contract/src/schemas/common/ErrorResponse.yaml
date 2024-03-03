@@ -5,7 +5,7 @@ required:
 properties:
   error:
     description: Type of the http error
-    type: any
+    type: string
   message:
     description: Detailed description of the error
     type: string

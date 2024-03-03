@@ -2,7 +2,7 @@ type: object
 required:
   - ambulanceName
   - ambulanceNumber
-  - contactPersonIds
+  - contactIds
 properties:
   ambulanceName:
     description: Name of the ambulance
@@ -16,11 +16,11 @@ properties:
   description:
     description: Description of the ambulance
     type: string
-  contactPersonIds:
+  contactIds:
     description: list of contact person ids
     type: array
     items:
-      type: number
+      type: string
   active:
     description: Status of the ambulance
     type: boolean

@@ -4,9 +4,9 @@ Ambulance:
   $ref: "./customers/ambulance/ambulance.yaml"
 WritableAmbulance:
   $ref: "./customers/ambulance/writableAmbulance.yaml"
-ContactPerson:
-  $ref: "./contactPerson/contactPerson.yaml"
-WritableContactPerson:
-  $ref: "./contactPerson/writableContactPerson.yaml"
+Contact:
+  $ref: "./contact/contact.yaml"
+WritableContact:
+  $ref: "./contact/writableContact.yaml"
 MasterSignInRequest:
   $ref: "./masterUser/masterSignIn.yaml"

@@ -1,4 +1,6 @@
 post:
+  tags:
+    - Master User
   summary: Master User Sign In
   operationId: masterUserSignIn
   requestBody:

@@ -18,7 +18,7 @@
       "outputs": ["dist/**", "build/**"]
     },
     "dev": {
-      "dependsOn": ["^generate-api-client"],
+      "dependsOn": ["^db:generate", "^generate-api-client"],
       "cache": false
     },
     "lint": {

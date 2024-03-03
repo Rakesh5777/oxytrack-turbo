@@ -1,0 +1,22 @@
+type: object
+required:
+  - id
+  - contactName
+  - mobileNumber
+properties:
+  id:
+    description: Id of the contact
+    type: string
+  contactName:
+    description: Name of the contact
+    type: string
+  mobileNumber:
+    description: Mobile number of the contact
+    type: string
+  createdAt:
+    description: Created date of the contact
+    type: string
+    format: date-time
+  active:
+    description: Status of the contact
+    type: boolean

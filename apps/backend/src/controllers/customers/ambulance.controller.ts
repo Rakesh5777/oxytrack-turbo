@@ -1,26 +1,24 @@
 import { Request, Response } from "express";
 import { createAmbulance } from "../../services/customers/ambulance.service";
-import { WritableAmbulance } from "@oxytrack/api-contract";
+import { Ambulance, WritableAmbulance } from "@oxytrack/api-contract";
 
 export const createAmbulanceHandler = async (
   req: Request<{}, {}, WritableAmbulance>,
-  res: Response,
+  res: Response<Ambulance>,
 ) => {
   const {
     ambulanceName,
     ambulanceNumber,
     emailAddress,
     description,
-    contactPersonIds,
+    contactIds,
   } = req.body;
   const createdAmbulance = await createAmbulance({
     ambulanceName,
     ambulanceNumber,
     emailAddress,
     description,
-    contactPersonIds,
+    contactIds,
   });
-  return res
-    .status(201)
-    .json({ message: `Ambulance created successfully`, createdAmbulance });
+  return res.status(201).json({ ...createdAmbulance });
 };

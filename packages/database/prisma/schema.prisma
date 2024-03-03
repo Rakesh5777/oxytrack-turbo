@@ -14,7 +14,7 @@ datasource db {
 }
 
 model MasterUsers {
-  id           Int     @id @default(autoincrement())
+  id           String  @id @unique @default(dbgenerated("gen_random_uuid()"))
   email        String  @unique
   password     String
   firstName    String
@@ -52,7 +52,7 @@ model Ambulance {
 }
 
 model Laboratories {
-  id           Int      @id @default(autoincrement())
+  id           String   @id @unique @default(dbgenerated("gen_random_uuid()"))
   labName      String   @unique
   labAddress   String
   emailAddress String?
@@ -62,7 +62,7 @@ model Laboratories {
 }
 
 model HouseHoldCustomer {
-  id           Int      @id @default(autoincrement())
+  id           String   @id @unique @default(dbgenerated("gen_random_uuid()"))
   customerName String   @unique
   address      String
   emailAddress String?
@@ -71,19 +71,19 @@ model HouseHoldCustomer {
   createdAt    DateTime @default(now())
 }
 
-model ContactPerson {
-  id                      Int                       @id @default(autoincrement())
+model Contact {
+  id                      String                    @id @unique @default(dbgenerated("gen_random_uuid()"))
   contactName             String
   mobileNumber            String                    @unique
   active                  Boolean                   @default(true)
-  contactPersonToCustomer ContactPersonToCustomer[]
+  contactToCustomer ContactToCustomer[]
   createdAt               DateTime                  @default(now())
 }
 
-model ContactPersonToCustomer {
-  id              Int           @id @default(autoincrement())
-  contactPersonId Int
-  customerId      Int
+model ContactToCustomer {
+  id              String        @id @unique @default(dbgenerated("gen_random_uuid()"))
+  contactId String
+  customerId      String
   customer        CustomerType
-  contactPerson   ContactPerson @relation(fields: [contactPersonId], references: [id])
+  contact   Contact @relation(fields: [contactId], references: [id])
 }

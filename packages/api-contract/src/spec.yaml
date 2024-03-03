@@ -16,10 +16,17 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
+tags:
+  - name: Master User
+    description: Master User related operations
+  - name: Contact
+    description: Contact related operations
+  - name: Ambulance
+    description: Ambulance related operations
 paths:
   /masterUser/signIn:
     $ref: "./paths/masterUser/masterSignIn.yaml"
-  /contactPerson/create:
-    $ref: "./paths/contactPerson/createContactPerson.yaml"
-  /customer/ambulance/create:
-    $ref: "./paths/customers/ambulance/createAmbulance.yaml"
+  /contacts:
+    $ref: "./paths/contact/createContact.yaml"
+  /customer/ambulance:
+    $ref: "./paths/customers/ambulance/ambulance.yaml"

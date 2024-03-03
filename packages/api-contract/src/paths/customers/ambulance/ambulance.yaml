@@ -1,4 +1,6 @@
 post:
+  tags:
+    - Ambulance
   summary: Create Ambulance
   operationId: createAmbulance
   security:
@@ -15,7 +17,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../../../schemas/customers/ambulance/writableAmbulance.yaml"
+            $ref: "../../../schemas/customers/ambulance/ambulance.yaml"
     "409":
       description: ambulance already exists
       content:

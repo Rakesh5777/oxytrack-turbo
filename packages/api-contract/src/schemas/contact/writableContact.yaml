@@ -4,12 +4,12 @@ required:
   - mobileNumber
 properties:
   contactName:
-    description: Name of the contact person
+    description: Name of the contact
     type: string
   mobileNumber:
-    description: Mobile number of the contact person
+    description: Mobile number of the contact
     type: string
   active:
-    description: Status of the contact person
+    description: Status of the contact
     type: boolean
     default: true

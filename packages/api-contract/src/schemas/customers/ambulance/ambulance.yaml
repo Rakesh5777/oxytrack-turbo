@@ -8,7 +8,7 @@ required:
 properties:
   id:
     description: Id of the ambulance
-    type: number
+    type: string
   ambulanceName:
     description: Name of the ambulance
     type: string
@@ -21,11 +21,11 @@ properties:
   description:
     description: Description of the ambulance
     type: string | null
-  contactPersons:
-    description: list of contact persons ids
+  contacts:
+    description: list of contact ids
     type: array
     items:
-      $ref: "./../../contactPerson/contactPerson.yaml"
+      $ref: "./../../contact/contact.yaml"
   createdAt:
     description: Created date of the ambulance
     type: string
