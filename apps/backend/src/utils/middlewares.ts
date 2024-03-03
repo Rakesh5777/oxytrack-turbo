@@ -1,13 +1,15 @@
-import jwt from "jsonwebtoken";
-import { NextFunction, Request, Response } from "express";
-import { z } from "@oxytrack/api-contract/zodSchema";
-import { Operation, Responses, TypedRequest, TypedResponse } from "../types/express";
 import { operations } from "@oxytrack/api-contract/dist/api";
+import { z } from "@oxytrack/api-contract/zodSchema";
+import { NextFunction, Request, Response } from "express";
+import jwt from "jsonwebtoken";
+import { Responses, TypedRequest, TypedResponse } from "../types/express";
+
+type StatusCodes = 200 | 400 | 401 | 403 | 404 | 409 | 500;
 
 export class CustomError extends Error {
-  statusCode: number;
+  statusCode: StatusCodes;
   error: unknown;
-  constructor(message: string, statusCode: number, name?: string, error?: unknown) {
+  constructor(message: string, statusCode: StatusCodes, name?: string, error?: unknown) {
     super(message);
     this.statusCode = statusCode;
     this.name = name || "CustomError";

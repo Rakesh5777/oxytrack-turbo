@@ -4,7 +4,6 @@
     "rootDir": "./src", // Adding root directory
     "outDir": "./dist" // Adding output directory
   },
-  "files": [
-    "./src/types/customTypes.d.ts"
-  ] /* List an array of files to be included in compilation. */
+  "include": ["src/**/*.ts", "src/**/*.d.ts"],
+  "files": ["src/types/customTypes.d.ts"]
 }
