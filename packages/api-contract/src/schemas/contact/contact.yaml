@@ -3,6 +3,8 @@ required:
   - id
   - contactName
   - mobileNumber
+  - createdAt
+  - active
 properties:
   id:
     description: Id of the contact
@@ -20,3 +22,4 @@ properties:
   active:
     description: Status of the contact
     type: boolean
+    default: true

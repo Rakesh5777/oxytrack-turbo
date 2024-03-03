@@ -4,7 +4,6 @@ import { asyncWrapper } from "../utils/middlewares";
 
 const contactsRouter = express.Router();
 
-contactsRouter.post("", asyncWrapper(createContactHandler));
-// contactsRouter.get("", asyncWrapper(getContactsHandler));
+contactsRouter.post("", asyncWrapper("createContact")(createContactHandler));
 
 export default contactsRouter;

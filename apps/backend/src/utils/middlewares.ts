@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 import { z } from "@oxytrack/api-contract/zodSchema";
+import { Operation, Responses, TypedRequest, TypedResponse } from "../types/express";
+import { operations } from "@oxytrack/api-contract/dist/api";
 
 export class CustomError extends Error {
   statusCode: number;
@@ -13,11 +15,19 @@ export class CustomError extends Error {
   }
 }
 
-export function asyncWrapper(fn: (req: Request, res: Response, next: NextFunction) => Promise<any>) {
-  return function (req: Request, res: Response, next: NextFunction) {
-    fn(req, res, next).catch(next);
+type OperationKey = keyof operations;
+
+type AsyncWrapperType<T extends OperationKey> = (
+  fn: (req: TypedRequest[T], res: TypedResponse<Responses[T]>, next: NextFunction) => Promise<any>,
+) => (req: TypedRequest[T], res: TypedResponse<Responses[T]>, next: NextFunction) => Promise<any>;
+
+export const asyncWrapper = <T extends OperationKey>(key: T): AsyncWrapperType<T> => {
+  return function (fn: (req: TypedRequest[T], res: TypedResponse<Responses[T]>, next: NextFunction) => Promise<any>) {
+    return function (req: TypedRequest[T], res: TypedResponse<Responses[T]>, next: NextFunction) {
+      return fn(req, res, next).catch(next);
+    };
   };
-}
+};
 
 export const validateReq = (schema: z.Schema) => (req: any, res: any, next: () => void) => {
   try {

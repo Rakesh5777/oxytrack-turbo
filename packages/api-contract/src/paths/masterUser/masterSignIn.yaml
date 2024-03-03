@@ -22,6 +22,12 @@ post:
               token:
                 description: JWT token
                 type: string
+    "401":
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/common/ErrorResponse.yaml"
     "400":
       description: Bad request
       content:

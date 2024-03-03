@@ -117,13 +117,13 @@ export interface Contact {
    * @type {Date}
    * @memberof Contact
    */
-  createdAt?: Date;
+  createdAt: Date;
   /**
    * Status of the contact
    * @type {boolean}
    * @memberof Contact
    */
-  active?: boolean;
+  active: boolean;
 }
 /**
  *

@@ -1,8 +1,7 @@
-import { Request, Response } from "express";
 import { createAmbulance } from "../../services/customers/ambulance.service";
-import { Ambulance, WritableAmbulance } from "@oxytrack/api-contract";
+import { Responses, TypedRequest, TypedResponse } from "../../types/express";
 
-export const createAmbulanceHandler = async (req: Request<{}, {}, WritableAmbulance>, res: Response<Ambulance>) => {
+export const createAmbulanceHandler = async (req: TypedRequest["createAmbulance"], res: TypedResponse<Responses["createAmbulance"]>) => {
   const { ambulanceName, ambulanceNumber, emailAddress, description, contactIds } = req.body;
   const createdAmbulance = await createAmbulance({
     ambulanceName,

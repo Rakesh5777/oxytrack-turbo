@@ -1,10 +1,9 @@
 import Express from "express";
 import { createAmbulanceHandler } from "../../controllers/customers/ambulance.controller";
-import { asyncWrapper, validateReq } from "../../utils/middlewares";
-import { createAmbulanceSchema } from "@oxytrack/api-contract/zodSchema";
+import { asyncWrapper } from "../../utils/middlewares";
 
 const ambulanceRouter = Express.Router();
 
-ambulanceRouter.post("", validateReq(createAmbulanceSchema), asyncWrapper(createAmbulanceHandler));
+ambulanceRouter.post("", asyncWrapper("createAmbulance")(createAmbulanceHandler));
 
 export default ambulanceRouter;
