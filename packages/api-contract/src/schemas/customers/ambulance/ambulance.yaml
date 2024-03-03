@@ -5,6 +5,7 @@ required:
   - ambulanceNumber
   - contactPersons
   - createdAt
+  - active
 properties:
   id:
     description: Id of the ambulance
@@ -17,10 +18,12 @@ properties:
     type: string
   emailAddress:
     description: Email address of the ambulance
-    type: string | null
+    type: string
+    nullable: true
   description:
     description: Description of the ambulance
-    type: string | null
+    type: string
+    nullable: true
   contacts:
     description: list of contact ids
     type: array
@@ -33,3 +36,4 @@ properties:
   active:
     description: Status of the ambulance
     type: boolean
+    default: true

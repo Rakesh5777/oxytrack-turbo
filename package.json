@@ -6,7 +6,9 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "docker-container": "docker run --name postgres-container -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 -v /path/on/host:/var/lib/postgresql/data postgres",
+    "docker-psql": "docker exec -it postgres-container psql -U postgres -d postgres"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"

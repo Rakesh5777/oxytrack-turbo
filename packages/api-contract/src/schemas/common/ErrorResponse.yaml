@@ -5,7 +5,18 @@ required:
 properties:
   error:
     description: Type of the http error
-    type: string
+    oneOf:
+      - type: string
+      - type: number
+      - type: boolean
+      - type: object
+      - type: array
+        items:
+          oneOf:
+            - type: string
+            - type: number
+            - type: boolean
+            - type: object
   message:
     description: Detailed description of the error
     type: string

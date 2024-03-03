@@ -59,16 +59,16 @@ export interface Ambulance {
   ambulanceNumber: string;
   /**
    * Email address of the ambulance
-   * @type {String | null}
+   * @type {string}
    * @memberof Ambulance
    */
-  emailAddress?: String | null;
+  emailAddress?: string | null;
   /**
    * Description of the ambulance
-   * @type {String | null}
+   * @type {string}
    * @memberof Ambulance
    */
-  description?: String | null;
+  description?: string | null;
   /**
    * list of contact ids
    * @type {Array<Contact>}
@@ -86,7 +86,7 @@ export interface Ambulance {
    * @type {boolean}
    * @memberof Ambulance
    */
-  active?: boolean;
+  active: boolean;
 }
 /**
  *
@@ -128,15 +128,46 @@ export interface Contact {
 /**
  *
  * @export
+ * @interface ContactPage
+ */
+export interface ContactPage {
+  /**
+   * Page number
+   * @type {number}
+   * @memberof ContactPage
+   */
+  page: number;
+  /**
+   * Number of items per page
+   * @type {number}
+   * @memberof ContactPage
+   */
+  pageSize: number;
+  /**
+   * Total number of items
+   * @type {number}
+   * @memberof ContactPage
+   */
+  totalItemCount: number;
+  /**
+   * List of contacts
+   * @type {Array<Contact>}
+   * @memberof ContactPage
+   */
+  items: Array<Contact>;
+}
+/**
+ *
+ * @export
  * @interface ErrorResponse
  */
 export interface ErrorResponse {
   /**
-   * Type of the http error
-   * @type {string}
+   *
+   * @type {ErrorResponseError}
    * @memberof ErrorResponse
    */
-  error: string;
+  error: ErrorResponseError;
   /**
    * Detailed description of the error
    * @type {string}
@@ -144,6 +175,19 @@ export interface ErrorResponse {
    */
   message: string;
 }
+/**
+ * @type ErrorResponseError
+ * Type of the http error
+ * @export
+ */
+export type ErrorResponseError = Array<ErrorResponseErrorOneOfInner> | boolean | number | object | string;
+
+/**
+ * @type ErrorResponseErrorOneOfInner
+ * @export
+ */
+export type ErrorResponseErrorOneOfInner = boolean | number | object | string;
+
 /**
  *
  * @export
@@ -168,6 +212,19 @@ export interface MasterSignInRequest {
    * @memberof MasterSignInRequest
    */
   createdAt?: Date;
+}
+/**
+ *
+ * @export
+ * @interface MasterUserSignIn200Response
+ */
+export interface MasterUserSignIn200Response {
+  /**
+   * JWT token
+   * @type {string}
+   * @memberof MasterUserSignIn200Response
+   */
+  token: string;
 }
 /**
  *
@@ -262,11 +319,7 @@ export const AmbulanceApiAxiosParamCreator = function (configuration?: Configura
         baseOptions = configuration.baseOptions;
       }
 
-      const localVarRequestOptions = {
-        method: "POST",
-        ...baseOptions,
-        ...options,
-      };
+      const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -278,11 +331,7 @@ export const AmbulanceApiAxiosParamCreator = function (configuration?: Configura
 
       setSearchParams(localVarUrlObj, localVarQueryParameter);
       let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
       localVarRequestOptions.data = serializeDataIfNeeded(writableAmbulance, localVarRequestOptions, configuration);
 
       return {
@@ -386,11 +435,7 @@ export const ContactApiAxiosParamCreator = function (configuration?: Configurati
         baseOptions = configuration.baseOptions;
       }
 
-      const localVarRequestOptions = {
-        method: "POST",
-        ...baseOptions,
-        ...options,
-      };
+      const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -402,12 +447,64 @@ export const ContactApiAxiosParamCreator = function (configuration?: Configurati
 
       setSearchParams(localVarUrlObj, localVarQueryParameter);
       let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
       localVarRequestOptions.data = serializeDataIfNeeded(writableContact, localVarRequestOptions, configuration);
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @summary Get all contacts
+     * @param {GetAllContactsPageSizeEnum} pageSize Number of items per page
+     * @param {number} page Page number
+     * @param {string} [query] Search by contact name and number
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getAllContacts: async (
+      pageSize: GetAllContactsPageSizeEnum,
+      page: number,
+      query?: string,
+      options: RawAxiosRequestConfig = {},
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'pageSize' is not null or undefined
+      assertParamExists("getAllContacts", "pageSize", pageSize);
+      // verify required parameter 'page' is not null or undefined
+      assertParamExists("getAllContacts", "page", page);
+      const localVarPath = `/contacts`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication bearerAuth required
+      // http bearer authentication required
+      await setBearerAuthToObject(localVarHeaderParameter, configuration);
+
+      if (pageSize !== undefined) {
+        localVarQueryParameter["pageSize"] = pageSize;
+      }
+
+      if (page !== undefined) {
+        localVarQueryParameter["page"] = page;
+      }
+
+      if (query !== undefined) {
+        localVarQueryParameter["query"] = query;
+      }
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
 
       return {
         url: toPathString(localVarUrlObj),
@@ -441,6 +538,27 @@ export const ContactApiFp = function (configuration?: Configuration) {
       return (axios, basePath) =>
         createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
     },
+    /**
+     *
+     * @summary Get all contacts
+     * @param {GetAllContactsPageSizeEnum} pageSize Number of items per page
+     * @param {number} page Page number
+     * @param {string} [query] Search by contact name and number
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async getAllContacts(
+      pageSize: GetAllContactsPageSizeEnum,
+      page: number,
+      query?: string,
+      options?: RawAxiosRequestConfig,
+    ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactPage>> {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.getAllContacts(pageSize, page, query, options);
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath = operationServerMap["ContactApi.getAllContacts"]?.[localVarOperationServerIndex]?.url;
+      return (axios, basePath) =>
+        createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+    },
   };
 };
 
@@ -460,6 +578,18 @@ export const ContactApiFactory = function (configuration?: Configuration, basePa
      */
     createContact(writableContact: WritableContact, options?: any): AxiosPromise<WritableContact> {
       return localVarFp.createContact(writableContact, options).then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @summary Get all contacts
+     * @param {GetAllContactsPageSizeEnum} pageSize Number of items per page
+     * @param {number} page Page number
+     * @param {string} [query] Search by contact name and number
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getAllContacts(pageSize: GetAllContactsPageSizeEnum, page: number, query?: string, options?: any): AxiosPromise<ContactPage> {
+      return localVarFp.getAllContacts(pageSize, page, query, options).then((request) => request(axios, basePath));
     },
   };
 };
@@ -484,7 +614,34 @@ export class ContactApi extends BaseAPI {
       .createContact(writableContact, options)
       .then((request) => request(this.axios, this.basePath));
   }
+
+  /**
+   *
+   * @summary Get all contacts
+   * @param {GetAllContactsPageSizeEnum} pageSize Number of items per page
+   * @param {number} page Page number
+   * @param {string} [query] Search by contact name and number
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof ContactApi
+   */
+  public getAllContacts(pageSize: GetAllContactsPageSizeEnum, page: number, query?: string, options?: RawAxiosRequestConfig) {
+    return ContactApiFp(this.configuration)
+      .getAllContacts(pageSize, page, query, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
 }
+
+/**
+ * @export
+ */
+export const GetAllContactsPageSizeEnum = {
+  NUMBER_10: 10,
+  NUMBER_20: 20,
+  NUMBER_50: 50,
+  NUMBER_100: 100,
+} as const;
+export type GetAllContactsPageSizeEnum = (typeof GetAllContactsPageSizeEnum)[keyof typeof GetAllContactsPageSizeEnum];
 
 /**
  * MasterUserApi - axios parameter creator
@@ -510,11 +667,7 @@ export const MasterUserApiAxiosParamCreator = function (configuration?: Configur
         baseOptions = configuration.baseOptions;
       }
 
-      const localVarRequestOptions = {
-        method: "POST",
-        ...baseOptions,
-        ...options,
-      };
+      const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
       const localVarHeaderParameter = {} as any;
       const localVarQueryParameter = {} as any;
 
@@ -522,11 +675,7 @@ export const MasterUserApiAxiosParamCreator = function (configuration?: Configur
 
       setSearchParams(localVarUrlObj, localVarQueryParameter);
       let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-      localVarRequestOptions.headers = {
-        ...localVarHeaderParameter,
-        ...headersFromBaseOptions,
-        ...options.headers,
-      };
+      localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
       localVarRequestOptions.data = serializeDataIfNeeded(masterSignInRequest, localVarRequestOptions, configuration);
 
       return {
@@ -554,7 +703,7 @@ export const MasterUserApiFp = function (configuration?: Configuration) {
     async masterUserSignIn(
       masterSignInRequest: MasterSignInRequest,
       options?: RawAxiosRequestConfig,
-    ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterSignInRequest>> {
+    ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterUserSignIn200Response>> {
       const localVarAxiosArgs = await localVarAxiosParamCreator.masterUserSignIn(masterSignInRequest, options);
       const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
       const localVarOperationServerBasePath = operationServerMap["MasterUserApi.masterUserSignIn"]?.[localVarOperationServerIndex]?.url;
@@ -578,7 +727,7 @@ export const MasterUserApiFactory = function (configuration?: Configuration, bas
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    masterUserSignIn(masterSignInRequest: MasterSignInRequest, options?: any): AxiosPromise<MasterSignInRequest> {
+    masterUserSignIn(masterSignInRequest: MasterSignInRequest, options?: any): AxiosPromise<MasterUserSignIn200Response> {
       return localVarFp.masterUserSignIn(masterSignInRequest, options).then((request) => request(axios, basePath));
     },
   };

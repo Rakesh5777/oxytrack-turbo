@@ -6,6 +6,8 @@ WritableAmbulance:
   $ref: "./customers/ambulance/writableAmbulance.yaml"
 Contact:
   $ref: "./contact/contact.yaml"
+ContactPage:
+  $ref: "./contact/contactPage.yaml"
 WritableContact:
   $ref: "./contact/writableContact.yaml"
 MasterSignInRequest:

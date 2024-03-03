@@ -1,0 +1,80 @@
+post:
+  tags:
+    - Contact
+  summary: Create Contact
+  operationId: createContact
+  security:
+    - bearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "./../../schemas/contact/writableContact.yaml"
+  responses:
+    "201":
+      description: added contact  details
+      content:
+        application/json:
+          schema:
+            $ref: "./../../schemas/contact/writableContact.yaml"
+    "409":
+      description: contact  already exists
+      content:
+        application/json:
+          schema:
+            $ref: "./../../schemas/common/ErrorResponse.yaml"
+    "500":
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "./../../schemas/common/ErrorResponse.yaml"
+get:
+  tags:
+    - Contact
+  summary: Get all contacts
+  operationId: getAllContacts
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: pageSize
+      in: query
+      description: Number of items per page
+      required: true
+      schema:
+        type: integer
+        enum:
+          - 10
+          - 20
+          - 50
+          - 100
+        default: 10
+    - name: page
+      in: query
+      description: Page number
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+    - name: query
+      in: query
+      description: Search by contact name and number
+      required: false
+      schema:
+        type: string
+      allowEmptyValue: true
+      allowReserved: true
+  responses:
+    "200":
+      description: List of contacts
+      content:
+        application/json:
+          schema:
+            $ref: "./../../schemas/contact/contactPage.yaml"
+    "500":
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "./../../schemas/common/ErrorResponse.yaml"

@@ -5,16 +5,25 @@
   "license": "MIT",
   "files": [
     "dist/spec.yaml",
-    "dist/**/*.js"
+    "dist/**/*.js",
+    "scripts/**/*.ts"
   ],
   "scripts": {
-    "build": "swagger-cli bundle ./src/spec.yaml --outfile ./dist/spec.yaml --type yaml",
-    "generate-api-client": "swagger-cli bundle ./src/spec.yaml --outfile ./dist/spec.yaml --type yaml & docker run --rm -v \"%cd%:/local\" -v \"%cd%:/tenent_client\" openapitools/openapi-generator-cli generate --type-mappings=DateTime=Date -i /local/dist/spec.yaml -g typescript-axios -o /tenent_client"
+    "generate-spec": "swagger-cli bundle ./src/spec.yaml --outfile ./dist/spec.yaml --type yaml",
+    "generate-api-client": "swagger-cli bundle ./src/spec.yaml --outfile ./dist/spec.yaml --type yaml & docker run --rm -v \"%cd%:/local\" -v \"%cd%:/tenent_client\" openapitools/openapi-generator-cli generate --type-mappings=DateTime=Date -i /local/dist/spec.yaml -g typescript-axios -o /tenent_client",
+    "generate-api-types": "openapi-typescript --type-mappings=DateTime=Date ./dist/spec.yaml --output ./dist/api.ts && ts-node ./scripts/postProcessing.ts",
+    "build-api-contract": "yarn run generate-api-client && yarn run generate-api-types"
   },
   "dependencies": {
     "@oxytrack/typescript-config": "*",
-    "zod": "^3.22.4",
     "axios": "^1.6.7",
-    "swagger-cli": "^4.0.4"
+    "swagger-cli": "^4.0.4",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.2",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@oxytrack/typescript-config": "*",
+    "openapi-typescript": "^6.7.4"
   }
 }

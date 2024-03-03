@@ -15,7 +15,13 @@ post:
       content:
         application/json:
           schema:
-            $ref: "../../schemas/masterUser/masterSignIn.yaml"
+            type: object
+            required:
+              - token
+            properties:
+              token:
+                description: JWT token
+                type: string
     "401":
       description: Unauthorized
       content:

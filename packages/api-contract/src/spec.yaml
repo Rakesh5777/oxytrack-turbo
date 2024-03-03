@@ -27,6 +27,6 @@ paths:
   /masterUser/signIn:
     $ref: "./paths/masterUser/masterSignIn.yaml"
   /contacts:
-    $ref: "./paths/contact/createContact.yaml"
+    $ref: "./paths/contact/contact.yaml"
   /customer/ambulance:
     $ref: "./paths/customers/ambulance/ambulance.yaml"
