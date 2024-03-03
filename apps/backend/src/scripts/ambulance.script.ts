@@ -2,9 +2,7 @@ import { CustomerType } from "@oxytrack/database";
 import { prisma } from "./../index";
 import { Ambulance, WritableAmbulance } from "@oxytrack/api-contract";
 
-export const createAmbulanceTransaction = async (
-  ambulanceData: WritableAmbulance,
-): Promise<string> => {
+export const createAmbulanceTransaction = async (ambulanceData: WritableAmbulance): Promise<string> => {
   const ambulanceId = await prisma.$transaction(async (prismaInstance) => {
     const ambulance = await prismaInstance.ambulance.create({
       data: {
@@ -29,9 +27,7 @@ export const createAmbulanceTransaction = async (
   return ambulanceId;
 };
 
-export const getAmbulanceDetailsById = async (
-  ambulanceId: string,
-): Promise<Ambulance | null> => {
+export const getAmbulanceDetailsById = async (ambulanceId: string): Promise<Ambulance | null> => {
   const ambulance = await prisma.ambulance.findUnique({
     where: {
       id: ambulanceId,

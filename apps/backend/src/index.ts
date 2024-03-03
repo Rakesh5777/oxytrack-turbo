@@ -7,10 +7,7 @@ import yamljs from "yamljs";
 import { specYamlPath } from "@oxytrack/api-contract/specYamlPath";
 import { Prisma, PrismaClient } from "@oxytrack/database";
 import { CustomError } from "./utils/middlewares";
-import {
-  getCauseFromError,
-  getErrorFieldsFromError,
-} from "./utils/commonUtils";
+import { getCauseFromError, getErrorFieldsFromError } from "./utils/commonUtils";
 
 dotenv.config();
 
@@ -34,34 +31,22 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof CustomError) {
     switch (err.name) {
       case "zodValidationErr":
-        return res
-          .status(err.statusCode)
-          .json({ message: "Bad request", error: err.error });
+        return res.status(err.statusCode).json({ message: "Bad request", error: err.error });
       default:
-        return res
-          .status(err.statusCode)
-          .json({ message: err.message, error: err });
+        return res.status(err.statusCode).json({ message: err.message, error: err });
     }
   } else if (err instanceof Prisma.PrismaClientKnownRequestError) {
     switch (err.code) {
       case "P2002":
-        return res
-          .status(409)
-          .json({
-            message: `Duplicate field value entered for ${getErrorFieldsFromError(
-              err,
-            )}`,
-            error: err,
-          });
+        return res.status(409).json({
+          message: `Duplicate field value entered for ${getErrorFieldsFromError(err)}`,
+          error: err,
+        });
       default:
-        return res
-          .status(400)
-          .json({ message: `${getCauseFromError(err)}`, error: err });
+        return res.status(400).json({ message: `${getCauseFromError(err)}`, error: err });
     }
   }
-  return res
-    .status(500)
-    .json({ error: "An error occurred while processing your request" });
+  return res.status(500).json({ error: "An error occurred while processing your request" });
 });
 
 app.listen(port, () => {

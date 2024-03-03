@@ -5,10 +5,6 @@ import { asyncWrapper, validateReq } from "../utils/middlewares";
 
 const contactsRouter = express.Router();
 
-contactsRouter.post(
-  "",
-  validateReq(createContactSchema),
-  asyncWrapper(createContactHandler),
-);
+contactsRouter.post("", validateReq(createContactSchema), asyncWrapper(createContactHandler));
 
 export default contactsRouter;

@@ -31,13 +31,7 @@ import {
 } from "./common";
 import type { RequestArgs } from "./base";
 // @ts-ignore
-import {
-  BASE_PATH,
-  COLLECTION_FORMATS,
-  BaseAPI,
-  RequiredError,
-  operationServerMap,
-} from "./base";
+import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from "./base";
 
 /**
  *
@@ -248,9 +242,7 @@ export interface WritableContact {
  * AmbulanceApi - axios parameter creator
  * @export
  */
-export const AmbulanceApiAxiosParamCreator = function (
-  configuration?: Configuration,
-) {
+export const AmbulanceApiAxiosParamCreator = function (configuration?: Configuration) {
   return {
     /**
      *
@@ -259,16 +251,9 @@ export const AmbulanceApiAxiosParamCreator = function (
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    createAmbulance: async (
-      writableAmbulance: WritableAmbulance,
-      options: RawAxiosRequestConfig = {},
-    ): Promise<RequestArgs> => {
+    createAmbulance: async (writableAmbulance: WritableAmbulance, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
       // verify required parameter 'writableAmbulance' is not null or undefined
-      assertParamExists(
-        "createAmbulance",
-        "writableAmbulance",
-        writableAmbulance,
-      );
+      assertParamExists("createAmbulance", "writableAmbulance", writableAmbulance);
       const localVarPath = `/customer/ambulance`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -292,18 +277,13 @@ export const AmbulanceApiAxiosParamCreator = function (
       localVarHeaderParameter["Content-Type"] = "application/json";
 
       setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
       localVarRequestOptions.headers = {
         ...localVarHeaderParameter,
         ...headersFromBaseOptions,
         ...options.headers,
       };
-      localVarRequestOptions.data = serializeDataIfNeeded(
-        writableAmbulance,
-        localVarRequestOptions,
-        configuration,
-      );
+      localVarRequestOptions.data = serializeDataIfNeeded(writableAmbulance, localVarRequestOptions, configuration);
 
       return {
         url: toPathString(localVarUrlObj),
@@ -318,8 +298,7 @@ export const AmbulanceApiAxiosParamCreator = function (
  * @export
  */
 export const AmbulanceApiFp = function (configuration?: Configuration) {
-  const localVarAxiosParamCreator =
-    AmbulanceApiAxiosParamCreator(configuration);
+  const localVarAxiosParamCreator = AmbulanceApiAxiosParamCreator(configuration);
   return {
     /**
      *
@@ -331,25 +310,12 @@ export const AmbulanceApiFp = function (configuration?: Configuration) {
     async createAmbulance(
       writableAmbulance: WritableAmbulance,
       options?: RawAxiosRequestConfig,
-    ): Promise<
-      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Ambulance>
-    > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.createAmbulance(
-        writableAmbulance,
-        options,
-      );
+    ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Ambulance>> {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.createAmbulance(writableAmbulance, options);
       const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-      const localVarOperationServerBasePath =
-        operationServerMap["AmbulanceApi.createAmbulance"]?.[
-          localVarOperationServerIndex
-        ]?.url;
+      const localVarOperationServerBasePath = operationServerMap["AmbulanceApi.createAmbulance"]?.[localVarOperationServerIndex]?.url;
       return (axios, basePath) =>
-        createRequestFunction(
-          localVarAxiosArgs,
-          globalAxios,
-          BASE_PATH,
-          configuration,
-        )(axios, localVarOperationServerBasePath || basePath);
+        createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
     },
   };
 };
@@ -358,11 +324,7 @@ export const AmbulanceApiFp = function (configuration?: Configuration) {
  * AmbulanceApi - factory interface
  * @export
  */
-export const AmbulanceApiFactory = function (
-  configuration?: Configuration,
-  basePath?: string,
-  axios?: AxiosInstance,
-) {
+export const AmbulanceApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
   const localVarFp = AmbulanceApiFp(configuration);
   return {
     /**
@@ -372,13 +334,8 @@ export const AmbulanceApiFactory = function (
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    createAmbulance(
-      writableAmbulance: WritableAmbulance,
-      options?: any,
-    ): AxiosPromise<Ambulance> {
-      return localVarFp
-        .createAmbulance(writableAmbulance, options)
-        .then((request) => request(axios, basePath));
+    createAmbulance(writableAmbulance: WritableAmbulance, options?: any): AxiosPromise<Ambulance> {
+      return localVarFp.createAmbulance(writableAmbulance, options).then((request) => request(axios, basePath));
     },
   };
 };
@@ -398,10 +355,7 @@ export class AmbulanceApi extends BaseAPI {
    * @throws {RequiredError}
    * @memberof AmbulanceApi
    */
-  public createAmbulance(
-    writableAmbulance: WritableAmbulance,
-    options?: RawAxiosRequestConfig,
-  ) {
+  public createAmbulance(writableAmbulance: WritableAmbulance, options?: RawAxiosRequestConfig) {
     return AmbulanceApiFp(this.configuration)
       .createAmbulance(writableAmbulance, options)
       .then((request) => request(this.axios, this.basePath));
@@ -412,9 +366,7 @@ export class AmbulanceApi extends BaseAPI {
  * ContactApi - axios parameter creator
  * @export
  */
-export const ContactApiAxiosParamCreator = function (
-  configuration?: Configuration,
-) {
+export const ContactApiAxiosParamCreator = function (configuration?: Configuration) {
   return {
     /**
      *
@@ -423,10 +375,7 @@ export const ContactApiAxiosParamCreator = function (
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    createContact: async (
-      writableContact: WritableContact,
-      options: RawAxiosRequestConfig = {},
-    ): Promise<RequestArgs> => {
+    createContact: async (writableContact: WritableContact, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
       // verify required parameter 'writableContact' is not null or undefined
       assertParamExists("createContact", "writableContact", writableContact);
       const localVarPath = `/contacts`;
@@ -452,18 +401,13 @@ export const ContactApiAxiosParamCreator = function (
       localVarHeaderParameter["Content-Type"] = "application/json";
 
       setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
       localVarRequestOptions.headers = {
         ...localVarHeaderParameter,
         ...headersFromBaseOptions,
         ...options.headers,
       };
-      localVarRequestOptions.data = serializeDataIfNeeded(
-        writableContact,
-        localVarRequestOptions,
-        configuration,
-      );
+      localVarRequestOptions.data = serializeDataIfNeeded(writableContact, localVarRequestOptions, configuration);
 
       return {
         url: toPathString(localVarUrlObj),
@@ -490,28 +434,12 @@ export const ContactApiFp = function (configuration?: Configuration) {
     async createContact(
       writableContact: WritableContact,
       options?: RawAxiosRequestConfig,
-    ): Promise<
-      (
-        axios?: AxiosInstance,
-        basePath?: string,
-      ) => AxiosPromise<WritableContact>
-    > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.createContact(
-        writableContact,
-        options,
-      );
+    ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<WritableContact>> {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.createContact(writableContact, options);
       const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-      const localVarOperationServerBasePath =
-        operationServerMap["ContactApi.createContact"]?.[
-          localVarOperationServerIndex
-        ]?.url;
+      const localVarOperationServerBasePath = operationServerMap["ContactApi.createContact"]?.[localVarOperationServerIndex]?.url;
       return (axios, basePath) =>
-        createRequestFunction(
-          localVarAxiosArgs,
-          globalAxios,
-          BASE_PATH,
-          configuration,
-        )(axios, localVarOperationServerBasePath || basePath);
+        createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
     },
   };
 };
@@ -520,11 +448,7 @@ export const ContactApiFp = function (configuration?: Configuration) {
  * ContactApi - factory interface
  * @export
  */
-export const ContactApiFactory = function (
-  configuration?: Configuration,
-  basePath?: string,
-  axios?: AxiosInstance,
-) {
+export const ContactApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
   const localVarFp = ContactApiFp(configuration);
   return {
     /**
@@ -534,13 +458,8 @@ export const ContactApiFactory = function (
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    createContact(
-      writableContact: WritableContact,
-      options?: any,
-    ): AxiosPromise<WritableContact> {
-      return localVarFp
-        .createContact(writableContact, options)
-        .then((request) => request(axios, basePath));
+    createContact(writableContact: WritableContact, options?: any): AxiosPromise<WritableContact> {
+      return localVarFp.createContact(writableContact, options).then((request) => request(axios, basePath));
     },
   };
 };
@@ -560,10 +479,7 @@ export class ContactApi extends BaseAPI {
    * @throws {RequiredError}
    * @memberof ContactApi
    */
-  public createContact(
-    writableContact: WritableContact,
-    options?: RawAxiosRequestConfig,
-  ) {
+  public createContact(writableContact: WritableContact, options?: RawAxiosRequestConfig) {
     return ContactApiFp(this.configuration)
       .createContact(writableContact, options)
       .then((request) => request(this.axios, this.basePath));
@@ -574,9 +490,7 @@ export class ContactApi extends BaseAPI {
  * MasterUserApi - axios parameter creator
  * @export
  */
-export const MasterUserApiAxiosParamCreator = function (
-  configuration?: Configuration,
-) {
+export const MasterUserApiAxiosParamCreator = function (configuration?: Configuration) {
   return {
     /**
      *
@@ -585,16 +499,9 @@ export const MasterUserApiAxiosParamCreator = function (
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    masterUserSignIn: async (
-      masterSignInRequest: MasterSignInRequest,
-      options: RawAxiosRequestConfig = {},
-    ): Promise<RequestArgs> => {
+    masterUserSignIn: async (masterSignInRequest: MasterSignInRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
       // verify required parameter 'masterSignInRequest' is not null or undefined
-      assertParamExists(
-        "masterUserSignIn",
-        "masterSignInRequest",
-        masterSignInRequest,
-      );
+      assertParamExists("masterUserSignIn", "masterSignInRequest", masterSignInRequest);
       const localVarPath = `/masterUser/signIn`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -614,18 +521,13 @@ export const MasterUserApiAxiosParamCreator = function (
       localVarHeaderParameter["Content-Type"] = "application/json";
 
       setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions =
-        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
       localVarRequestOptions.headers = {
         ...localVarHeaderParameter,
         ...headersFromBaseOptions,
         ...options.headers,
       };
-      localVarRequestOptions.data = serializeDataIfNeeded(
-        masterSignInRequest,
-        localVarRequestOptions,
-        configuration,
-      );
+      localVarRequestOptions.data = serializeDataIfNeeded(masterSignInRequest, localVarRequestOptions, configuration);
 
       return {
         url: toPathString(localVarUrlObj),
@@ -640,8 +542,7 @@ export const MasterUserApiAxiosParamCreator = function (
  * @export
  */
 export const MasterUserApiFp = function (configuration?: Configuration) {
-  const localVarAxiosParamCreator =
-    MasterUserApiAxiosParamCreator(configuration);
+  const localVarAxiosParamCreator = MasterUserApiAxiosParamCreator(configuration);
   return {
     /**
      *
@@ -653,29 +554,12 @@ export const MasterUserApiFp = function (configuration?: Configuration) {
     async masterUserSignIn(
       masterSignInRequest: MasterSignInRequest,
       options?: RawAxiosRequestConfig,
-    ): Promise<
-      (
-        axios?: AxiosInstance,
-        basePath?: string,
-      ) => AxiosPromise<MasterSignInRequest>
-    > {
-      const localVarAxiosArgs =
-        await localVarAxiosParamCreator.masterUserSignIn(
-          masterSignInRequest,
-          options,
-        );
+    ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterSignInRequest>> {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.masterUserSignIn(masterSignInRequest, options);
       const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-      const localVarOperationServerBasePath =
-        operationServerMap["MasterUserApi.masterUserSignIn"]?.[
-          localVarOperationServerIndex
-        ]?.url;
+      const localVarOperationServerBasePath = operationServerMap["MasterUserApi.masterUserSignIn"]?.[localVarOperationServerIndex]?.url;
       return (axios, basePath) =>
-        createRequestFunction(
-          localVarAxiosArgs,
-          globalAxios,
-          BASE_PATH,
-          configuration,
-        )(axios, localVarOperationServerBasePath || basePath);
+        createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
     },
   };
 };
@@ -684,11 +568,7 @@ export const MasterUserApiFp = function (configuration?: Configuration) {
  * MasterUserApi - factory interface
  * @export
  */
-export const MasterUserApiFactory = function (
-  configuration?: Configuration,
-  basePath?: string,
-  axios?: AxiosInstance,
-) {
+export const MasterUserApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
   const localVarFp = MasterUserApiFp(configuration);
   return {
     /**
@@ -698,13 +578,8 @@ export const MasterUserApiFactory = function (
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    masterUserSignIn(
-      masterSignInRequest: MasterSignInRequest,
-      options?: any,
-    ): AxiosPromise<MasterSignInRequest> {
-      return localVarFp
-        .masterUserSignIn(masterSignInRequest, options)
-        .then((request) => request(axios, basePath));
+    masterUserSignIn(masterSignInRequest: MasterSignInRequest, options?: any): AxiosPromise<MasterSignInRequest> {
+      return localVarFp.masterUserSignIn(masterSignInRequest, options).then((request) => request(axios, basePath));
     },
   };
 };
@@ -724,10 +599,7 @@ export class MasterUserApi extends BaseAPI {
    * @throws {RequiredError}
    * @memberof MasterUserApi
    */
-  public masterUserSignIn(
-    masterSignInRequest: MasterSignInRequest,
-    options?: RawAxiosRequestConfig,
-  ) {
+  public masterUserSignIn(masterSignInRequest: MasterSignInRequest, options?: RawAxiosRequestConfig) {
     return MasterUserApiFp(this.configuration)
       .masterUserSignIn(masterSignInRequest, options)
       .then((request) => request(this.axios, this.basePath));
