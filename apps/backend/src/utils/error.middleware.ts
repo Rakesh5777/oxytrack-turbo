@@ -37,6 +37,9 @@ const handlePrismaError = (err: Prisma.PrismaClientKnownRequestError, res: Respo
         message: `Duplicate field value entered for ${getErrorFieldsFromError(err)}`,
         error: err,
       });
+    case "P1001":
+    case "P2024":
+      return res.status(408).json({ message: "Request timeout", error: err });
     default:
       return res.status(400).json({ message: `${getCauseFromError(err)}`, error: err });
   }

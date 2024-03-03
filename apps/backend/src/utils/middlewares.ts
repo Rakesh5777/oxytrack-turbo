@@ -4,7 +4,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { Responses, TypedRequest, TypedResponse } from "../types/express";
 
-type StatusCodes = 200 | 400 | 401 | 403 | 404 | 409 | 500;
+type StatusCodes = 200 | 400 | 401 | 403 | 404 | 408 | 409 | 500;
 
 export class CustomError extends Error {
   statusCode: StatusCodes;

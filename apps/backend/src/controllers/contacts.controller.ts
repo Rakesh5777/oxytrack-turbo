@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { createContactFn } from "../services/contacts.service";
 import { Responses, TypedRequest, TypedResponse } from "../types/express";
+import { getContactPages, getContactsCount } from "../scripts/contacts.script";
 
 export const createContactHandler = async (req: TypedRequest["createContact"], res: TypedResponse<Responses["createContact"]>) => {
   const { contactName, mobileNumber } = req.body;
@@ -8,4 +9,9 @@ export const createContactHandler = async (req: TypedRequest["createContact"], r
   return res.status(201).json({ ...contact });
 };
 
-export const getContactsHandler = async (req: Request, res: Response) => {};
+export const getContactsHandler = async (req: TypedRequest["getAllContacts"], res: TypedResponse<Responses["getAllContacts"]>) => {
+  const { page, pageSize, query } = req.query;
+  const contacts = await getContactPages(page, pageSize, query);
+  const totalItemCount = await getContactsCount(query);
+  return res.status(200).json({ items: contacts, page, pageSize, totalItemCount });
+};
