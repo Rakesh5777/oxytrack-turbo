@@ -6,7 +6,7 @@ import { signInSchema } from "@oxytrack/api-contract/zodSchema";
 const masterUserRouter = express.Router();
 
 masterUserRouter.post(
-  "/signin",
+  "/signIn",
   validateReq(signInSchema),
   asyncWrapper(masterSignInHandler),
 );
