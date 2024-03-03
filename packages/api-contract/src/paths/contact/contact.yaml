@@ -13,41 +13,21 @@ post:
           $ref: "./../../schemas/contact/writableContact.yaml"
   responses:
     "201":
-      description: added contact  details
+      description: added contact details
       content:
         application/json:
           schema:
             $ref: "./../../schemas/contact/writableContact.yaml"
-    "403":
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: "./../../schemas/common/ErrorResponse.yaml"
     "400":
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: "./../../schemas/common/ErrorResponse.yaml"
+      $ref: "./../../responses.yaml#/BadRequest"
+    "403":
+      $ref: "./../../responses.yaml#/Forbidden"
     "408":
-      description: Request timeout
-      content:
-        application/json:
-          schema:
-            $ref: "./../../schemas/common/ErrorResponse.yaml"
+      $ref: "./../../responses.yaml#/RequestTimeout"
     "409":
-      description: contact already exists
-      content:
-        application/json:
-          schema:
-            $ref: "./../../schemas/common/ErrorResponse.yaml"
+      $ref: "./../../responses.yaml#/Conflict"
     "500":
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: "./../../schemas/common/ErrorResponse.yaml"
+      $ref: "./../../responses.yaml#/InternalServerError"
 get:
   tags:
     - Contact
@@ -91,20 +71,8 @@ get:
           schema:
             $ref: "./../../schemas/contact/contactPage.yaml"
     "403":
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: "./../../schemas/common/ErrorResponse.yaml"
+      $ref: "./../../responses.yaml#/Forbidden"
     "408":
-      description: Request timeout
-      content:
-        application/json:
-          schema:
-            $ref: "./../../schemas/common/ErrorResponse.yaml"
+      $ref: "./../../responses.yaml#/RequestTimeout"
     "500":
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: "./../../schemas/common/ErrorResponse.yaml"
+      $ref: "./../../responses.yaml#/InternalServerError"

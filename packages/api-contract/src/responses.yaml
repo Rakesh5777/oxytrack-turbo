@@ -1,0 +1,36 @@
+BadRequest:
+  description: Bad request
+  content:
+    application/json:
+      schema:
+        $ref: "./schemas/common/ErrorResponse.yaml"
+Forbidden:
+  description: Forbidden
+  content:
+    application/json:
+      schema:
+        $ref: "./schemas/common/ErrorResponse.yaml"
+NotFound:
+  description: Not Found
+  content:
+    application/json:
+      schema:
+        $ref: "./schemas/common/ErrorResponse.yaml"
+InternalServerError:
+  description: Internal server error
+  content:
+    application/json:
+      schema:
+        $ref: "./schemas/common/ErrorResponse.yaml"
+RequestTimeout:
+  description: Request timeout
+  content:
+    application/json:
+      schema:
+        $ref: "./schemas/common/ErrorResponse.yaml"
+Conflict:
+  description: Conflict, e.g., resource already exists
+  content:
+    application/json:
+      schema:
+        $ref: "./schemas/common/ErrorResponse.yaml"

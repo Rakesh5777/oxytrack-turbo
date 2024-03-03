@@ -12,6 +12,8 @@ servers:
 components:
   schemas:
     $ref: "./schemas/index.yaml"
+  responses:
+    $ref: "./responses.yaml"
   securitySchemes:
     bearerAuth:
       type: http

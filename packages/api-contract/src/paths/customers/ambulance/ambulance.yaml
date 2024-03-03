@@ -19,26 +19,10 @@ post:
           schema:
             $ref: "../../../schemas/customers/ambulance/ambulance.yaml"
     "403":
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: "../../../schemas/common/ErrorResponse.yaml"
+      $ref: "../../../responses.yaml#/Forbidden"
     "400":
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: "../../../schemas/common/ErrorResponse.yaml"
+      $ref: "../../../responses.yaml#/BadRequest"
     "409":
-      description: ambulance already exists
-      content:
-        application/json:
-          schema:
-            $ref: "../../../schemas/common/ErrorResponse.yaml"
+      $ref: "../../../responses.yaml#/Conflict"
     "500":
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: "../../../schemas/common/ErrorResponse.yaml"
+      $ref: "../../../responses.yaml#/InternalServerError"
