@@ -1,81 +1,80 @@
-# Turborepo starter
+# OxyTrack Turbo Project
 
-This is an official starter Turborepo.
+Welcome to the OxyTrack Turbo project! This monorepo is built with Turbo Repo, utilizing a robust stack that includes Prisma, Postgres, Express, Node.js, React, and TypeScript across both the frontend and backend, ensuring a strongly typed development environment.
 
-## Using this example
+## Features
 
-Run the following command:
+- **Monorepo Structure**: Organized into `apps/` for frontend/backend applications and `packages/` for shared logic or components.
+- **OpenAPI Specification**: Utilizes OpenAPI spec as the source of truth for API design, with auto-generated TypeScript clients using `openapi-typescript` and `openapi-typescript-axios`.
+- **Strong Typing**: Both frontend and backend are fully typed, enhancing development experience and code quality.
+- **Database Flexibility**: Supports local Postgres setups as well as Docker-based environments for ease of development.
+- **Development Workflow**: Integrates tools like Prettier, ESLint, Husky, and lint-staged for code formatting and linting, ensuring code consistency and quality.
 
-```sh
-npx create-turbo@latest
-```
+## Getting Started
 
-## What's inside?
+### Prerequisites
 
-This Turborepo includes the following packages/apps:
+- Node.js (v18 or higher)
+- Yarn (v1.22.21)
+- Docker (for running Postgres in a container)
 
-### Apps and Packages
+### Setup Instructions
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@oxytrack/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@oxytrack/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@oxytrack/typescript-config`: `tsconfig.json`s used throughout the monorepo
+1. **Clone the Repository**
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+   Start by cloning this repository to your local machine.
 
-### Utilities
+2. **Environment Setup**
 
-This Turborepo has some additional tools already setup for you:
+   Rename `.example.env` to `.env` in both `apps/backend` and `packages/database`. This is crucial for configuring your environment variables correctly.
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+3. **Database Configuration**
 
-### Build
+   Ensure you have a running Postgres database. You can use Docker as mentioned in the scripts section or set up a local instance.
 
-To build all apps and packages, run the following command:
+4. **Install Dependencies**
 
-```
-cd my-turborepo
-pnpm build
-```
+   Run `yarn install` to install all required dependencies across the monorepo.
 
-### Develop
+5. **Start Development Server**
 
-To develop all apps and packages, run the following command:
+   To start the development server, run `turbo run dev`.
 
-```
-cd my-turborepo
-pnpm dev
-```
+## Useful Scripts
 
-### Remote Caching
+Defined within the `turbo.json` pipeline, these commands are key to the project's development and deployment processes:
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+- **Prisma Commands**:
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
+  - `turbo run db:generate`: Generates Prisma client artifacts, essential for interacting with your database in a type-safe manner.
+  - `turbo run db:push`: Updates the database schema during development without applying migrations, useful for quick iterations.
+  - `turbo run db:migrate`: Applies database migrations, ensuring your database schema matches your Prisma schema.
 
-```
-cd my-turborepo
-npx turbo login
-```
+- **API Contract and Client Generation**:
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+  - `turbo run build-api-contract`: Bundles the OpenAPI spec and generates TypeScript Axios clients, ensuring frontend and backend communicate over a strongly typed API.
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+- **Turbo Commands**:
+  - `turbo run build`: Compiles the project for production, ensuring all dependencies like Prisma client and API contracts are generated and up-to-date.
+  - `turbo run dev`: Starts the development server, watching for changes in your source code and automatically recompiling.
 
-```
-npx turbo link
-```
+## Project Structure
 
-## Useful Links
+- `apps/*`: Contains the frontend and backend applications.
+- `packages/*`: Includes shared libraries, configurations, and utility functions.
 
-Learn more about the power of Turborepo:
+## Additional Resources
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+- [Turbo Repo Documentation](https://turborepo.org/docs)
+- [Prisma Documentation](https://www.prisma.io/docs/)
+- [OpenAPI Specification](https://swagger.io/specification/)
+- [TypeScript](https://www.typescriptlang.org/docs/)
+- [Postgres Docker Setup](https://docs.docker.com/samples/postgresql_service/)
+
+## Contributing
+
+Contributions are welcome! Please follow the established coding conventions and pull request process.
+
+---
+
+Thank you for choosing OxyTrack Turbo Repo for your development needs. Happy coding!
