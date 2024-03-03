@@ -18,6 +18,18 @@ post:
         application/json:
           schema:
             $ref: "../../../schemas/customers/ambulance/ambulance.yaml"
+    "403":
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: "../../../schemas/common/ErrorResponse.yaml"
+    "400":
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: "../../../schemas/common/ErrorResponse.yaml"
     "409":
       description: ambulance already exists
       content:

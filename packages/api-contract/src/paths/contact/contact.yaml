@@ -18,8 +18,20 @@ post:
         application/json:
           schema:
             $ref: "./../../schemas/contact/writableContact.yaml"
+    "403":
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: "./../../schemas/common/ErrorResponse.yaml"
+    "400":
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: "./../../schemas/common/ErrorResponse.yaml"
     "409":
-      description: contact  already exists
+      description: contact already exists
       content:
         application/json:
           schema:
@@ -72,6 +84,12 @@ get:
         application/json:
           schema:
             $ref: "./../../schemas/contact/contactPage.yaml"
+    "403":
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: "./../../schemas/common/ErrorResponse.yaml"
     "500":
       description: Internal server error
       content:
