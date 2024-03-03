@@ -55,6 +55,6 @@ export const validateUser = (req: Request, res: Response, next: NextFunction) =>
 
     next();
   } catch (error) {
-    return res.status(403).json({ message: "Invalid token" });
+    return res.status(403).json({ message: "Invalid token", error: error });
   }
 };
