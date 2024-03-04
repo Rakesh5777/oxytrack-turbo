@@ -4,6 +4,12 @@ BadRequest:
     application/json:
       schema:
         $ref: "./schemas/common/ErrorResponse.yaml"
+Unauthorized:
+  description: Unauthorized
+  content:
+    application/json:
+      schema:
+        $ref: "./schemas/common/ErrorResponse.yaml"
 Forbidden:
   description: Forbidden
   content:
