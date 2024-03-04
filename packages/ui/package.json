@@ -8,13 +8,11 @@
     "./code": "./src/code.tsx"
   },
   "scripts": {
-    "lint": "eslint . --max-warnings 0",
-    "generate:component": "turbo gen react-component"
+    "lint": "eslint . --max-warnings 0"
   },
   "devDependencies": {
     "@oxytrack/eslint-config": "*",
     "@oxytrack/typescript-config": "*",
-    "@turbo/gen": "^1.11.3",
     "@types/node": "^20.10.6",
     "@types/eslint": "^8.56.1",
     "@types/react": "^18.2.46",
