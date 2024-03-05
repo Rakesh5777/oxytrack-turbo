@@ -1,14 +1,11 @@
-import oxyTrackApi from "./oxytrackApiContext.js";
+import { Button, buttonVariants } from "@oxytrack/ui";
 
 function App() {
-  // oxyTrackApi
-  //   .masterUserSignIn({
-  //     username: "rakesh5777",
-  //     password: "rakesh@5777",
-  //   })
-  //   .then((res) => console.log(res));
-
-  return <>Oxy track</>;
+  return (
+    <>
+      <Button>Rakesh</Button>
+    </>
+  );
 }
 
 export default App;
