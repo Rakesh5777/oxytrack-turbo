@@ -15,7 +15,7 @@ Welcome to the OxyTrack Turbo project! This monorepo is built with Turbo Repo, u
 ### Prerequisites
 
 - Node.js (v18 or higher)
-- Yarn (v1.22.21)
+- pnpm (v8.9.0)
 - Docker (for running Postgres in a container)
 
 ### Setup Instructions
@@ -34,7 +34,7 @@ Welcome to the OxyTrack Turbo project! This monorepo is built with Turbo Repo, u
 
 4. **Install Dependencies**
 
-   Run `yarn install` to install all required dependencies across the monorepo.
+   Run `pnpm install` to install all required dependencies across the monorepo.
 
 5. **Start Development Server**
 

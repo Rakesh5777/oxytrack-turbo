@@ -11,6 +11,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@oxytrack/typescript-config": "*"
+    "@oxytrack/typescript-config": "workspace:*"
   }
 }

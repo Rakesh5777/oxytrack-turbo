@@ -7,20 +7,23 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/index.ts"
   },
+  "types": "src/types/customTypes.d.ts",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@oxytrack/api-contract": "*",
-    "@oxytrack/common": "*",
-    "@oxytrack/database": "*",
-    "@oxytrack/typescript-config": "*",
-    "express-openapi-validator": "^5.1.6",
+    "@oxytrack/api-contract": "workspace:*",
+    "@oxytrack/common": "workspace:*",
+    "@oxytrack/database": "workspace:*",
+    "@oxytrack/typescript-config": "workspace:*",
+    "@types/express-serve-static-core": "^4.17.43",
     "dotenv": "^16.4.5",
     "express": "^4.18.2",
+    "express-openapi-validator": "^5.1.6",
     "jsonwebtoken": "^9.0.2",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
+    "ts-node": "^10.7.0",
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
