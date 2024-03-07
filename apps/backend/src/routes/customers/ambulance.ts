@@ -4,6 +4,6 @@ import { asyncWrapper } from "../../utils/middlewares";
 
 const ambulanceRouter = Express.Router();
 
-ambulanceRouter.post("", asyncWrapper("createAmbulance")(createAmbulanceHandler));
+ambulanceRouter.post("/", asyncWrapper("createAmbulance")(createAmbulanceHandler));
 
 export default ambulanceRouter;
