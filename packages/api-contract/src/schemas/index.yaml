@@ -1,14 +1,24 @@
 ErrorResponse:
   $ref: "./common/ErrorResponse.yaml"
-Ambulance:
-  $ref: "./customers/ambulance/ambulance.yaml"
-WritableAmbulance:
-  $ref: "./customers/ambulance/writableAmbulance.yaml"
+MasterSignInRequest:
+  $ref: "./masterUser/masterSignIn.yaml"
 Contact:
   $ref: "./contact/contact.yaml"
 ContactPage:
   $ref: "./contact/contactPage.yaml"
 WritableContact:
   $ref: "./contact/writableContact.yaml"
-MasterSignInRequest:
-  $ref: "./masterUser/masterSignIn.yaml"
+Customer:
+  $ref: "./customers/customer.yaml"
+WritableCustomer:
+  $ref: "./customers/writableCustomer.yaml"
+EntityRequirments:
+  $ref: "./customers/entityRequirment.yaml"
+AdditionalRecord:
+  $ref: "./customers/additionalRecord.yaml"
+HospitalRequirement:
+  $ref: "./customers/customerType/hospital.yaml"
+AmbulanceRequirement:
+  $ref: "./customers/customerType/ambulance.yaml"
+laboratoryRequirement:
+  $ref: "./customers/customerType/laboratory.yaml"

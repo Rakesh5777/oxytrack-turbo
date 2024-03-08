@@ -1,0 +1,20 @@
+type: object
+required:
+  - key
+  - value
+properties:
+  id:
+    description: Id of the additional record
+    type: string
+  customerId:
+    description: Id of the customer
+    type: string
+  key:
+    description: Key of the entity requirement
+    oneOf:
+      - $ref: "./customerType/ambulance.yaml"
+      - $ref: "./customerType/hospital.yaml"
+      - $ref: "./customerType/laboratory.yaml"
+  value:
+    description: Value of the entity requirement
+    type: string

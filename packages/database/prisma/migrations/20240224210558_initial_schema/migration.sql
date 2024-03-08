@@ -40,7 +40,7 @@ CREATE TABLE "Ambulance" (
 );
 
 -- CreateTable
-CREATE TABLE "Laboratories" (
+CREATE TABLE "laboratory" (
     "id" SERIAL NOT NULL,
     "labName" TEXT NOT NULL,
     "labAddress" TEXT NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE "Laboratories" (
     "description" TEXT,
     "active" BOOLEAN NOT NULL DEFAULT true,
 
-    CONSTRAINT "Laboratories_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "laboratory_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -96,7 +96,7 @@ CREATE UNIQUE INDEX "Ambulance_ambulanceName_key" ON "Ambulance"("ambulanceName"
 CREATE UNIQUE INDEX "Ambulance_ambulanceNumber_key" ON "Ambulance"("ambulanceNumber");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Laboratories_labName_key" ON "Laboratories"("labName");
+CREATE UNIQUE INDEX "laboratory_labName_key" ON "laboratory"("labName");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "HouseHoldCustomer_customerName_key" ON "HouseHoldCustomer"("customerName");

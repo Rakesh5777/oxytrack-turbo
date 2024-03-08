@@ -1,0 +1,60 @@
+type: object
+required:
+  - type
+  - name
+  - number
+  - entityRequirements
+  - contacts
+properties:
+  id:
+    description: Id of the customer
+    type: string
+  type:
+    description: Type of the customer
+    type: string
+    enum:
+      - HOSPITAL
+      - AMBULANCE
+      - LABORATORY
+      - HOUSEHOLD
+  name:
+    description: Name of the customer
+    type: string
+  number:
+    description: Number of the customer
+    type: string
+  emailAddress:
+    description: Email address of the customer
+    type: string
+    nullable: true
+  address:
+    description: Address of the customer
+    type: string
+    nullable: true
+  description:
+    description: Description of the customer
+    type: string
+    nullable: true
+  entityRequirements:
+    description: list of entities
+    type: array
+    items:
+      $ref: "./../customers/entityRequirment.yaml"
+  contacts:
+    description: list of contact ids
+    type: array
+    items:
+      $ref: "./../contact/contact.yaml"
+  additionalRecords:
+    description: Additional records of the customer
+    type: array
+    items:
+      $ref: "./../customers/additionalRecord.yaml"
+  createdAt:
+    description: Created date of the customer
+    type: string
+    format: date-time
+  active:
+    description: Status of the customer
+    type: boolean
+    default: true

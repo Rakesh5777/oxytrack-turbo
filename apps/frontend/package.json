@@ -12,6 +12,7 @@
   "dependencies": {
     "react": "^18.2.0",
     "@oxytrack/ui": "workspace:*",
+    "@oxytrack/api-contract": "workspace:*",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {

@@ -1,0 +1,28 @@
+post:
+  tags:
+    - Customer
+  summary: Create Customer
+  operationId: createCustomer
+  security:
+    - bearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../schemas/customers/writableCustomer.yaml"
+  responses:
+    "201":
+      description: added ambulance details
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/customers/customer.yaml"
+    "403":
+      $ref: "../../responses.yaml#/Forbidden"
+    "400":
+      $ref: "../../responses.yaml#/BadRequest"
+    "409":
+      $ref: "../../responses.yaml#/Conflict"
+    "500":
+      $ref: "../../responses.yaml#/InternalServerError"

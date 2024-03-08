@@ -23,12 +23,12 @@ tags:
     description: Master User related operations
   - name: Contact
     description: Contact related operations
-  - name: Ambulance
-    description: Ambulance related operations
+  - name: Customer
+    description: Customer related operations
 paths:
   /masterUser/signIn:
     $ref: "./paths/masterUser/masterSignIn.yaml"
   /contacts:
     $ref: "./paths/contact/contact.yaml"
-  /customer/ambulance:
-    $ref: "./paths/customers/ambulance/ambulance.yaml"
+  /customer:
+    $ref: "./paths/customers/customers.yaml"

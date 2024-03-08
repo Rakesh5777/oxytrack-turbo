@@ -31,59 +31,52 @@ enum CustomerType {
   HOUSEHOLD
 }
 
-model Hospitals {
-  id              String   @id @unique @default(dbgenerated("gen_random_uuid()"))
-  hospitalName    String   @unique
-  hospitalAddress String
-  emailAddress    String?
-  description     String?
-  active          Boolean  @default(true)
-  createdAt       DateTime @default(now())
+model Customers {
+  id               String             @id @unique @default(dbgenerated("gen_random_uuid()"))
+  type             CustomerType
+  name             String
+  number           String
+  emailAddress     String?
+  address          String?
+  description      String?
+  contacts          CustomerContact[]
+  entityRequirments EntityRequirment[]
+  additionalRecords AdditionalRecord[]
+  active           Boolean            @default(true)
+  createdAt        DateTime           @default(now())
 }
 
-model Ambulance {
-  id              String   @id @unique @default(dbgenerated("gen_random_uuid()"))
-  ambulanceName   String   @unique
-  ambulanceNumber String   @unique
-  emailAddress    String?
-  description     String?
-  active          Boolean  @default(true)
-  createdAt       DateTime @default(now())
+model EntityRequirment {
+  id         String    @id @unique @default(dbgenerated("gen_random_uuid()"))
+  customerId String
+  customer   Customers @relation(fields: [customerId], references: [id])
+  key        String
+  value      String
 }
 
-model Laboratories {
-  id           String   @id @unique @default(dbgenerated("gen_random_uuid()"))
-  labName      String   @unique
-  labAddress   String
-  emailAddress String?
-  description  String?
-  active       Boolean  @default(true)
-  createdAt    DateTime @default(now())
-}
-
-model HouseHoldCustomer {
-  id           String   @id @unique @default(dbgenerated("gen_random_uuid()"))
-  customerName String   @unique
-  address      String
-  emailAddress String?
-  description  String?
-  active       Boolean  @default(true)
-  createdAt    DateTime @default(now())
+model AdditionalRecord {
+  id         String    @id @unique @default(dbgenerated("gen_random_uuid()"))
+  customerId String
+  customer   Customers @relation(fields: [customerId], references: [id])
+  key        String
+  value      String
 }
 
 model Contact {
-  id                      String                    @id @unique @default(dbgenerated("gen_random_uuid()"))
-  contactName             String
-  mobileNumber            String                    @unique
-  active                  Boolean                   @default(true)
-  contactToCustomer ContactToCustomer[]
-  createdAt               DateTime                  @default(now())
+  id           String     @id @unique @default(dbgenerated("gen_random_uuid()"))
+  contactName  String
+  mobileNumber String     @unique
+  customersId  String?
+  Customers    CustomerContact[]
+  active       Boolean    @default(true)
 }
 
-model ContactToCustomer {
-  id              String        @id @unique @default(dbgenerated("gen_random_uuid()"))
-  contactId String
-  customerId      String
-  customer        CustomerType
-  contact   Contact @relation(fields: [contactId], references: [id])
+// Join table for many-to-many relationship between Customer and Contact
+model CustomerContact {
+  customerId String
+  contactId  String
+  customer   Customers @relation(fields: [customerId], references: [id])
+  contact    Contact  @relation(fields: [contactId], references: [id])
+
+  @@id([customerId, contactId])
 }

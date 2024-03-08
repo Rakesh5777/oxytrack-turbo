@@ -36,58 +36,53 @@ import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerM
 /**
  *
  * @export
- * @interface Ambulance
+ * @interface AdditionalRecord
  */
-export interface Ambulance {
+export interface AdditionalRecord {
   /**
-   * Id of the ambulance
+   * Id of the additional record
    * @type {string}
-   * @memberof Ambulance
+   * @memberof AdditionalRecord
    */
-  id: string;
+  id?: string;
   /**
-   * Name of the ambulance
+   * Id of the customer
    * @type {string}
-   * @memberof Ambulance
+   * @memberof AdditionalRecord
    */
-  ambulanceName: string;
+  customerId?: string;
   /**
-   * Number of the ambulance
+   *
+   * @type {AdditionalRecordKey}
+   * @memberof AdditionalRecord
+   */
+  key: AdditionalRecordKey;
+  /**
+   * Value of the entity requirement
    * @type {string}
-   * @memberof Ambulance
+   * @memberof AdditionalRecord
    */
-  ambulanceNumber: string;
-  /**
-   * Email address of the ambulance
-   * @type {string}
-   * @memberof Ambulance
-   */
-  emailAddress?: string | null;
-  /**
-   * Description of the ambulance
-   * @type {string}
-   * @memberof Ambulance
-   */
-  description?: string | null;
-  /**
-   * list of contact ids
-   * @type {Array<Contact>}
-   * @memberof Ambulance
-   */
-  contacts?: Array<Contact>;
-  /**
-   * Created date of the ambulance
-   * @type {Date}
-   * @memberof Ambulance
-   */
-  createdAt: Date;
-  /**
-   * Status of the ambulance
-   * @type {boolean}
-   * @memberof Ambulance
-   */
-  active: boolean;
+  value: string;
 }
+/**
+ * @type AdditionalRecordKey
+ * Key of the entity requirement
+ * @export
+ */
+export type AdditionalRecordKey = AmbulanceRequirement | HospitalRequirement | LaboratoryRequirement;
+
+/**
+ *
+ * @export
+ * @enum {string}
+ */
+
+export const AmbulanceRequirement = {
+  AmbulanceNumber: "ambulanceNumber",
+} as const;
+
+export type AmbulanceRequirement = (typeof AmbulanceRequirement)[keyof typeof AmbulanceRequirement];
+
 /**
  *
  * @export
@@ -112,12 +107,6 @@ export interface Contact {
    * @memberof Contact
    */
   mobileNumber: string;
-  /**
-   * Created date of the contact
-   * @type {Date}
-   * @memberof Contact
-   */
-  createdAt: Date;
   /**
    * Status of the contact
    * @type {boolean}
@@ -159,6 +148,134 @@ export interface ContactPage {
 /**
  *
  * @export
+ * @interface Customer
+ */
+export interface Customer {
+  /**
+   * Id of the customer
+   * @type {string}
+   * @memberof Customer
+   */
+  id?: string;
+  /**
+   * Type of the customer
+   * @type {string}
+   * @memberof Customer
+   */
+  type: CustomerTypeEnum;
+  /**
+   * Name of the customer
+   * @type {string}
+   * @memberof Customer
+   */
+  name: string;
+  /**
+   * Number of the customer
+   * @type {string}
+   * @memberof Customer
+   */
+  number: string;
+  /**
+   * Email address of the customer
+   * @type {string}
+   * @memberof Customer
+   */
+  emailAddress?: string | null;
+  /**
+   * Address of the customer
+   * @type {string}
+   * @memberof Customer
+   */
+  address?: string | null;
+  /**
+   * Description of the customer
+   * @type {string}
+   * @memberof Customer
+   */
+  description?: string | null;
+  /**
+   * list of entities
+   * @type {Array<EntityRequirments>}
+   * @memberof Customer
+   */
+  entityRequirements: Array<EntityRequirments>;
+  /**
+   * list of contact ids
+   * @type {Array<Contact>}
+   * @memberof Customer
+   */
+  contacts: Array<Contact>;
+  /**
+   * Additional records of the customer
+   * @type {Array<AdditionalRecord>}
+   * @memberof Customer
+   */
+  additionalRecords?: Array<AdditionalRecord>;
+  /**
+   * Created date of the customer
+   * @type {Date}
+   * @memberof Customer
+   */
+  createdAt?: Date;
+  /**
+   * Status of the customer
+   * @type {boolean}
+   * @memberof Customer
+   */
+  active?: boolean;
+}
+
+export const CustomerTypeEnum = {
+  Hospital: "HOSPITAL",
+  Ambulance: "AMBULANCE",
+  Laboratory: "LABORATORY",
+  Household: "HOUSEHOLD",
+} as const;
+
+export type CustomerTypeEnum = (typeof CustomerTypeEnum)[keyof typeof CustomerTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface EntityRequirments
+ */
+export interface EntityRequirments {
+  /**
+   * Id of the additional record
+   * @type {string}
+   * @memberof EntityRequirments
+   */
+  id?: string;
+  /**
+   * Id of the customer
+   * @type {string}
+   * @memberof EntityRequirments
+   */
+  customerId?: string;
+  /**
+   * Key of the entity requirement
+   * @type {string}
+   * @memberof EntityRequirments
+   */
+  key: EntityRequirmentsKeyEnum;
+  /**
+   * Value of the entity requirement
+   * @type {string}
+   * @memberof EntityRequirments
+   */
+  value: string;
+}
+
+export const EntityRequirmentsKeyEnum = {
+  Volume: "volume",
+  Frequency: "frequency",
+} as const;
+
+export type EntityRequirmentsKeyEnum = (typeof EntityRequirmentsKeyEnum)[keyof typeof EntityRequirmentsKeyEnum];
+
+/**
+ *
+ * @export
  * @interface ErrorResponse
  */
 export interface ErrorResponse {
@@ -187,6 +304,30 @@ export type ErrorResponseError = Array<ErrorResponseErrorOneOfInner> | boolean |
  * @export
  */
 export type ErrorResponseErrorOneOfInner = boolean | number | object | string;
+
+/**
+ *
+ * @export
+ * @enum {string}
+ */
+
+export const HospitalRequirement = {
+  HospitalBeds: "hospitalBeds",
+} as const;
+
+export type HospitalRequirement = (typeof HospitalRequirement)[keyof typeof HospitalRequirement];
+
+/**
+ *
+ * @export
+ * @enum {string}
+ */
+
+export const LaboratoryRequirement = {
+  TestSamples: "testSamples",
+} as const;
+
+export type LaboratoryRequirement = (typeof LaboratoryRequirement)[keyof typeof LaboratoryRequirement];
 
 /**
  *
@@ -229,49 +370,6 @@ export interface MasterUserSignIn200Response {
 /**
  *
  * @export
- * @interface WritableAmbulance
- */
-export interface WritableAmbulance {
-  /**
-   * Name of the ambulance
-   * @type {string}
-   * @memberof WritableAmbulance
-   */
-  ambulanceName: string;
-  /**
-   * Number of the ambulance
-   * @type {string}
-   * @memberof WritableAmbulance
-   */
-  ambulanceNumber: string;
-  /**
-   * Email address of the ambulance
-   * @type {string}
-   * @memberof WritableAmbulance
-   */
-  emailAddress?: string;
-  /**
-   * Description of the ambulance
-   * @type {string}
-   * @memberof WritableAmbulance
-   */
-  description?: string;
-  /**
-   * list of contact person ids
-   * @type {Array<string>}
-   * @memberof WritableAmbulance
-   */
-  contactIds: Array<string>;
-  /**
-   * Status of the ambulance
-   * @type {boolean}
-   * @memberof WritableAmbulance
-   */
-  active?: boolean;
-}
-/**
- *
- * @export
  * @interface WritableContact
  */
 export interface WritableContact {
@@ -294,122 +392,82 @@ export interface WritableContact {
    */
   active?: boolean;
 }
-
 /**
- * AmbulanceApi - axios parameter creator
+ *
  * @export
+ * @interface WritableCustomer
  */
-export const AmbulanceApiAxiosParamCreator = function (configuration?: Configuration) {
-  return {
-    /**
-     *
-     * @summary Create Ambulance
-     * @param {WritableAmbulance} writableAmbulance
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    createAmbulance: async (writableAmbulance: WritableAmbulance, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-      // verify required parameter 'writableAmbulance' is not null or undefined
-      assertParamExists("createAmbulance", "writableAmbulance", writableAmbulance);
-      const localVarPath = `/customer/ambulance`;
-      // use dummy base URL string because the URL constructor only accepts absolute URLs.
-      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-      let baseOptions;
-      if (configuration) {
-        baseOptions = configuration.baseOptions;
-      }
-
-      const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-      const localVarHeaderParameter = {} as any;
-      const localVarQueryParameter = {} as any;
-
-      // authentication bearerAuth required
-      // http bearer authentication required
-      await setBearerAuthToObject(localVarHeaderParameter, configuration);
-
-      localVarHeaderParameter["Content-Type"] = "application/json";
-
-      setSearchParams(localVarUrlObj, localVarQueryParameter);
-      let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-      localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
-      localVarRequestOptions.data = serializeDataIfNeeded(writableAmbulance, localVarRequestOptions, configuration);
-
-      return {
-        url: toPathString(localVarUrlObj),
-        options: localVarRequestOptions,
-      };
-    },
-  };
-};
-
-/**
- * AmbulanceApi - functional programming interface
- * @export
- */
-export const AmbulanceApiFp = function (configuration?: Configuration) {
-  const localVarAxiosParamCreator = AmbulanceApiAxiosParamCreator(configuration);
-  return {
-    /**
-     *
-     * @summary Create Ambulance
-     * @param {WritableAmbulance} writableAmbulance
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    async createAmbulance(
-      writableAmbulance: WritableAmbulance,
-      options?: RawAxiosRequestConfig,
-    ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Ambulance>> {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.createAmbulance(writableAmbulance, options);
-      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-      const localVarOperationServerBasePath = operationServerMap["AmbulanceApi.createAmbulance"]?.[localVarOperationServerIndex]?.url;
-      return (axios, basePath) =>
-        createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-    },
-  };
-};
-
-/**
- * AmbulanceApi - factory interface
- * @export
- */
-export const AmbulanceApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-  const localVarFp = AmbulanceApiFp(configuration);
-  return {
-    /**
-     *
-     * @summary Create Ambulance
-     * @param {WritableAmbulance} writableAmbulance
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    createAmbulance(writableAmbulance: WritableAmbulance, options?: any): AxiosPromise<Ambulance> {
-      return localVarFp.createAmbulance(writableAmbulance, options).then((request) => request(axios, basePath));
-    },
-  };
-};
-
-/**
- * AmbulanceApi - object-oriented interface
- * @export
- * @class AmbulanceApi
- * @extends {BaseAPI}
- */
-export class AmbulanceApi extends BaseAPI {
+export interface WritableCustomer {
   /**
-   *
-   * @summary Create Ambulance
-   * @param {WritableAmbulance} writableAmbulance
-   * @param {*} [options] Override http request option.
-   * @throws {RequiredError}
-   * @memberof AmbulanceApi
+   * Type of the customer
+   * @type {string}
+   * @memberof WritableCustomer
    */
-  public createAmbulance(writableAmbulance: WritableAmbulance, options?: RawAxiosRequestConfig) {
-    return AmbulanceApiFp(this.configuration)
-      .createAmbulance(writableAmbulance, options)
-      .then((request) => request(this.axios, this.basePath));
-  }
+  type: WritableCustomerTypeEnum;
+  /**
+   * Name of the customer
+   * @type {string}
+   * @memberof WritableCustomer
+   */
+  name: string;
+  /**
+   * Number of the customer
+   * @type {string}
+   * @memberof WritableCustomer
+   */
+  number: string;
+  /**
+   * Email address of the customer
+   * @type {string}
+   * @memberof WritableCustomer
+   */
+  emailAddress?: string | null;
+  /**
+   * Address of the customer
+   * @type {string}
+   * @memberof WritableCustomer
+   */
+  address?: string | null;
+  /**
+   * Description of the customer
+   * @type {string}
+   * @memberof WritableCustomer
+   */
+  description?: string | null;
+  /**
+   * list of entities
+   * @type {Array<EntityRequirments>}
+   * @memberof WritableCustomer
+   */
+  entityRequirement: Array<EntityRequirments> | null;
+  /**
+   * list of contact ids
+   * @type {Array<string>}
+   * @memberof WritableCustomer
+   */
+  contactIds: Array<string> | null;
+  /**
+   * Additional records of the customer
+   * @type {Array<AdditionalRecord>}
+   * @memberof WritableCustomer
+   */
+  additionalRecord?: Array<AdditionalRecord> | null;
+  /**
+   * Status of the customer
+   * @type {boolean}
+   * @memberof WritableCustomer
+   */
+  active?: boolean;
 }
+
+export const WritableCustomerTypeEnum = {
+  Hospital: "HOSPITAL",
+  Ambulance: "AMBULANCE",
+  Laboratory: "LABORATORY",
+  Household: "HOUSEHOLD",
+} as const;
+
+export type WritableCustomerTypeEnum = (typeof WritableCustomerTypeEnum)[keyof typeof WritableCustomerTypeEnum];
 
 /**
  * ContactApi - axios parameter creator
@@ -642,6 +700,122 @@ export const GetAllContactsPageSizeEnum = {
   NUMBER_100: 100,
 } as const;
 export type GetAllContactsPageSizeEnum = (typeof GetAllContactsPageSizeEnum)[keyof typeof GetAllContactsPageSizeEnum];
+
+/**
+ * CustomerApi - axios parameter creator
+ * @export
+ */
+export const CustomerApiAxiosParamCreator = function (configuration?: Configuration) {
+  return {
+    /**
+     *
+     * @summary Create Customer
+     * @param {WritableCustomer} writableCustomer
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    createCustomer: async (writableCustomer: WritableCustomer, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+      // verify required parameter 'writableCustomer' is not null or undefined
+      assertParamExists("createCustomer", "writableCustomer", writableCustomer);
+      const localVarPath = `/customer`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      // authentication bearerAuth required
+      // http bearer authentication required
+      await setBearerAuthToObject(localVarHeaderParameter, configuration);
+
+      localVarHeaderParameter["Content-Type"] = "application/json";
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter);
+      let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = { ...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers };
+      localVarRequestOptions.data = serializeDataIfNeeded(writableCustomer, localVarRequestOptions, configuration);
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+  };
+};
+
+/**
+ * CustomerApi - functional programming interface
+ * @export
+ */
+export const CustomerApiFp = function (configuration?: Configuration) {
+  const localVarAxiosParamCreator = CustomerApiAxiosParamCreator(configuration);
+  return {
+    /**
+     *
+     * @summary Create Customer
+     * @param {WritableCustomer} writableCustomer
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async createCustomer(
+      writableCustomer: WritableCustomer,
+      options?: RawAxiosRequestConfig,
+    ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Customer>> {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.createCustomer(writableCustomer, options);
+      const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+      const localVarOperationServerBasePath = operationServerMap["CustomerApi.createCustomer"]?.[localVarOperationServerIndex]?.url;
+      return (axios, basePath) =>
+        createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+    },
+  };
+};
+
+/**
+ * CustomerApi - factory interface
+ * @export
+ */
+export const CustomerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+  const localVarFp = CustomerApiFp(configuration);
+  return {
+    /**
+     *
+     * @summary Create Customer
+     * @param {WritableCustomer} writableCustomer
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    createCustomer(writableCustomer: WritableCustomer, options?: any): AxiosPromise<Customer> {
+      return localVarFp.createCustomer(writableCustomer, options).then((request) => request(axios, basePath));
+    },
+  };
+};
+
+/**
+ * CustomerApi - object-oriented interface
+ * @export
+ * @class CustomerApi
+ * @extends {BaseAPI}
+ */
+export class CustomerApi extends BaseAPI {
+  /**
+   *
+   * @summary Create Customer
+   * @param {WritableCustomer} writableCustomer
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof CustomerApi
+   */
+  public createCustomer(writableCustomer: WritableCustomer, options?: RawAxiosRequestConfig) {
+    return CustomerApiFp(this.configuration)
+      .createCustomer(writableCustomer, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+}
 
 /**
  * MasterUserApi - axios parameter creator

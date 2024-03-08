@@ -101,6 +101,9 @@ importers:
 
   apps/frontend:
     dependencies:
+      "@oxytrack/api-contract":
+        specifier: workspace:*
+        version: link:../../packages/api-contract
       "@oxytrack/ui":
         specifier: workspace:*
         version: link:../../packages/ui

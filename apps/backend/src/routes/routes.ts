@@ -1,6 +1,6 @@
 import express from "express";
 import masterUserRouter from "./masterUser";
-import customerRouter from "./customers/customersRouter";
+import customerRouter from "./customers";
 import { validateUser } from "../utils/middlewares";
 import contactsRouter from "./contact";
 
