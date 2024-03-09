@@ -1,7 +1,7 @@
 {
   "extends": "@oxytrack/typescript-config/base.json",
   "compilerOptions": {
-    "rootDir": "./src", // Adding root directory
+    "rootDir": "./", // Adding root directory
     "outDir": "./dist" // Adding output directory
   }
 }

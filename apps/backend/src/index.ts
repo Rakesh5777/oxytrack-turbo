@@ -1,5 +1,5 @@
-import { specYamlPath } from "@oxytrack/api-contract/specYamlPath";
 import { PrismaClient } from "@oxytrack/database";
+import { specYamlPath } from "@oxytrack/api-contract/specYamlPath";
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
@@ -11,11 +11,11 @@ import * as OpenApiValidator from "express-openapi-validator";
 
 dotenv.config();
 
-const app = express();
-const port = 3000;
-const apiVersion = "v1";
-
 export const prisma = new PrismaClient();
+
+const app = express();
+const port = process.env.PORT || 3000;
+const apiVersion = "v1";
 
 const swaggerSpec = yamljs.load(specYamlPath);
 

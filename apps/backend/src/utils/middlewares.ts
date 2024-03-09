@@ -9,7 +9,7 @@ type StatusCodes = 200 | 400 | 401 | 403 | 404 | 408 | 409 | 500;
 export class CustomError extends Error {
   statusCode: StatusCodes;
   error: unknown;
-  constructor(message: string, statusCode: StatusCodes, name?: string, error?: unknown) {
+  constructor(statusCode: StatusCodes, message: string, name?: string, error?: unknown) {
     super(message);
     this.statusCode = statusCode;
     this.name = name || "CustomError";
@@ -36,7 +36,7 @@ export const validateReq = (schema: z.Schema) => (req: any, res: any, next: () =
     schema.parse(req.body);
     next();
   } catch (error: any) {
-    throw new CustomError("Invalid request body", 400, "zodValidationErr", error.errors);
+    throw new CustomError(400, "Invalid request body", "zodValidationErr", error.errors);
   }
 };
 

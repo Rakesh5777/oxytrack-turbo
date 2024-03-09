@@ -39,7 +39,7 @@ export const getCustomerDetailsById = async (customerId: string): Promise<Custom
     },
   });
 
-  if (!customer) throw new CustomError("Customer not found", 404);
+  if (!customer) throw new CustomError(404, "Customer not found");
 
   const contacts = await prisma.contact.findMany({
     where: {
