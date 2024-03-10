@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Header from "@/layouts/header";
-import { SideNav } from "@/layouts/sidenav/sidenav";
+import { SideNav } from "@/layouts/sidenav";
 
 function App() {
   return (
