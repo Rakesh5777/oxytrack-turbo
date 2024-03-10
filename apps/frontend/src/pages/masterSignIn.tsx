@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import * as React from "react";
 import { Icons } from "@ui/components/ui/icons";
-import { masterUserApi } from "@/services/api";
+import Api from "@/services/api";
 import useLocalStorage from "@/hooks/localStorage";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@ui/components/ui/card";
@@ -39,7 +39,7 @@ export function SignInForm() {
   async function onSubmit(values: MasterSignInFormValues) {
     setIsLoading(true);
     try {
-      const { token, id, username } = (await masterUserApi.masterUserSignIn({ username: values.username, password: values.password })).data;
+      const { token, id, username } = (await Api.master.masterUserSignIn({ username: values.username, password: values.password })).data;
       if (!token || !id || !username) throw new Error("User not found");
       setIsLoading(false);
       setToken(token);
