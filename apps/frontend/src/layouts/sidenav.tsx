@@ -61,7 +61,7 @@ export const SideNav = () => {
       {sideNavState.isDrawerOpen && (
         <div
           id="overlay"
-          className={`lg:hidden absolute top-0 h-full w-screen bg-primary/5`}
+          className={`lg:hidden absolute top-0 h-full w-screen bg-primary/10`}
           onClick={() => {
             setSideNavState((state) => ({ isDrawerOpen: false, sideNavExpand: false }));
           }}
