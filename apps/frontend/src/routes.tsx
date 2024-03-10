@@ -2,6 +2,7 @@ import App from "@/App";
 import ErrorPage from "@/pages/errorPage";
 import { createBrowserRouter, redirect } from "react-router-dom";
 import { MasterSignIn } from "./pages/masterSignIn";
+import { Home } from "@/pages/home/home";
 
 export const router = createBrowserRouter([
   {
@@ -9,6 +10,12 @@ export const router = createBrowserRouter([
     loader: loginLoader,
     element: <App />,
     errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+    ],
   },
   {
     path: "/signin",
