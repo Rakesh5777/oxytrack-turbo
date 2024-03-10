@@ -19,7 +19,7 @@ async function buildIfChanged(): Promise<void> {
     // Check for changes in /src directory
     const changes = await executeCommand("git status --porcelain ./src");
     if (changes.trim()) {
-      console.log("Changes detected in /src. Running build-api-contract...");
+      console.log("Changes detected in packages/api-contract/src. Running build-api-contract...");
       // List of build commands to run
       const commands = ["pnpm run build-api-contract"];
       // Execute each build command sequentially
@@ -30,7 +30,7 @@ async function buildIfChanged(): Promise<void> {
       }
       console.log("Build process completed.");
     } else {
-      console.log("No changes in /src. Skipping build-api-contract...");
+      console.log("No changes in packages/api-contract/src. Skipping build-api-contract...");
     }
   } catch (error) {
     console.error("Error during build process:", error);
