@@ -18,9 +18,17 @@ post:
             type: object
             required:
               - token
+              - id
+              - username
             properties:
               token:
                 description: JWT token
+                type: string
+              id:
+                description: Master User ID
+                type: string
+              username:
+                description: Master User Username
                 type: string
     "401":
       $ref: "../../responses.yaml#/Unauthorized"

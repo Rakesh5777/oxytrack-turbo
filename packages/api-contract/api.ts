@@ -366,6 +366,18 @@ export interface MasterUserSignIn200Response {
    * @memberof MasterUserSignIn200Response
    */
   token: string;
+  /**
+   * Master User ID
+   * @type {string}
+   * @memberof MasterUserSignIn200Response
+   */
+  id: string;
+  /**
+   * Master User Username
+   * @type {string}
+   * @memberof MasterUserSignIn200Response
+   */
+  username: string;
 }
 /**
  *

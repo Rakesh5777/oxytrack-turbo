@@ -9,6 +9,10 @@ import { Icons } from "@ui/components/ui/icons";
 import { masterUserApi } from "@/services/api";
 import useLocalStorage from "@/hooks/localStorage";
 import { useNavigate } from "react-router-dom";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@ui/components/ui/card";
+import { OxytrackTitle } from "@/components/oxytrackTitle";
+import { useSetRecoilState } from "recoil";
+import { userDetailsAtom } from "@/state/userDetails";
 
 export const masterSignInSchema = z
   .object({
@@ -23,6 +27,7 @@ export function SignInForm() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [_token, setToken] = useLocalStorage("token", "");
   const navigate = useNavigate();
+  const setUserDetails = useSetRecoilState(userDetailsAtom);
   const form = useForm<MasterSignInFormValues>({
     resolver: zodResolver(masterSignInSchema),
     defaultValues: {
@@ -34,9 +39,11 @@ export function SignInForm() {
   async function onSubmit(values: MasterSignInFormValues) {
     setIsLoading(true);
     try {
-      const { token } = (await masterUserApi.masterUserSignIn({ username: values.username, password: values.password })).data;
+      const { token, id, username } = (await masterUserApi.masterUserSignIn({ username: values.username, password: values.password })).data;
+      if (!token || !id || !username) throw new Error("User not found");
       setIsLoading(false);
       setToken(token);
+      setUserDetails({ id, username });
       navigate("/");
     } catch (error) {
       setIsLoading(false);
@@ -100,7 +107,7 @@ export function MasterSignIn() {
     <>
       <div className="container relative h-screen flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 px-0">
         <div className="relative hidden h-full flex-col bg-muted p-10 text-white lg:flex dark:border-r">
-          <div className="absolute inset-0 bg-zinc-900" />
+          <div className="absolute inset-0 bg-zinc-900 dark:bg-gray-900" />
           <div className="relative z-20 flex items-center text-lg font-medium">Medox Oxytrack</div>
           <div className="relative z-20 mt-auto">
             <blockquote className="space-y-2">
@@ -113,15 +120,17 @@ export function MasterSignIn() {
           </div>
         </div>
         <div className="lg:p-8">
-          <div className="mx-auto flex w-screen p-8 md:p-0 flex-col justify-center space-y-6 lg:w-[400px]">
-            <div className="mx-auto w-5/6 lg:w-full">
-              <div className="flex flex-col space-y-2 text-center mb-6">
-                <h1 className="text-2xl font-semibold tracking-tight">Signin to your account</h1>
-                <p className="text-sm text-muted-foreground">Enter your username and password</p>
-              </div>
+          <Card className="mx-auto flex w-screen p-8 md:p-0 flex-col justify-center space-y-6 lg:w-[400px] border-none">
+            <CardHeader>
+              <CardTitle>
+                Sign In to <OxytrackTitle />
+              </CardTitle>
+              <CardDescription>Enter your username and password.</CardDescription>
+            </CardHeader>
+            <CardContent>
               <SignInForm />
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </>

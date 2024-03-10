@@ -6,5 +6,5 @@ export const getMasterUser = async (username: string, password: string) => {
   const user = await getMasterUserByUsernamePassword(username, password);
   if (!user) throw new CustomError(401, "Invalid username or password");
   const token = jwt.sign({ ...user, role: "master" }, process.env.JWT_SECRET!);
-  return token;
+  return { token, id: user.id, username };
 };
