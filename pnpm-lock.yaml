@@ -119,6 +119,9 @@ importers:
       "@radix-ui/react-slot":
         specifier: ^1.0.2
         version: 1.0.2(@types/react@18.2.63)(react@18.2.0)
+      axios:
+        specifier: ^1.6.7
+        version: 1.6.7
       react:
         specifier: ^18.2.0
         version: 18.2.0
