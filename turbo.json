@@ -10,15 +10,15 @@
     "db:migrate": {
       "cache": false
     },
-    "build-api-contract": {
+    "check-and-build-contract": {
       "cache": false
     },
     "build": {
-      "dependsOn": ["^db:generate", "^build-api-contract"],
+      "dependsOn": ["^db:generate", "^check-and-build-contract"],
       "outputs": ["dist/**", "build/**"]
     },
     "dev": {
-      "dependsOn": ["^db:generate", "^build-api-contract"],
+      "dependsOn": ["^db:generate", "^check-and-build-contract"],
       "cache": false
     },
     "lint": {
