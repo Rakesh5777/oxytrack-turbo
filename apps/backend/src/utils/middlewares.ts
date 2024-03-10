@@ -1,5 +1,4 @@
 import { operations } from "@oxytrack/api-contract/dist/api";
-import { z } from "@oxytrack/api-contract/zodSchema";
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { Responses, TypedRequest, TypedResponse } from "../types/express";
@@ -29,15 +28,6 @@ export const asyncWrapper = <T extends OperationKey>(key: T): AsyncWrapperType<T
       return fn(req, res, next).catch(next);
     };
   };
-};
-
-export const validateReq = (schema: z.Schema) => (req: any, res: any, next: () => void) => {
-  try {
-    schema.parse(req.body);
-    next();
-  } catch (error: any) {
-    throw new CustomError(400, "Invalid request body", "zodValidationErr", error.errors);
-  }
 };
 
 export const validateUser = (req: Request, res: Response, next: NextFunction) => {
