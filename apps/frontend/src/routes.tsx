@@ -2,7 +2,7 @@ import App from "@/App";
 import ErrorPage from "@/pages/errorPage";
 import { createBrowserRouter, redirect } from "react-router-dom";
 import { MasterSignIn } from "./pages/masterSignIn";
-import { Home } from "@/pages/home/home";
+import { Dashboard } from "@/pages/dashboard/dashboard";
 
 export const router = createBrowserRouter([
   {
@@ -13,7 +13,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: <Dashboard />,
       },
     ],
   },
