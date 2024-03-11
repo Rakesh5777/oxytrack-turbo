@@ -6,17 +6,23 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import apis from "./services/api";
 import { userDetailsAtom } from "./store/userDetails";
 import React from "react";
+import { set } from "react-hook-form";
 
 function App() {
   const [userDetails, setUserDetails] = useRecoilState(userDetailsAtom);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const getUserDetails = async () => {
+      setIsLoading(true);
       try {
         const user = (await apis.master.masterUserDetails()).data;
         setUserDetails(user);
+        setIsLoading(false);
       } catch (error) {
+        setIsLoading(false);
         navigate("/signin");
       }
     };
@@ -24,7 +30,7 @@ function App() {
   }, []);
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className={`${isLoading ? "opacity-0" : "opacity-100"} transition-opacity ease-in-out flex flex-col h-screen`}>
       <Header className="h-14" />
       <div className="flex-1 flex">
         <div>
