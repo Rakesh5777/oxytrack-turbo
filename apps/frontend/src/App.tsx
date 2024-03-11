@@ -1,12 +1,10 @@
 import Header from "@/layouts/header";
 import { SideNav } from "@/layouts/sidenav";
-import { Suspense, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import apis from "./services/api";
 import { userDetailsAtom } from "./store/userDetails";
-import React from "react";
-import { set } from "react-hook-form";
 
 function App() {
   const [userDetails, setUserDetails] = useRecoilState(userDetailsAtom);
