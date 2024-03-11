@@ -8,7 +8,7 @@ import { userDetailsAtom } from "./store/userDetails";
 
 function App() {
   const [userDetails, setUserDetails] = useRecoilState(userDetailsAtom);
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
   const navigate = useNavigate();
 
@@ -24,7 +24,11 @@ function App() {
         navigate("/signin");
       }
     };
-    if (!userDetails?.username) getUserDetails();
+    if (!userDetails?.username) {
+      getUserDetails();
+    } else {
+      setIsLoading(false);
+    }
   }, []);
 
   return (
