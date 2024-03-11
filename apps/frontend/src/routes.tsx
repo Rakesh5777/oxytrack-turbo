@@ -20,6 +20,10 @@ export const router = createBrowserRouter([
         path: "/customers",
         element: <Customers />,
       },
+      {
+        path: "/settings",
+        element: <div>Settings</div>,
+      },
     ],
   },
   {
