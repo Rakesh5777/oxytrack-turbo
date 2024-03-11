@@ -1,6 +1,7 @@
 import { OxytrackTitle } from "@/components/oxytrackTitle";
 import useLocalStorage from "@/hooks/localStorage";
 import Api from "@/services/api";
+import { userDetailsAtom } from "@/store/userDetails";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@ui/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ui/components/ui/card";
@@ -10,6 +11,7 @@ import { Input } from "@ui/components/ui/input";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import { z } from "zod";
 
 export const masterSignInSchema = z
@@ -24,6 +26,7 @@ export type MasterSignInFormValues = z.infer<typeof masterSignInSchema>;
 export function SignInForm() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [_token, setToken] = useLocalStorage("token", "");
+  const setUserDetails = useSetRecoilState(userDetailsAtom);
   const navigate = useNavigate();
   const form = useForm<MasterSignInFormValues>({
     resolver: zodResolver(masterSignInSchema),
@@ -40,6 +43,7 @@ export function SignInForm() {
       if (!token || !id || !username) throw new Error("User not found");
       setIsLoading(false);
       setToken(token);
+      setUserDetails({ id, username });
       navigate("/");
     } catch (error) {
       setIsLoading(false);
