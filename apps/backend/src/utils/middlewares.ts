@@ -37,7 +37,7 @@ export const validateUser = (req: Request, res: Response, next: NextFunction) =>
   }
   const token = authorization.split(" ")[1];
   try {
-    const { id, username, role } = jwt.verify(token!, process.env.JWT_SECRET!) as { id: number; username: string; role: string };
+    const { id, username, role } = jwt.verify(token!, process.env.JWT_SECRET!) as { id: string; username: string; role: string };
 
     req.id = id;
     req.username = username;

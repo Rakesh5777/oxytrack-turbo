@@ -28,6 +28,8 @@ tags:
 paths:
   /masterUser/signIn:
     $ref: "./paths/masterUser/masterSignIn.yaml"
+  /masterUser/details:
+    $ref: "./paths/masterUser/masterUserDetails.yaml"
   /contacts:
     $ref: "./paths/contact/contact.yaml"
   /customer:

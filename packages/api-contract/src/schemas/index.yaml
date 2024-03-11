@@ -2,6 +2,8 @@ ErrorResponse:
   $ref: "./common/ErrorResponse.yaml"
 MasterSignInRequest:
   $ref: "./masterUser/masterSignIn.yaml"
+MasterUserDetails:
+  $ref: "./masterUser/masterUserDetails.yaml"
 Contact:
   $ref: "./contact/contact.yaml"
 ContactPage:

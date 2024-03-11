@@ -1,4 +1,4 @@
-import { sideNavAtom } from "@/state/applicationSettings";
+import { sideNavAtom } from "@/store/applicationSettings";
 import { ArchiveIcon, CardStackIcon, DashboardIcon } from "@radix-ui/react-icons";
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
@@ -50,9 +50,6 @@ const NavItems = ({ smallScreen = false }) => {
 
 export const SideNav = () => {
   const [sideNavState, setSideNavState] = useRecoilState(sideNavAtom);
-  useEffect(() => {
-    console.log(sideNavState);
-  });
   return (
     <div className="relative h-full">
       <aside className={`hidden lg:block h-full transition-all overflow-hidden ${sideNavState.sideNavExpand ? "w-52" : "w-0"}`}>

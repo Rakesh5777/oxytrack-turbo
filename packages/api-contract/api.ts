@@ -350,6 +350,61 @@ export interface MasterSignInRequest {
 /**
  * 
  * @export
+ * @interface MasterUserDetails
+ */
+export interface MasterUserDetails {
+    /**
+     * Master User ID
+     * @type {string}
+     * @memberof MasterUserDetails
+     */
+    'id'?: string;
+    /**
+     * Master User Username
+     * @type {string}
+     * @memberof MasterUserDetails
+     */
+    'username'?: string;
+    /**
+     * Master User Email
+     * @type {string}
+     * @memberof MasterUserDetails
+     */
+    'email'?: string;
+    /**
+     * Date and time of the user creation
+     * @type {Date}
+     * @memberof MasterUserDetails
+     */
+    'createdAt'?: Date;
+    /**
+     * First Name of the user
+     * @type {string}
+     * @memberof MasterUserDetails
+     */
+    'firstName'?: string;
+    /**
+     * Last Name of the user
+     * @type {string}
+     * @memberof MasterUserDetails
+     */
+    'lastName'?: string;
+    /**
+     * Mobile Number of the user
+     * @type {string}
+     * @memberof MasterUserDetails
+     */
+    'mobileNumber'?: string;
+    /**
+     * Active status of the user
+     * @type {boolean}
+     * @memberof MasterUserDetails
+     */
+    'active'?: boolean;
+}
+/**
+ * 
+ * @export
  * @interface MasterUserSignIn200Response
  */
 export interface MasterUserSignIn200Response {
@@ -815,6 +870,40 @@ export const MasterUserApiAxiosParamCreator = function (configuration?: Configur
     return {
         /**
          * 
+         * @summary Master User Details
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        masterUserDetails: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/masterUser/details`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Master User Sign In
          * @param {MasterSignInRequest} masterSignInRequest 
          * @param {*} [options] Override http request option.
@@ -861,6 +950,18 @@ export const MasterUserApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Master User Details
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async masterUserDetails(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MasterUserDetails>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.masterUserDetails(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MasterUserApi.masterUserDetails']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Master User Sign In
          * @param {MasterSignInRequest} masterSignInRequest 
          * @param {*} [options] Override http request option.
@@ -884,6 +985,15 @@ export const MasterUserApiFactory = function (configuration?: Configuration, bas
     return {
         /**
          * 
+         * @summary Master User Details
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        masterUserDetails(options?: any): AxiosPromise<MasterUserDetails> {
+            return localVarFp.masterUserDetails(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Master User Sign In
          * @param {MasterSignInRequest} masterSignInRequest 
          * @param {*} [options] Override http request option.
@@ -902,6 +1012,17 @@ export const MasterUserApiFactory = function (configuration?: Configuration, bas
  * @extends {BaseAPI}
  */
 export class MasterUserApi extends BaseAPI {
+    /**
+     * 
+     * @summary Master User Details
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MasterUserApi
+     */
+    public masterUserDetails(options?: RawAxiosRequestConfig) {
+        return MasterUserApiFp(this.configuration).masterUserDetails(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Master User Sign In

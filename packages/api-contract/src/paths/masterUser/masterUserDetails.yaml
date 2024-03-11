@@ -1,0 +1,20 @@
+get:
+  tags:
+    - masterUser
+  summary: Master User Details
+  operationId: masterUserDetails
+  security:
+    - bearerAuth: []
+  responses:
+    "200":
+      description: Master User Details
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/masterUser/masterUserDetails.yaml"
+    "401":
+      $ref: "../../responses.yaml#/Unauthorized"
+    "400":
+      $ref: "../../responses.yaml#/BadRequest"
+    "500":
+      $ref: "../../responses.yaml#/InternalServerError"

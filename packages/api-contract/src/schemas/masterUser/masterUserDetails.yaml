@@ -1,0 +1,28 @@
+type: object
+properties: 
+  id: 
+    type: string
+    description: Master User ID
+  username: 
+    type: string
+    description: Master User Username
+  email: 
+    type: string
+    description: Master User Email
+  createdAt: 
+    type: string
+    format: date-time
+    description: Date and time of the user creation
+  firstName: 
+    type: string
+    description: First Name of the user
+  lastName:
+    type: string
+    description: Last Name of the user
+  mobileNumber:
+    type: string
+    description: Mobile Number of the user
+  active:
+    type: boolean
+    description: Active status of the user
+    default: true

@@ -6,3 +6,9 @@ export const getMasterUserByUsernamePassword = async (username: string, password
     select: { id: true, username: true },
   });
 };
+
+export const getMasterUserById = async (id: string) => {
+  return await prisma.masterUsers.findFirst({
+    where: { id },
+  });
+};

@@ -1,10 +1,10 @@
 import { OxytrackTitle } from "@/components/oxytrackTitle";
-import { sideNavAtom } from "@/state/applicationSettings";
-import { userDetailsAtom } from "@/state/userDetails";
-import { HamburgerMenuIcon, BellIcon } from "@radix-ui/react-icons";
+import { sideNavAtom } from "@/store/applicationSettings";
+import { userDetailsAtom } from "@/store/userDetails";
+import { BellIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { Avatar, AvatarFallback } from "@ui/components/ui/avatar";
 import { cn } from "@ui/lib/utils";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 const Header = ({ className = "" }: { className?: string }) => {
   const setSideNavState = useSetRecoilState(sideNavAtom);

@@ -30,8 +30,6 @@ export const router = createBrowserRouter([
 
 async function loginLoader() {
   const token = localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")!) : null;
-  if (!token) {
-    return redirect("/signin");
-  }
+  if (!token) return redirect("/signin");
   return null;
 }
