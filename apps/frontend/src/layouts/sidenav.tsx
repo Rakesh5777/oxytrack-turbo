@@ -24,6 +24,12 @@ const sideNavList = [
 
 const NavItems = ({ smallScreen = false }) => {
   const setSideNavState = useSetRecoilState(sideNavAtom);
+  useEffect(() => {
+    if (!smallScreen) {
+      setSideNavState({ isDrawerOpen: false, sideNavExpand: true });
+    }
+  }, []);
+
   return (
     <div className="flex flex-col h-full border-r">
       <div className="my-6">
