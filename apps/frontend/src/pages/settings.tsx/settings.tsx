@@ -5,7 +5,7 @@ export const Settings = () => {
   const { setTheme } = useTheme();
   return (
     <>
-      <div className="md:w-3/4 mx-auto p-4 my-4">
+      <div className={`mx-auto p-4 my-4 md:w-10/12`}>
         <TitleDescription title="Settings" description="Manage your account settings" />
         <div className="bg-primary/10 h-[1px] my-4"></div>
         <div className="mt-4">

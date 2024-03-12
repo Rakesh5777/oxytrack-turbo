@@ -33,7 +33,7 @@ const UserAvatarPopover = () => {
         </Avatar>
       </PopoverTrigger>
       <PopoverContent className="mt-1">
-        <Card className="border-none p-0">
+        <Card className="border-none p-0 shadow-none">
           <CardHeader className="p-0">
             <CardTitle>
               <div className="flex items-center gap-2">
