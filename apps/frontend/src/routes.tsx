@@ -4,6 +4,7 @@ import { createBrowserRouter, redirect } from "react-router-dom";
 import { MasterSignIn } from "./pages/masterSignIn";
 import { Dashboard } from "@/pages/dashboard/dashboard";
 import { Customers } from "@/pages/customers/customers";
+import { Settings } from "./pages/settings.tsx/settings";
 
 export const router = createBrowserRouter([
   {
@@ -22,7 +23,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/settings",
-        element: <div>Settings</div>,
+        element: <Settings />,
       },
     ],
   },
