@@ -4,7 +4,7 @@ import { sideNavAtom } from "@/store/applicationSettings";
 import { BellIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { cn } from "@ui/lib/utils";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 
 const Header = ({ className = "" }: { className?: string }) => {
   const setSideNavState = useSetRecoilState(sideNavAtom);

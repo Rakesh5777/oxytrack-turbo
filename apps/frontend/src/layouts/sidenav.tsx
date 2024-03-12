@@ -2,7 +2,7 @@ import { sideNavAtom } from "@/store/applicationSettings";
 import { ArchiveIcon, CardStackIcon, DashboardIcon } from "@radix-ui/react-icons";
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 const sideNavList = [
   {
