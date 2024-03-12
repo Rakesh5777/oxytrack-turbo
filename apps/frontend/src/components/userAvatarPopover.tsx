@@ -2,7 +2,7 @@ import { ExitIcon, GearIcon } from "@radix-ui/react-icons";
 import { Avatar, AvatarFallback } from "@ui/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@ui/components/ui/card";
 import { Popover, PopoverContent, PopoverTrigger } from "@ui/components/ui/popover";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userDetailsAtom } from "@/store/userDetails";
 import React from "react";
@@ -20,9 +20,11 @@ const UserAvatarPopover = () => {
   const userDetails = useRecoilValue(userDetailsAtom);
   const [popover, setPopover] = React.useState(false);
   const [_token, setToken] = useLocalStorage("token", "");
+  const navigate = useNavigate();
 
   const handleSignOut = async () => {
     setToken("");
+    navigate("/signin");
   };
 
   return (
