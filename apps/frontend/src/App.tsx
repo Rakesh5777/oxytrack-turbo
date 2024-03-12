@@ -33,7 +33,7 @@ function App() {
 
   return (
     <div className={`${isLoading ? "opacity-0" : "opacity-100"} transition-opacity ease-in-out flex flex-col h-screen`}>
-      <Header className="h-14" />
+      <Header className="h-14 flex-shrink-0" />
       <div className="flex-1 flex">
         <div>
           <SideNav />

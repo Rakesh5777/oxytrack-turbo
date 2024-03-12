@@ -5,6 +5,8 @@ import { MasterSignIn } from "./pages/masterSignIn";
 import { Dashboard } from "@/pages/dashboard/dashboard";
 import { Customers } from "@/pages/customers/customers";
 import { Settings } from "./pages/settings.tsx/settings";
+import { CreateCustomer } from "@/pages/customers/components/createCreate";
+import { CustomerDashboard } from "./pages/customers/components/customerDashboard";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +22,16 @@ export const router = createBrowserRouter([
       {
         path: "/customers",
         element: <Customers />,
+        children: [
+          {
+            path: "",
+            element: <CustomerDashboard />,
+          },
+          {
+            path: "create",
+            element: <CreateCustomer />,
+          },
+        ],
       },
       {
         path: "/settings",
