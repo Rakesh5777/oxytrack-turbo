@@ -5,7 +5,7 @@ import { MasterSignIn } from "./pages/masterSignIn";
 import { Dashboard } from "@/pages/dashboard/dashboard";
 import { Customers } from "@/pages/customers/customers";
 import { Settings } from "./pages/settings.tsx/settings";
-import { CreateCustomer } from "@/pages/customers/components/createCreate";
+import { CreateCustomer } from "@/pages/customers/components/createCustomer";
 import { CustomerDashboard } from "./pages/customers/components/customerDashboard";
 
 export const router = createBrowserRouter([
