@@ -19,15 +19,15 @@ const Header = ({ className = "" }: { className?: string }) => {
   };
 
   return (
-    <header className={cn("border-b bg-background z-20 flex px-4 items-center justify-between sticky top-0", className)}>
-      <div id="title-section" className="relative z-20 flex gap-3 h-full items-center">
+    <header className={cn("border-b bg-background z-50 flex px-4 items-center justify-between sticky top-0", className)}>
+      <div id="title-section" className="relative z-50 flex gap-3 h-full items-center">
         <HamburgerMenuIcon onClick={toggleSideNav} className="hidden lg:block h-5 w-6 cursor-pointer leading-none" />
         <HamburgerMenuIcon onClick={toggleSideDrawer} className="lg:hidden h-5 w-6 cursor-pointer leading-none" />
         <span className="cursor-pointer" onClick={() => navigate("/")}>
           <OxytrackTitle />
         </span>
       </div>
-      <div id="avatar-section" className="relative z-20 h-full flex gap-3 items-center select-none">
+      <div id="avatar-section" className="relative z-50 h-full flex gap-3 items-center select-none">
         <BellIcon className="h-5 w-6 cursor-pointer" />
         <UserAvatarPopover />
       </div>

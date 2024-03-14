@@ -32,13 +32,11 @@ function App() {
   }, []);
 
   return (
-    <div className={`${isLoading ? "opacity-0" : "opacity-100"} transition-opacity ease-in-out flex flex-col h-screen`}>
+    <div className={`${isLoading ? "opacity-0" : "opacity-100"} transition-opacity ease-in-out flex flex-col h-dvh`}>
       <Header className="h-14 flex-shrink-0" />
-      <div className="flex-1 flex">
-        <div>
-          <SideNav />
-        </div>
-        <div className="flex-1">
+      <div className="flex-1 flex overflow-auto">
+        <SideNav />
+        <div className="flex-1 h-full overflow-auto">
           <Outlet />
         </div>
       </div>

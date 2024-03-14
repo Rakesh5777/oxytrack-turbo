@@ -57,8 +57,8 @@ const NavItems = ({ smallScreen = false }) => {
 export const SideNav = () => {
   const [sideNavState, setSideNavState] = useRecoilState(sideNavAtom);
   return (
-    <div className="relative h-full">
-      <aside className={`hidden lg:block h-full transition-all overflow-hidden ${sideNavState.sideNavExpand ? "w-52" : "w-0"}`}>
+    <div className="relative h-full z-10">
+      <aside className={`hidden lg:block h-full transition-all overflow-auto ${sideNavState.sideNavExpand ? "w-60" : "w-0"}`}>
         <NavItems />
       </aside>
       {sideNavState.isDrawerOpen && (
@@ -70,7 +70,7 @@ export const SideNav = () => {
           }}
         ></div>
       )}
-      <aside className={`lg:hidden absolute top-0 h-full transition-all overflow-hidden ${sideNavState.isDrawerOpen ? "w-52" : "w-0"} bg-background`}>
+      <aside className={`lg:hidden absolute top-0 h-full transition-all overflow-auto ${sideNavState.isDrawerOpen ? "w-60" : "w-0"} bg-background`}>
         <NavItems smallScreen={true} />
       </aside>
     </div>

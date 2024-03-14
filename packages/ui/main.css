@@ -73,6 +73,8 @@
 
   body {
     @apply bg-background text-foreground;
+    height: 100dvh;
+    overflow: hidden;
   }
 }
 

@@ -64,7 +64,7 @@ const UserAvatarPopover = () => {
                 {<item.icon className="h-12 w-5" />} {item.name}
               </NavLink>
             ))}
-            <div className="to-transparent bg-primary/10 h-[1px] my-4"></div>
+            <div className="bg-primary/10 h-[1px] my-4"></div>
             <a
               onClick={handleSignOut}
               type="submit"

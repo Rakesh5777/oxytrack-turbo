@@ -4,7 +4,6 @@ required:
   - name
   - number
   - entityRequirement
-  - contactIds
 properties:
   type:
     description: Type of the customer

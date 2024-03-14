@@ -4,7 +4,6 @@ required:
   - name
   - number
   - entityRequirements
-  - contacts
 properties:
   id:
     description: Id of the customer
