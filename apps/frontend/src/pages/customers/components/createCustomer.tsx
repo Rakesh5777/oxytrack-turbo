@@ -1,3 +1,4 @@
+import apis from "@/services/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CustomerTypeEnum } from "@oxytrack/api-contract";
 import {
@@ -8,6 +9,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  Icons,
   Input,
   Select,
   SelectContent,
@@ -16,7 +18,9 @@ import {
   SelectValue,
   Textarea,
 } from "@ui/components";
+import React from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 const isValidIndianPhoneNumber = (value: string): boolean => {
   const phoneNumberRegex = /^[789]\d{9}$/;
@@ -35,10 +39,12 @@ const createCustomerSchema = z.object({
   description: z.string().max(255).optional(),
   emailAddress: z.string().email("Invalid email address").optional(),
   address: z.string().optional(),
-  ambulanceNumber: z.string().refine((value) => value === CustomerTypeEnum.Ambulance, { message: "Kindly enter ambulance number" }),
 });
 
 export const CreateCustomer = () => {
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
   const form = useForm({
     resolver: zodResolver(createCustomerSchema),
     defaultValues: {
@@ -48,12 +54,18 @@ export const CreateCustomer = () => {
       description: "",
       emailAddress: "",
       address: "",
-      ambulanceNumber: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof createCustomerSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof createCustomerSchema>) => {
+    setIsLoading(true);
+    try {
+      await apis.customer.createCustomer({ ...values });
+      setIsLoading(false);
+      navigate("/customers");
+    } catch (error) {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -153,7 +165,8 @@ export const CreateCustomer = () => {
               </FormItem>
             )}
           />
-          <Button className="mt-4 md:w-72" type="submit">
+          <Button type="submit" className="mt-4 md:w-72">
+            {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
             Create Customer
           </Button>
         </form>

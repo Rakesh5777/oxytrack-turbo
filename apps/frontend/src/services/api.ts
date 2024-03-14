@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-import { MasterUserApi } from "@oxytrack/api-contract";
+import { CustomerApi, MasterUserApi } from "@oxytrack/api-contract";
 import { Configuration } from "@oxytrack/api-contract/configuration";
 import axiosInstance from "@/axios/axiosInstance";
 
@@ -11,6 +11,7 @@ function createApiInstance<T>(ApiClass: new (config: Configuration, basePath: st
 
 const apis = {
   master: createApiInstance(MasterUserApi),
+  customer: createApiInstance(CustomerApi),
 };
 
 export default apis;

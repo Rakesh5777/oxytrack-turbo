@@ -32,18 +32,18 @@ enum CustomerType {
 }
 
 model Customers {
-  id               String             @id @unique @default(dbgenerated("gen_random_uuid()"))
-  type             CustomerType
-  name             String
-  number           String
-  emailAddress     String?
-  address          String?
-  description      String?
+  id                String             @id @unique @default(dbgenerated("gen_random_uuid()"))
+  type              CustomerType
+  name              String             @unique
+  number            String
+  emailAddress      String?
+  address           String?
+  description       String?
   contacts          CustomerContact[]
   entityRequirments EntityRequirment[]
   additionalRecords AdditionalRecord[]
-  active           Boolean            @default(true)
-  createdAt        DateTime           @default(now())
+  active            Boolean            @default(true)
+  createdAt         DateTime           @default(now())
 }
 
 model EntityRequirment {
@@ -63,12 +63,12 @@ model AdditionalRecord {
 }
 
 model Contact {
-  id           String     @id @unique @default(dbgenerated("gen_random_uuid()"))
+  id           String            @id @unique @default(dbgenerated("gen_random_uuid()"))
   contactName  String
-  mobileNumber String     @unique
+  mobileNumber String            @unique
   customersId  String?
   Customers    CustomerContact[]
-  active       Boolean    @default(true)
+  active       Boolean           @default(true)
 }
 
 // Join table for many-to-many relationship between Customer and Contact
@@ -76,7 +76,7 @@ model CustomerContact {
   customerId String
   contactId  String
   customer   Customers @relation(fields: [customerId], references: [id])
-  contact    Contact  @relation(fields: [contactId], references: [id])
+  contact    Contact   @relation(fields: [contactId], references: [id])
 
   @@id([customerId, contactId])
 }

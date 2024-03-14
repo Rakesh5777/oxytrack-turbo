@@ -195,7 +195,7 @@ export interface Customer {
      * @type {Array<Contact>}
      * @memberof Customer
      */
-    'contacts': Array<Contact>;
+    'contacts'?: Array<Contact>;
     /**
      * Additional records of the customer
      * @type {Array<AdditionalRecord>}
@@ -499,13 +499,13 @@ export interface WritableCustomer {
      * @type {Array<EntityRequirments>}
      * @memberof WritableCustomer
      */
-    'entityRequirement': Array<EntityRequirments> | null;
+    'entityRequirement'?: Array<EntityRequirments> | null;
     /**
      * list of contact ids
      * @type {Array<string>}
      * @memberof WritableCustomer
      */
-    'contactIds': Array<string> | null;
+    'contactIds'?: Array<string> | null;
     /**
      * Additional records of the customer
      * @type {Array<AdditionalRecord>}

@@ -3,7 +3,6 @@ required:
   - type
   - name
   - number
-  - entityRequirement
 properties:
   type:
     description: Type of the customer
