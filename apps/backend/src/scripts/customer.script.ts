@@ -1,9 +1,10 @@
 import { CustomerType } from "@oxytrack/database";
-import { AdditionalRecordKey, EntityRequirmentsKeyEnum } from "@oxytrack/api-contract";
+import { AdditionalRecordKey, EntityRequirementsKeyEnum } from "@oxytrack/api-contract";
 import { prisma } from "../index";
 import { Customer, WritableCustomer } from "@oxytrack/api-contract";
 import { CustomError } from "../utils/middlewares";
 
+//TODO: need to handle contacts and entityRequirements
 export const createCustomerTransaction = async (customerData: WritableCustomer): Promise<Customer> => {
   const customer = await prisma.customers.create({
     data: {
@@ -16,7 +17,7 @@ export const createCustomerTransaction = async (customerData: WritableCustomer):
       contacts: {
         create: customerData.contactIds?.map((id) => ({ contactId: id })),
       },
-      entityRequirments: {
+      entityRequirements: {
         create: customerData.entityRequirement?.map((entity) => entity),
       },
       additionalRecords: {
@@ -34,24 +35,45 @@ export const getCustomerDetailsById = async (customerId: string): Promise<Custom
       id: customerId,
     },
     include: {
-      entityRequirments: true,
+      entityRequirements: true,
       additionalRecords: true,
     },
   });
 
   if (!customer) throw new CustomError(404, "Customer not found");
 
-  const contacts = await prisma.contact.findMany({
-    where: {
-      customersId: customerId,
-    },
-  });
-
   return {
     ...customer,
     type: customer.type as CustomerType,
-    contacts: contacts,
-    entityRequirements: customer.entityRequirments.map((entity) => ({ key: entity.key as EntityRequirmentsKeyEnum, value: entity.value })),
+    contacts: [],
+    entityRequirements: customer.entityRequirements.map((entity) => ({ key: entity.key as EntityRequirementsKeyEnum, value: entity.value })),
     additionalRecords: customer.additionalRecords.map((record) => ({ key: record.key as AdditionalRecordKey, value: record.value })),
   };
+};
+
+export const getCustomersPage = async (page: number, pageSize: number, query?: string): Promise<Customer[]> => {
+  let where = {};
+  if (query) {
+    where = {
+      name: query,
+    };
+  }
+  const customers = await prisma.customers.findMany({
+    where,
+    skip: (page - 1) * pageSize,
+    take: pageSize,
+    include: {
+      entityRequirements: true,
+      additionalRecords: true,
+    },
+  });
+
+  return customers.map((customer) => {
+    return {
+      ...customer,
+      contacts: [],
+      entityRequirements: customer.entityRequirements.map((entity) => ({ key: entity.key as EntityRequirementsKeyEnum, value: entity.value })),
+      additionalRecords: customer.additionalRecords.map((record) => ({ key: record.key as AdditionalRecordKey, value: record.value })),
+    };
+  });
 };

@@ -34,7 +34,7 @@ properties:
     description: list of entities
     type: array
     items:
-      $ref: "./../customers/entityRequirment.yaml"
+      $ref: "./../customers/entityRequirements.yaml"
     nullable: true
   contactIds:
     description: list of contact ids

@@ -186,10 +186,10 @@ export interface Customer {
     'description'?: string | null;
     /**
      * list of entities
-     * @type {Array<EntityRequirments>}
+     * @type {Array<EntityRequirements>}
      * @memberof Customer
      */
-    'entityRequirements': Array<EntityRequirments>;
+    'entityRequirements': Array<EntityRequirements>;
     /**
      * list of contact ids
      * @type {Array<Contact>}
@@ -228,41 +228,72 @@ export type CustomerTypeEnum = typeof CustomerTypeEnum[keyof typeof CustomerType
 /**
  * 
  * @export
- * @interface EntityRequirments
+ * @interface CustomerPage
  */
-export interface EntityRequirments {
+export interface CustomerPage {
+    /**
+     * Page number
+     * @type {number}
+     * @memberof CustomerPage
+     */
+    'page': number;
+    /**
+     * Number of items per page
+     * @type {number}
+     * @memberof CustomerPage
+     */
+    'pageSize': number;
+    /**
+     * Total number of items
+     * @type {number}
+     * @memberof CustomerPage
+     */
+    'totalItemCount': number;
+    /**
+     * List of customers
+     * @type {Array<Customer>}
+     * @memberof CustomerPage
+     */
+    'items': Array<Customer>;
+}
+/**
+ * 
+ * @export
+ * @interface EntityRequirements
+ */
+export interface EntityRequirements {
     /**
      * Id of the additional record
      * @type {string}
-     * @memberof EntityRequirments
+     * @memberof EntityRequirements
      */
     'id'?: string;
     /**
      * Id of the customer
      * @type {string}
-     * @memberof EntityRequirments
+     * @memberof EntityRequirements
      */
     'customerId'?: string;
     /**
      * Key of the entity requirement
      * @type {string}
-     * @memberof EntityRequirments
+     * @memberof EntityRequirements
      */
-    'key': EntityRequirmentsKeyEnum;
+    'key': EntityRequirementsKeyEnum;
     /**
      * Value of the entity requirement
      * @type {string}
-     * @memberof EntityRequirments
+     * @memberof EntityRequirements
      */
     'value': string;
 }
 
-export const EntityRequirmentsKeyEnum = {
+export const EntityRequirementsKeyEnum = {
     Volume: 'volume',
     Frequency: 'frequency'
 } as const;
 
-export type EntityRequirmentsKeyEnum = typeof EntityRequirmentsKeyEnum[keyof typeof EntityRequirmentsKeyEnum];
+export type EntityRequirementsKeyEnum = typeof EntityRequirementsKeyEnum[keyof typeof EntityRequirementsKeyEnum];
 
 /**
  * 
@@ -296,37 +327,6 @@ export type ErrorResponseError = Array<ErrorResponseErrorOneOfInner> | boolean |
  */
 export type ErrorResponseErrorOneOfInner = boolean | number | object | string;
 
-/**
- * 
- * @export
- * @interface GetCustomers200Response
- */
-export interface GetCustomers200Response {
-    /**
-     * Page number
-     * @type {number}
-     * @memberof GetCustomers200Response
-     */
-    'page': number;
-    /**
-     * Number of items per page
-     * @type {number}
-     * @memberof GetCustomers200Response
-     */
-    'pageSize': number;
-    /**
-     * Total number of items
-     * @type {number}
-     * @memberof GetCustomers200Response
-     */
-    'totalItemCount': number;
-    /**
-     * List of customers
-     * @type {Array<Customer>}
-     * @memberof GetCustomers200Response
-     */
-    'items': Array<Customer>;
-}
 /**
  * 
  * @export
@@ -527,10 +527,10 @@ export interface WritableCustomer {
     'description'?: string | null;
     /**
      * list of entities
-     * @type {Array<EntityRequirments>}
+     * @type {Array<EntityRequirements>}
      * @memberof WritableCustomer
      */
-    'entityRequirement'?: Array<EntityRequirments> | null;
+    'entityRequirement'?: Array<EntityRequirements> | null;
     /**
      * list of contact ids
      * @type {Array<string>}
@@ -910,7 +910,7 @@ export const CustomerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCustomers(pageSize: GetCustomersPageSizeEnum, page: number, query?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetCustomers200Response>> {
+        async getCustomers(pageSize: GetCustomersPageSizeEnum, page: number, query?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CustomerPage>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCustomers(pageSize, page, query, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CustomerApi.getCustomers']?.[localVarOperationServerIndex]?.url;
@@ -945,7 +945,7 @@ export const CustomerApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCustomers(pageSize: GetCustomersPageSizeEnum, page: number, query?: string, options?: any): AxiosPromise<GetCustomers200Response> {
+        getCustomers(pageSize: GetCustomersPageSizeEnum, page: number, query?: string, options?: any): AxiosPromise<CustomerPage> {
             return localVarFp.getCustomers(pageSize, page, query, options).then((request) => request(axios, basePath));
         },
     };

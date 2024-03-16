@@ -12,10 +12,12 @@ WritableContact:
   $ref: "./contact/writableContact.yaml"
 Customer:
   $ref: "./customers/customer.yaml"
+CustomerPage:
+  $ref: "./customers/customerPage.yaml"
 WritableCustomer:
   $ref: "./customers/writableCustomer.yaml"
-EntityRequirments:
-  $ref: "./customers/entityRequirment.yaml"
+entityRequirements:
+  $ref: "./customers/entityRequirements.yaml"
 AdditionalRecord:
   $ref: "./customers/additionalRecord.yaml"
 HospitalRequirement:

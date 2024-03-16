@@ -32,18 +32,18 @@ enum CustomerType {
 }
 
 model Customers {
-  id                String             @id @unique @default(dbgenerated("gen_random_uuid()"))
-  type              CustomerType
-  name              String             @unique
-  number            String
-  emailAddress      String?
-  address           String?
-  description       String?
-  contacts          CustomerContact[]
-  entityRequirments EntityRequirment[]
-  additionalRecords AdditionalRecord[]
-  active            Boolean            @default(true)
-  createdAt         DateTime           @default(now())
+  id                 String             @id @unique @default(dbgenerated("gen_random_uuid()"))
+  type               CustomerType
+  name               String             @unique
+  number             String
+  emailAddress       String?
+  address            String?
+  description        String?
+  contacts           CustomerContact[]
+  entityRequirements EntityRequirment[]
+  additionalRecords  AdditionalRecord[]
+  active             Boolean            @default(true)
+  createdAt          DateTime           @default(now())
 }
 
 model EntityRequirment {
@@ -66,7 +66,6 @@ model Contact {
   id           String            @id @unique @default(dbgenerated("gen_random_uuid()"))
   contactName  String
   mobileNumber String            @unique
-  customersId  String?
   Customers    CustomerContact[]
   active       Boolean           @default(true)
 }
