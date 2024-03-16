@@ -26,3 +26,51 @@ post:
       $ref: "../../responses.yaml#/Conflict"
     "500":
       $ref: "../../responses.yaml#/InternalServerError"
+get:
+  tags:
+    - Customer
+  summary: Get Customers
+  operationId: getCustomers
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: pageSize
+      in: query
+      description: Number of items per page
+      required: true
+      schema:
+        type: integer
+        enum:
+          - 10
+          - 20
+          - 50
+          - 100
+        default: 10
+    - name: page
+      in: query
+      description: Page number
+      required: true
+      schema:
+        type: integer
+        minimum: 1
+    - name: query
+      in: query
+      description: Search by customer name
+      required: false
+      schema:
+        type: string
+      allowEmptyValue: true
+      allowReserved: true
+  responses:
+    "200":
+      description: List of customers
+      content:
+        application/json:
+          schema:
+            $ref: "../../schemas/customers/customerPage.yaml"
+    "403":
+      $ref: "../../responses.yaml#/Forbidden"
+    "400":
+      $ref: "../../responses.yaml#/BadRequest"
+    "500":
+      $ref: "../../responses.yaml#/InternalServerError"
