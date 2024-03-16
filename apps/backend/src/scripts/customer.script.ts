@@ -77,3 +77,13 @@ export const getCustomersPage = async (page: number, pageSize: number, query?: s
     };
   });
 };
+
+export const getCustomersCount = async (query?: string): Promise<number> => {
+  let where = {};
+  if (query) {
+    where = {
+      name: query,
+    };
+  }
+  return await prisma.customers.count({ where });
+};
