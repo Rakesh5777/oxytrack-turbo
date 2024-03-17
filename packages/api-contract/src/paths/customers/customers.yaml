@@ -39,13 +39,7 @@ get:
       description: Number of items per page
       required: true
       schema:
-        type: integer
-        enum:
-          - 10
-          - 20
-          - 50
-          - 100
-        default: 10
+        $ref: "../../schemas/common/PageSizeEnum.yaml"
     - name: page
       in: query
       description: Page number

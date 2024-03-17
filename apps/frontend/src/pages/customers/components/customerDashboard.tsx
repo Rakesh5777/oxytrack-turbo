@@ -1,6 +1,9 @@
 import { NoDataFound } from "@/components/noDataFound";
+import useFetch from "@/hooks/useFetch";
 
 export const CustomerDashboard = () => {
+  const { data, isLoading, error } = useFetch({ key: "getCustomers", pageSize: 10, page: 1 });
+  console.log(data, isLoading, error);
   return (
     <div className="flex flex-col">
       <header className="flex-shirnk-0">
