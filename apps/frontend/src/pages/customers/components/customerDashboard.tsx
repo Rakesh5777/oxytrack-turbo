@@ -1,8 +1,9 @@
 import { NoDataFound } from "@/components/noDataFound";
-import useFetch from "@/hooks/useFetch";
+import useCustomSWR from "@/hooks/useCustomSWR";
+import useFetch from "@/hooks/useCustomSWR";
 
 export const CustomerDashboard = () => {
-  const { data, isLoading, error } = useFetch({ key: "getCustomers", pageSize: 10, page: 1 });
+  const { data, isLoading, error } = useCustomSWR({ key: "getCustomers", page: 1, pageSize: 10 });
   console.log(data, isLoading, error);
   return (
     <div className="flex flex-col">
