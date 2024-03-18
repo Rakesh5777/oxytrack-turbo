@@ -4,7 +4,6 @@ import useFetch from "@/hooks/useCustomSWR";
 
 export const CustomerDashboard = () => {
   const { data, isLoading, error } = useCustomSWR({ key: "getCustomers", page: 1, pageSize: 10 });
-  console.log(data, isLoading, error);
   return (
     <div className="flex flex-col">
       <header className="flex-shirnk-0">
