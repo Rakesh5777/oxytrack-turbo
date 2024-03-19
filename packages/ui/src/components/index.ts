@@ -9,3 +9,4 @@ export * from "./ui/icons";
 export * from "./ui/popover";
 export * from "./ui/select";
 export * from "./ui/textarea";
+export * from "./ui/breadcrumb";

@@ -4,11 +4,11 @@ import { operations } from "@oxytrack/api-contract/dist/api";
 import { AxiosResponse } from "axios";
 import useSWR, { SWRConfiguration } from "swr";
 
-type ResponseType<T extends keyof typeof functionKeyMap> = operations[T]["responses"][200]["content"]["application/json"];
-
 const functionKeyMap = {
   getCustomers: apis.customer.getCustomers.bind(apis.customer),
 };
+
+type ResponseType<T extends keyof typeof functionKeyMap> = operations[T]["responses"][200]["content"]["application/json"];
 
 interface FetcherArgs<T extends keyof typeof functionKeyMap> {
   key: T;

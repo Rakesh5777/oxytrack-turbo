@@ -2,6 +2,12 @@ import apis from "@/services/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CustomerTypeEnum } from "@oxytrack/api-contract";
 import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbRouterDomLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
   Button,
   Form,
   FormControl,
@@ -20,7 +26,7 @@ import {
 } from "@ui/components";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 const isValidIndianPhoneNumber = (value: string): boolean => {
   const phoneNumberRegex = /^[789]\d{9}$/;
@@ -70,8 +76,8 @@ export const CreateCustomer = () => {
 
   return (
     <div className="h-full flex flex-col">
-      <header className="flex-shirnk-0">
-        <h3 className="text-xl tracking-tight font-semibold p-4">Create Customer</h3>
+      <header className="flex-shirnk-0 p-4">
+        <HeaderBreadCrumb />
       </header>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="px-4 md:w-2/3 flex flex-col gap-3">
@@ -172,5 +178,21 @@ export const CreateCustomer = () => {
         </form>
       </Form>
     </div>
+  );
+};
+
+const HeaderBreadCrumb = () => {
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbRouterDomLink to="/customers">Customers</BreadcrumbRouterDomLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage className="text-base font-semibold">Create Customer</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
   );
 };
