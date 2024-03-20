@@ -9,16 +9,19 @@ export const CustomerDashboard = () => {
   if (error) {
     return <div>Error</div>;
   }
+
   return (
-    <>
-      <div className="flex flex-col">
-        <header className="flex-shirnk-0">
-          <h3 className="text-xl tracking-tight font-semibold p-4">Customers</h3>
-        </header>
-        <div>
-          <NoDataFound title="customers" routeLink="create" />
-        </div>
+    <div className="flex flex-col h-full">
+      <header className="flex-shirnk-0">
+        <h3 className="text-xl tracking-tight font-semibold p-4">Customers</h3>
+      </header>
+      <div className="flex-grow relative">
+        {data?.totalItemCount === 0 ? <NoDataFound title="customers" routeLink="create" /> : <CustomerTable />}
       </div>
-    </>
+    </div>
   );
+};
+
+const CustomerTable = () => {
+  return <div className="h-full"></div>;
 };
