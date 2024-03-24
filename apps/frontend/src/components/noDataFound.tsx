@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export const NoDataFound = ({ title = "data", routeLink }: { title?: string; routeLink?: string }) => {
   return (
-    <div className="h-full w-full flex flex-col justify-center items-center p-4">
+    <div style={{ marginTop: "-5%" }} className="h-full w-full flex flex-col justify-center items-center p-4">
       <img className="dark:hidden" src={noDataFoundImg} alt="no-data-found" />
       <img className="hidden dark:block opacity-90" src={noDataFoundDarkImg} alt="no-data-found" />
       <h3 className="text-xl font-bold tracked-tight dark:opacity-90">No {title} found</h3>
