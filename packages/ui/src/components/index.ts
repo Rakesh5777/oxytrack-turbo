@@ -11,3 +11,4 @@ export * from "./ui/select";
 export * from "./ui/textarea";
 export * from "./ui/breadcrumb";
 export * from "./ui/table";
+export * from "./ui/dropdown-menu";
