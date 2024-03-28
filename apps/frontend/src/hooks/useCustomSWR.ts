@@ -1,9 +1,12 @@
 import apis from "@/services/api";
 import { PageSizeEnum } from "@oxytrack/api-contract";
 import { operations } from "@oxytrack/api-contract/dist/api";
-import { AxiosResponse } from "axios";
+import axios, { AxiosResponse, CancelTokenSource, RawAxiosRequestConfig } from "axios";
+import { useEffect, useState } from "react";
 import useSWR, { SWRConfiguration } from "swr";
 
+type CancelTokenSourceMap = Record<string, CancelTokenSource | undefined>;
+const cancelTokenSources: CancelTokenSourceMap = {};
 const functionKeyMap = {
   getCustomers: apis.customer.getCustomers.bind(apis.customer),
 };
@@ -15,25 +18,75 @@ interface FetcherArgs<T extends keyof typeof functionKeyMap> {
   pageSize: PageSizeEnum;
   page: number;
   query?: string;
+  options?: RawAxiosRequestConfig;
+  cancelPreviousRequest?: boolean;
 }
 
-const fetcher = async <T extends keyof typeof functionKeyMap>({ key, pageSize, page, query }: FetcherArgs<T>) => {
+const fetcher = async <T extends keyof typeof functionKeyMap>(
+  { key, pageSize, page, query, options }: FetcherArgs<T>,
+  cancelTokenSource?: CancelTokenSource,
+) => {
   const fetchDataFunction = functionKeyMap[key];
-  if (fetchDataFunction) {
-    if (page !== undefined) {
-      return fetchDataFunction(pageSize, page, query).then((res: AxiosResponse<ResponseType<T>>) => res.data);
+
+  try {
+    if (fetchDataFunction) {
+      if (page !== undefined) {
+        // Pass the cancel token to the axios request config
+        const response = (await fetchDataFunction(pageSize, page, query, { ...options, cancelToken: cancelTokenSource?.token })) as AxiosResponse<
+          ResponseType<T>
+        >;
+        return response.data;
+      }
+    } else {
+      throw new Error(`Function for key "${key}" not found in functionKeyMap`);
     }
-  } else {
-    throw new Error(`Function for key "${key}" not found in functionKeyMap`);
+  } catch (error) {
+    // If the request was canceled, don't throw an error
+    if (!axios.isCancel(error)) {
+      throw error;
+    }
   }
 };
 
-const getFetcherArgs = <T extends keyof typeof functionKeyMap>(key: T, pageSize: PageSizeEnum, page: number, query?: string): FetcherArgs<T> => {
-  return { key, pageSize, page, query };
+const useCustomSWR = <T extends keyof typeof functionKeyMap>(
+  { key, page, pageSize, query, options, cancelPreviousRequest = true }: FetcherArgs<T>,
+  config?: SWRConfiguration<any>,
+) => {
+  const [firstTimeLoader, setFirstTimeLoader] = useState(true);
+
+  const fetcherWithCancelToken = async (fetcherArgs: FetcherArgs<T>) => {
+    // If there's an active request for this key, cancel it
+    if (cancelTokenSources[key]) {
+      cancelTokenSources[key]?.cancel("Request canceled due to new request");
+      delete cancelTokenSources[key];
+    }
+
+    // Create a new cancel token source
+    const cancelTokenSource = axios.CancelToken.source();
+    cancelTokenSources[key] = cancelTokenSource;
+
+    // Call the main fetcher function with the cancel token source
+    return fetcher(fetcherArgs, cancelTokenSource);
+  };
+
+  const result = useSWR(getFetcherArgs(key, pageSize, page, query, options), cancelPreviousRequest ? fetcherWithCancelToken : fetcher, config);
+  useEffect(() => {
+    if (firstTimeLoader && !result.isLoading) {
+      setFirstTimeLoader(false);
+    }
+  }, [result.isLoading]);
+  return { ...result, isInitialLoading: firstTimeLoader };
 };
 
-const useCustomSWR = <T extends keyof typeof functionKeyMap>({ key, page, pageSize, query }: FetcherArgs<T>, config?: SWRConfiguration<any>) => {
-  return useSWR(getFetcherArgs(key, pageSize, page, query), fetcher, config);
+const getFetcherArgs = <T extends keyof typeof functionKeyMap>(
+  key: T,
+  pageSize: PageSizeEnum,
+  page: number,
+  query?: string,
+  options?: RawAxiosRequestConfig,
+  cancelPreviousRequest?: boolean,
+): FetcherArgs<T> => {
+  return { key, pageSize, page, query, options, cancelPreviousRequest };
 };
 
 export default useCustomSWR;

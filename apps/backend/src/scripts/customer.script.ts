@@ -55,7 +55,10 @@ export const getCustomersPage = async (page: number, pageSize: number, query?: s
   let where = {};
   if (query) {
     where = {
-      name: query,
+      name: {
+        contains: query,
+        mode: "insensitive",
+      },
     };
   }
   const customers = await prisma.customers.findMany({
