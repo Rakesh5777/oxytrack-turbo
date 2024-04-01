@@ -4,19 +4,14 @@ import { Customer } from "@oxytrack/api-contract";
 import { CustomersDataTable } from "./customersDataTable";
 import { Button } from "@ui/components";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import useDebounce from "@/hooks/useDebounce";
-import { OnChangeFn, PaginationState } from "@tanstack/react-table";
+import usePaginationParams from "@/hooks/usePaginationParams";
 
 export const CustomerDashboard = () => {
-  const [searchTerm, setSearchTermState] = useState("");
-  const [fromFilter, setFromFilter] = useState(false);
-  const debouncedSearchTerm = useDebounce(searchTerm);
-  const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 });
+  const { pagination, searchTerm, fromFilter, handleSetSearchTerm, setPagination } = usePaginationParams();
   const { data, isLoading, error, isInitialLoading } = useCustomSWR({
     key: "getCustomers",
     ...pagination,
-    query: debouncedSearchTerm,
+    query: searchTerm,
   });
 
   if (isInitialLoading) {
@@ -27,13 +22,7 @@ export const CustomerDashboard = () => {
     return <div>Error</div>;
   }
 
-  const showEmptyState = data?.totalItemCount === 0 && !debouncedSearchTerm;
-
-  const onSetSearchTerm = (value: string) => {
-    setPagination({ pageIndex: 0, pageSize: 10 });
-    setSearchTermState(value);
-    setFromFilter(true);
-  };
+  const showEmptyState = data?.totalItemCount === 0 && !searchTerm;
 
   return (
     <div className="flex flex-col h-full">
@@ -55,7 +44,7 @@ export const CustomerDashboard = () => {
               data={data?.items as Customer[]}
               totalItemCount={data?.totalItemCount || 0}
               pagination={pagination}
-              handleSetSearchTerm={onSetSearchTerm}
+              handleSetSearchTerm={handleSetSearchTerm}
               handleOnPaginationChange={setPagination}
             />
           </div>
