@@ -5,8 +5,8 @@ export const createCustomer = async (ambulanceData: WritableCustomer): Promise<C
   return await createCustomerTransaction(ambulanceData);
 };
 
-export const getCustomers = async (page: number, pageSize: number, query?: string): Promise<CustomerPage> => {
-  const customers = await getCustomersPage(page, pageSize, query);
+export const getCustomers = async (pageIndex: number, pageSize: number, query?: string): Promise<CustomerPage> => {
+  const customers = await getCustomersPage(pageIndex, pageSize, query);
   const customersCount = await getCustomersCount(query);
-  return { items: customers, totalItemCount: customersCount, pageSize, page };
+  return { items: customers, totalItemCount: customersCount, pageSize, pageIndex };
 };

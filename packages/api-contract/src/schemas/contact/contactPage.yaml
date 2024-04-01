@@ -1,11 +1,11 @@
 type: object
 required:
-  - page
+  - pageIndex
   - pageSize
   - totalItemCount
   - items
 properties:
-  page:
+  pageIndex:
     description: Page number
     type: integer
   pageSize:

@@ -1,6 +1,6 @@
 import { DataTable } from "@/components/datatable";
 import { Customer } from "@oxytrack/api-contract";
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, OnChangeFn, PaginationState } from "@tanstack/react-table";
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger, Input } from "@ui/components";
 import { MoreHorizontal } from "lucide-react";
 
@@ -47,11 +47,21 @@ export const customersTableColumns: ColumnDef<Customer>[] = [
 
 type CustomersDataTableProps = {
   data: Customer[];
+  totalItemCount: number;
   isLoading: boolean;
+  pagination: PaginationState;
   handleSetSearchTerm: (value: string) => void;
+  handleOnPaginationChange: OnChangeFn<PaginationState>;
 };
 
-export const CustomersDataTable = ({ data, isLoading, handleSetSearchTerm }: CustomersDataTableProps) => {
+export const CustomersDataTable = ({
+  data,
+  isLoading,
+  totalItemCount,
+  pagination,
+  handleSetSearchTerm,
+  handleOnPaginationChange,
+}: CustomersDataTableProps) => {
   return (
     <div className="h-full flex flex-col gap-3">
       <header className="flex justify-between items-center flex-shrink-0">
@@ -63,7 +73,16 @@ export const CustomersDataTable = ({ data, isLoading, handleSetSearchTerm }: Cus
           />
         </div>
       </header>
-      <DataTable isLoading={isLoading} columns={customersTableColumns} data={data} />
+      <div id="datatable" className="flex-grow-1 relative overflow-auto">
+        <DataTable
+          rowCount={totalItemCount}
+          isLoading={isLoading}
+          columns={customersTableColumns}
+          pagination={pagination}
+          data={data}
+          handleOnPaginationChange={handleOnPaginationChange}
+        />
+      </div>
     </div>
   );
 };

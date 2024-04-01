@@ -1,5 +1,4 @@
 import apis from "@/services/api";
-import { PageSizeEnum } from "@oxytrack/api-contract";
 import { operations } from "@oxytrack/api-contract/dist/api";
 import axios, { AxiosResponse, CancelTokenSource, RawAxiosRequestConfig } from "axios";
 import { useEffect, useState } from "react";
@@ -15,26 +14,27 @@ type ResponseType<T extends keyof typeof functionKeyMap> = operations[T]["respon
 
 interface FetcherArgs<T extends keyof typeof functionKeyMap> {
   key: T;
-  pageSize: PageSizeEnum;
-  page: number;
+  pageSize: number;
+  pageIndex: number;
   query?: string;
   options?: RawAxiosRequestConfig;
   cancelPreviousRequest?: boolean;
 }
 
 const fetcher = async <T extends keyof typeof functionKeyMap>(
-  { key, pageSize, page, query, options }: FetcherArgs<T>,
+  { key, pageSize, pageIndex, query, options }: FetcherArgs<T>,
   cancelTokenSource?: CancelTokenSource,
 ) => {
   const fetchDataFunction = functionKeyMap[key];
 
   try {
     if (fetchDataFunction) {
-      if (page !== undefined) {
+      if (pageIndex !== undefined) {
         // Pass the cancel token to the axios request config
-        const response = (await fetchDataFunction(pageSize, page, query, { ...options, cancelToken: cancelTokenSource?.token })) as AxiosResponse<
-          ResponseType<T>
-        >;
+        const response = (await fetchDataFunction(pageSize, pageIndex, query, {
+          ...options,
+          cancelToken: cancelTokenSource?.token,
+        })) as AxiosResponse<ResponseType<T>>;
         return response.data;
       }
     } else {
@@ -49,7 +49,7 @@ const fetcher = async <T extends keyof typeof functionKeyMap>(
 };
 
 const useCustomSWR = <T extends keyof typeof functionKeyMap>(
-  { key, page, pageSize, query, options, cancelPreviousRequest = true }: FetcherArgs<T>,
+  { key, pageIndex, pageSize, query, options, cancelPreviousRequest = true }: FetcherArgs<T>,
   config?: SWRConfiguration<any>,
 ) => {
   const [firstTimeLoader, setFirstTimeLoader] = useState(true);
@@ -69,7 +69,7 @@ const useCustomSWR = <T extends keyof typeof functionKeyMap>(
     return fetcher(fetcherArgs, cancelTokenSource);
   };
 
-  const result = useSWR(getFetcherArgs(key, pageSize, page, query, options), cancelPreviousRequest ? fetcherWithCancelToken : fetcher, config);
+  const result = useSWR(getFetcherArgs(key, pageSize, pageIndex, query, options), cancelPreviousRequest ? fetcherWithCancelToken : fetcher, config);
   useEffect(() => {
     if (firstTimeLoader && !result.isLoading) {
       setFirstTimeLoader(false);
@@ -80,13 +80,13 @@ const useCustomSWR = <T extends keyof typeof functionKeyMap>(
 
 const getFetcherArgs = <T extends keyof typeof functionKeyMap>(
   key: T,
-  pageSize: PageSizeEnum,
-  page: number,
+  pageSize: number,
+  pageIndex: number,
   query?: string,
   options?: RawAxiosRequestConfig,
   cancelPreviousRequest?: boolean,
 ): FetcherArgs<T> => {
-  return { key, pageSize, page, query, options, cancelPreviousRequest };
+  return { key, pageSize, pageIndex, query, options, cancelPreviousRequest };
 };
 
 export default useCustomSWR;

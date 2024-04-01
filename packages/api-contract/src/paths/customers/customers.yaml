@@ -39,8 +39,8 @@ get:
       description: Number of items per page
       required: true
       schema:
-        $ref: "../../schemas/common/PageSizeEnum.yaml"
-    - name: page
+        type: integer
+    - name: pageIndex
       in: query
       description: Page number
       required: true

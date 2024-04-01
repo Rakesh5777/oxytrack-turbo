@@ -1,7 +1,5 @@
 ErrorResponse:
   $ref: "./common/ErrorResponse.yaml"
-PageSizeEnum:
-  $ref: "./common/PageSizeEnum.yaml"
 MasterSignInRequest:
   $ref: "./masterUser/masterSignIn.yaml"
 MasterUserDetails:

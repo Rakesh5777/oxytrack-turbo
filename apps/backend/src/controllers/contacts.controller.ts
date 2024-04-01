@@ -10,8 +10,8 @@ export const createContactHandler = async (req: TypedRequest["createContact"], r
 };
 
 export const getContactsHandler = async (req: TypedRequest["getAllContacts"], res: TypedResponse<Responses["getAllContacts"]>) => {
-  const { page, pageSize, query } = req.query;
-  const contacts = await getContactPages(page, pageSize, query);
+  const { pageIndex, pageSize, query } = req.query;
+  const contacts = await getContactPages(pageIndex, pageSize, query);
   const totalItemCount = await getContactsCount(query);
-  return res.status(200).json({ items: contacts, page, pageSize, totalItemCount });
+  return res.status(200).json({ items: contacts, pageIndex, pageSize, totalItemCount });
 };

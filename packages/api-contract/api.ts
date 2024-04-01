@@ -116,7 +116,7 @@ export interface ContactPage {
      * @type {number}
      * @memberof ContactPage
      */
-    'page': number;
+    'pageIndex': number;
     /**
      * Number of items per page
      * @type {number}
@@ -236,7 +236,7 @@ export interface CustomerPage {
      * @type {number}
      * @memberof CustomerPage
      */
-    'page': number;
+    'pageIndex': number;
     /**
      * Number of items per page
      * @type {number}
@@ -461,22 +461,6 @@ export interface MasterUserSignIn200Response {
 /**
  * 
  * @export
- * @enum {string}
- */
-
-export const PageSizeEnum = {
-    NUMBER_10: 10,
-    NUMBER_20: 20,
-    NUMBER_50: 50,
-    NUMBER_100: 100
-} as const;
-
-export type PageSizeEnum = typeof PageSizeEnum[keyof typeof PageSizeEnum];
-
-
-/**
- * 
- * @export
  * @interface WritableContact
  */
 export interface WritableContact {
@@ -626,17 +610,17 @@ export const ContactApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary Get all contacts
-         * @param {PageSizeEnum} pageSize Number of items per page
-         * @param {number} page Page number
+         * @param {number} pageSize Number of items per page
+         * @param {number} pageIndex Page number
          * @param {string} [query] Search by contact name and number
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllContacts: async (pageSize: PageSizeEnum, page: number, query?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAllContacts: async (pageSize: number, pageIndex: number, query?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageSize' is not null or undefined
             assertParamExists('getAllContacts', 'pageSize', pageSize)
-            // verify required parameter 'page' is not null or undefined
-            assertParamExists('getAllContacts', 'page', page)
+            // verify required parameter 'pageIndex' is not null or undefined
+            assertParamExists('getAllContacts', 'pageIndex', pageIndex)
             const localVarPath = `/contacts`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -657,8 +641,8 @@ export const ContactApiAxiosParamCreator = function (configuration?: Configurati
                 localVarQueryParameter['pageSize'] = pageSize;
             }
 
-            if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
+            if (pageIndex !== undefined) {
+                localVarQueryParameter['pageIndex'] = pageIndex;
             }
 
             if (query !== undefined) {
@@ -702,14 +686,14 @@ export const ContactApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get all contacts
-         * @param {PageSizeEnum} pageSize Number of items per page
-         * @param {number} page Page number
+         * @param {number} pageSize Number of items per page
+         * @param {number} pageIndex Page number
          * @param {string} [query] Search by contact name and number
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAllContacts(pageSize: PageSizeEnum, page: number, query?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactPage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllContacts(pageSize, page, query, options);
+        async getAllContacts(pageSize: number, pageIndex: number, query?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContactPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllContacts(pageSize, pageIndex, query, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ContactApi.getAllContacts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -737,14 +721,14 @@ export const ContactApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary Get all contacts
-         * @param {PageSizeEnum} pageSize Number of items per page
-         * @param {number} page Page number
+         * @param {number} pageSize Number of items per page
+         * @param {number} pageIndex Page number
          * @param {string} [query] Search by contact name and number
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAllContacts(pageSize: PageSizeEnum, page: number, query?: string, options?: any): AxiosPromise<ContactPage> {
-            return localVarFp.getAllContacts(pageSize, page, query, options).then((request) => request(axios, basePath));
+        getAllContacts(pageSize: number, pageIndex: number, query?: string, options?: any): AxiosPromise<ContactPage> {
+            return localVarFp.getAllContacts(pageSize, pageIndex, query, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -771,15 +755,15 @@ export class ContactApi extends BaseAPI {
     /**
      * 
      * @summary Get all contacts
-     * @param {PageSizeEnum} pageSize Number of items per page
-     * @param {number} page Page number
+     * @param {number} pageSize Number of items per page
+     * @param {number} pageIndex Page number
      * @param {string} [query] Search by contact name and number
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ContactApi
      */
-    public getAllContacts(pageSize: PageSizeEnum, page: number, query?: string, options?: RawAxiosRequestConfig) {
-        return ContactApiFp(this.configuration).getAllContacts(pageSize, page, query, options).then((request) => request(this.axios, this.basePath));
+    public getAllContacts(pageSize: number, pageIndex: number, query?: string, options?: RawAxiosRequestConfig) {
+        return ContactApiFp(this.configuration).getAllContacts(pageSize, pageIndex, query, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -834,17 +818,17 @@ export const CustomerApiAxiosParamCreator = function (configuration?: Configurat
         /**
          * 
          * @summary Get Customers
-         * @param {PageSizeEnum} pageSize Number of items per page
-         * @param {number} page Page number
+         * @param {number} pageSize Number of items per page
+         * @param {number} pageIndex Page number
          * @param {string} [query] Search by customer name
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCustomers: async (pageSize: PageSizeEnum, page: number, query?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getCustomers: async (pageSize: number, pageIndex: number, query?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'pageSize' is not null or undefined
             assertParamExists('getCustomers', 'pageSize', pageSize)
-            // verify required parameter 'page' is not null or undefined
-            assertParamExists('getCustomers', 'page', page)
+            // verify required parameter 'pageIndex' is not null or undefined
+            assertParamExists('getCustomers', 'pageIndex', pageIndex)
             const localVarPath = `/customer`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -865,8 +849,8 @@ export const CustomerApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter['pageSize'] = pageSize;
             }
 
-            if (page !== undefined) {
-                localVarQueryParameter['page'] = page;
+            if (pageIndex !== undefined) {
+                localVarQueryParameter['pageIndex'] = pageIndex;
             }
 
             if (query !== undefined) {
@@ -910,14 +894,14 @@ export const CustomerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Get Customers
-         * @param {PageSizeEnum} pageSize Number of items per page
-         * @param {number} page Page number
+         * @param {number} pageSize Number of items per page
+         * @param {number} pageIndex Page number
          * @param {string} [query] Search by customer name
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCustomers(pageSize: PageSizeEnum, page: number, query?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CustomerPage>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCustomers(pageSize, page, query, options);
+        async getCustomers(pageSize: number, pageIndex: number, query?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CustomerPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCustomers(pageSize, pageIndex, query, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CustomerApi.getCustomers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -945,14 +929,14 @@ export const CustomerApiFactory = function (configuration?: Configuration, baseP
         /**
          * 
          * @summary Get Customers
-         * @param {PageSizeEnum} pageSize Number of items per page
-         * @param {number} page Page number
+         * @param {number} pageSize Number of items per page
+         * @param {number} pageIndex Page number
          * @param {string} [query] Search by customer name
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCustomers(pageSize: PageSizeEnum, page: number, query?: string, options?: any): AxiosPromise<CustomerPage> {
-            return localVarFp.getCustomers(pageSize, page, query, options).then((request) => request(axios, basePath));
+        getCustomers(pageSize: number, pageIndex: number, query?: string, options?: any): AxiosPromise<CustomerPage> {
+            return localVarFp.getCustomers(pageSize, pageIndex, query, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -979,15 +963,15 @@ export class CustomerApi extends BaseAPI {
     /**
      * 
      * @summary Get Customers
-     * @param {PageSizeEnum} pageSize Number of items per page
-     * @param {number} page Page number
+     * @param {number} pageSize Number of items per page
+     * @param {number} pageIndex Page number
      * @param {string} [query] Search by customer name
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CustomerApi
      */
-    public getCustomers(pageSize: PageSizeEnum, page: number, query?: string, options?: RawAxiosRequestConfig) {
-        return CustomerApiFp(this.configuration).getCustomers(pageSize, page, query, options).then((request) => request(this.axios, this.basePath));
+    public getCustomers(pageSize: number, pageIndex: number, query?: string, options?: RawAxiosRequestConfig) {
+        return CustomerApiFp(this.configuration).getCustomers(pageSize, pageIndex, query, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

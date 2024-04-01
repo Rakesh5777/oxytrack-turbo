@@ -6,15 +6,16 @@ import { Button } from "@ui/components";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import useDebounce from "@/hooks/useDebounce";
+import { OnChangeFn, PaginationState } from "@tanstack/react-table";
 
 export const CustomerDashboard = () => {
   const [searchTerm, setSearchTermState] = useState("");
   const [fromFilter, setFromFilter] = useState(false);
   const debouncedSearchTerm = useDebounce(searchTerm);
+  const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 1, pageSize: 10 });
   const { data, isLoading, error, isInitialLoading } = useCustomSWR({
     key: "getCustomers",
-    page: 1,
-    pageSize: 10,
+    ...pagination,
     query: debouncedSearchTerm,
   });
 
@@ -51,7 +52,10 @@ export const CustomerDashboard = () => {
             <CustomersDataTable
               isLoading={isLoading && !fromFilter && !isInitialLoading}
               data={data?.items as Customer[]}
+              totalItemCount={data?.totalItemCount || 0}
+              pagination={pagination}
               handleSetSearchTerm={onSetSearchTerm}
+              handleOnPaginationChange={setPagination}
             />
           </div>
         )}
