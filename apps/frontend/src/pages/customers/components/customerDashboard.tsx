@@ -30,6 +30,7 @@ export const CustomerDashboard = () => {
   const showEmptyState = data?.totalItemCount === 0 && !debouncedSearchTerm;
 
   const onSetSearchTerm = (value: string) => {
+    setPagination({ pageIndex: 0, pageSize: 10 });
     setSearchTermState(value);
     setFromFilter(true);
   };
