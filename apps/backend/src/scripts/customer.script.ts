@@ -63,7 +63,7 @@ export const getCustomersPage = async (page: number, pageSize: number, query?: s
   }
   const customers = await prisma.customers.findMany({
     where,
-    skip: (page - 1) * pageSize,
+    skip: page * pageSize,
     take: pageSize,
     include: {
       entityRequirements: true,

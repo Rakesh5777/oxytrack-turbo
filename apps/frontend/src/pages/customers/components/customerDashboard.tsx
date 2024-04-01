@@ -12,7 +12,7 @@ export const CustomerDashboard = () => {
   const [searchTerm, setSearchTermState] = useState("");
   const [fromFilter, setFromFilter] = useState(false);
   const debouncedSearchTerm = useDebounce(searchTerm);
-  const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 1, pageSize: 10 });
+  const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize: 10 });
   const { data, isLoading, error, isInitialLoading } = useCustomSWR({
     key: "getCustomers",
     ...pagination,

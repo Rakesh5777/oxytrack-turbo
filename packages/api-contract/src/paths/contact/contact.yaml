@@ -48,7 +48,7 @@ get:
       required: true
       schema:
         type: integer
-        minimum: 1
+        minimum: 0
     - name: query
       in: query
       description: Search by contact name and number

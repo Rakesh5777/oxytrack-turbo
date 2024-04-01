@@ -41,10 +41,7 @@ export function DataTable<TData, TValue>({
     manualPagination: true,
     rowCount: rowCount || 0,
     state: {
-      pagination: {
-        pageIndex: pagination.pageIndex - 1,
-        pageSize: pagination.pageSize,
-      },
+      pagination,
     },
     onPaginationChange: handleOnPaginationChange,
     getCoreRowModel: getCoreRowModel(),
