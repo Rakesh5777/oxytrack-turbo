@@ -55,6 +55,16 @@ get:
         type: string
       allowEmptyValue: true
       allowReserved: true
+    - name: type
+      in: query
+      description: type of customer
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      allowEmptyValue: true
+      allowReserved: true
   responses:
     "200":
       description: List of customers

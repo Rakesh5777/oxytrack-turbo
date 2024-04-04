@@ -1,7 +1,16 @@
 import { DataTable } from "@/components/datatable";
 import { Customer } from "@oxytrack/api-contract";
 import { ColumnDef, OnChangeFn, PaginationState } from "@tanstack/react-table";
-import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger, Input } from "@ui/components";
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+  Input,
+  MultiSelectDropdown,
+} from "@ui/components";
 import { MoreHorizontal } from "lucide-react";
 
 export const customersTableColumns: ColumnDef<Customer>[] = [
@@ -50,6 +59,8 @@ type CustomersDataTableProps = {
   totalItemCount: number;
   isLoading: boolean;
   pagination: PaginationState;
+  selectedValues: string[];
+  setSelectedValues: (selectedValues: string[]) => void;
   handleSetSearchTerm: (value: string) => void;
   handleOnPaginationChange: OnChangeFn<PaginationState>;
 };
@@ -59,6 +70,8 @@ export const CustomersDataTable = ({
   isLoading,
   totalItemCount,
   pagination,
+  selectedValues,
+  setSelectedValues,
   handleSetSearchTerm,
   handleOnPaginationChange,
 }: CustomersDataTableProps) => {
@@ -72,6 +85,17 @@ export const CustomersDataTable = ({
             onChange={(event) => handleSetSearchTerm(event?.target?.value)}
           />
         </div>
+        <MultiSelectDropdown
+          title="Type"
+          options={[
+            { label: "Hospital", value: "HOSPITAL" },
+            { label: "Ambulance", value: "AMBULANCE" },
+            { label: "Household", value: "HOUSEHOLD" },
+            { label: "Laboratory", value: "LABORATORY" },
+          ]}
+          selectedValues={selectedValues}
+          setSelectedValues={setSelectedValues}
+        />
       </header>
       <div id="datatable" className="flex-grow-1 relative overflow-auto">
         <DataTable

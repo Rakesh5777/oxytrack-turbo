@@ -18,7 +18,7 @@ export const createCustomerHandler = async (req: TypedRequest["createCustomer"],
 };
 
 export const getCustomersHandler = async (req: TypedRequest["getCustomers"], res: TypedResponse<Responses["getCustomers"]>) => {
-  const { pageIndex, pageSize, query } = req.query;
-  const customers = await getCustomers(pageIndex, pageSize, query);
+  const { pageIndex, pageSize, query, type } = req.query;
+  const customers = await getCustomers(pageIndex, pageSize, query, type);
   return res.status(200).json(customers);
 };

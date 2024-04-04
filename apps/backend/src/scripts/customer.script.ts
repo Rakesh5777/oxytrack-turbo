@@ -51,13 +51,21 @@ export const getCustomerDetailsById = async (customerId: string): Promise<Custom
   };
 };
 
-export const getCustomersPage = async (page: number, pageSize: number, query?: string): Promise<Customer[]> => {
+export const getCustomersPage = async (page: number, pageSize: number, query?: string, type?: string[]): Promise<Customer[]> => {
   let where = {};
   if (query) {
     where = {
       name: {
         contains: query,
         mode: "insensitive",
+      },
+    };
+  }
+  if (type) {
+    where = {
+      ...where,
+      type: {
+        in: type,
       },
     };
   }
@@ -81,11 +89,19 @@ export const getCustomersPage = async (page: number, pageSize: number, query?: s
   });
 };
 
-export const getCustomersCount = async (query?: string): Promise<number> => {
+export const getCustomersCount = async (query?: string, type?: string[]): Promise<number> => {
   let where = {};
   if (query) {
     where = {
       name: query,
+    };
+  }
+  if (type) {
+    where = {
+      ...where,
+      type: {
+        in: type,
+      },
     };
   }
   return await prisma.customers.count({ where });

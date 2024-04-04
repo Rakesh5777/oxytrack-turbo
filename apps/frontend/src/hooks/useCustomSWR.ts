@@ -17,12 +17,13 @@ interface FetcherArgs<T extends keyof typeof functionKeyMap> {
   pageSize: number;
   pageIndex: number;
   query?: string;
+  type?: string[];
   options?: RawAxiosRequestConfig;
   cancelPreviousRequest?: boolean;
 }
 
 const fetcher = async <T extends keyof typeof functionKeyMap>(
-  { key, pageSize, pageIndex, query, options }: FetcherArgs<T>,
+  { key, pageSize, pageIndex, query, type, options }: FetcherArgs<T>,
   cancelTokenSource?: CancelTokenSource,
 ) => {
   const fetchDataFunction = functionKeyMap[key];
@@ -31,7 +32,7 @@ const fetcher = async <T extends keyof typeof functionKeyMap>(
     if (fetchDataFunction) {
       if (pageIndex !== undefined) {
         // Pass the cancel token to the axios request config
-        const response = (await fetchDataFunction(pageSize, pageIndex, query, {
+        const response = (await fetchDataFunction(pageSize, pageIndex, query, type, {
           ...options,
           cancelToken: cancelTokenSource?.token,
         })) as AxiosResponse<ResponseType<T>>;
@@ -49,7 +50,7 @@ const fetcher = async <T extends keyof typeof functionKeyMap>(
 };
 
 const useCustomSWR = <T extends keyof typeof functionKeyMap>(
-  { key, pageIndex, pageSize, query, options, cancelPreviousRequest = true }: FetcherArgs<T>,
+  { key, pageIndex, pageSize, query, type, options, cancelPreviousRequest = true }: FetcherArgs<T>,
   config?: SWRConfiguration<any>,
 ) => {
   const [firstTimeLoader, setFirstTimeLoader] = useState(true);
@@ -69,7 +70,11 @@ const useCustomSWR = <T extends keyof typeof functionKeyMap>(
     return fetcher(fetcherArgs, cancelTokenSource);
   };
 
-  const result = useSWR(getFetcherArgs(key, pageSize, pageIndex, query, options), cancelPreviousRequest ? fetcherWithCancelToken : fetcher, config);
+  const result = useSWR(
+    getFetcherArgs(key, pageSize, pageIndex, query, type, options),
+    cancelPreviousRequest ? fetcherWithCancelToken : fetcher,
+    config,
+  );
   useEffect(() => {
     if (firstTimeLoader && !result.isLoading) {
       setFirstTimeLoader(false);
@@ -83,10 +88,11 @@ const getFetcherArgs = <T extends keyof typeof functionKeyMap>(
   pageSize: number,
   pageIndex: number,
   query?: string,
+  type?: string[],
   options?: RawAxiosRequestConfig,
   cancelPreviousRequest?: boolean,
 ): FetcherArgs<T> => {
-  return { key, pageSize, pageIndex, query, options, cancelPreviousRequest };
+  return { key, pageSize, pageIndex, query, type, options, cancelPreviousRequest };
 };
 
 export default useCustomSWR;

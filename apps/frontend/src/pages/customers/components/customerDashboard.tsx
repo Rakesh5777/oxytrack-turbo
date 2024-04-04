@@ -5,13 +5,16 @@ import { CustomersDataTable } from "./customersDataTable";
 import { Button } from "@ui/components";
 import { Link } from "react-router-dom";
 import usePaginationParams from "@/hooks/usePaginationParams";
+import { useState } from "react";
 
 export const CustomerDashboard = () => {
   const { pagination, searchTerm, fromFilter, handleSetSearchTerm, setPagination } = usePaginationParams();
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const { data, isLoading, error, isInitialLoading } = useCustomSWR({
     key: "getCustomers",
     ...pagination,
     query: searchTerm,
+    type: ["HOSPITAL"],
   });
 
   if (isInitialLoading) {
@@ -44,6 +47,8 @@ export const CustomerDashboard = () => {
               data={data?.items as Customer[]}
               totalItemCount={data?.totalItemCount || 0}
               pagination={pagination}
+              selectedValues={selectedValues}
+              setSelectedValues={setSelectedValues}
               handleSetSearchTerm={handleSetSearchTerm}
               handleOnPaginationChange={setPagination}
             />
