@@ -14,7 +14,7 @@ export const CustomerDashboard = () => {
     key: "getCustomers",
     ...pagination,
     query: searchTerm,
-    type: ["HOSPITAL"],
+    type: selectedValues,
   });
 
   if (isInitialLoading) {
@@ -25,7 +25,7 @@ export const CustomerDashboard = () => {
     return <div>Error</div>;
   }
 
-  const showEmptyState = data?.totalItemCount === 0 && !searchTerm;
+  const showEmptyState = data?.totalItemCount === 0 && !searchTerm && selectedValues.length === 0;
 
   return (
     <div className="flex flex-col h-full">

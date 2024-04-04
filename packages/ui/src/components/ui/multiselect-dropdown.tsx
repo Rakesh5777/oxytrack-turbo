@@ -34,10 +34,7 @@ export const MultiSelectDropdown = ({ title, options, selectedValues, setSelecte
           {selectedValuesSet?.size > 0 && (
             <>
               <Separator orientation="vertical" className="mx-2 h-4" />
-              <Badge variant="secondary" className="rounded-sm px-1 font-normal lg:hidden">
-                {selectedValuesSet.size}
-              </Badge>
-              <div className="hidden space-x-1 lg:flex">
+              <div className="space-x-1 lg:flex">
                 {selectedValuesSet.size > 2 ? (
                   <Badge variant="secondary" className="rounded-sm px-1 font-normal">
                     {selectedValuesSet.size} selected
