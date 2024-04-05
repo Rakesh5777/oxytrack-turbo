@@ -77,7 +77,7 @@ export const CustomersDataTable = ({
 }: CustomersDataTableProps) => {
   return (
     <div className="h-full flex flex-col gap-3">
-      <header className="flex items-center gap-2 flex-shrink-0">
+      <header className="flex justify-between md:justify-start items-center gap-2 flex-shrink-0">
         <div>
           <Input
             className="h-8 w-[150px] lg:w-[320px]"
