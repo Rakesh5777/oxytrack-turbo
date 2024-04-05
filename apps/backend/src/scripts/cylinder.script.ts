@@ -51,7 +51,7 @@ export const getCylinders = async (
 
   return await prisma.cylinders.findMany({
     where,
-    skip: (page - 1) * pageSize,
+    skip: page * pageSize,
     take: pageSize,
   });
 };
