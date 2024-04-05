@@ -79,3 +79,25 @@ model CustomerContact {
 
   @@id([customerId, contactId])
 }
+
+enum CylinderType {
+  OXYGEN
+  NITRUOUS_OXIDE
+  CARBON_DIOXIDE
+}
+
+enum CylinderSize {
+  TYPE_A
+  TYPE_B
+  TYPE_D
+}
+
+model Cylinders {
+  id           String       @id @unique @default(dbgenerated("gen_random_uuid()"))
+  cylinderId   String       @unique
+  type         CylinderType
+  size         CylinderSize
+  purchaseDate DateTime
+  active       Boolean      @default(true)
+  createdAt    DateTime     @default(now())
+}
