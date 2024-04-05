@@ -1,0 +1,23 @@
+type: object
+required:
+  - cylinderId
+  - type
+  - size
+properties:
+  cylinderId:
+    description: Id of the cylinder
+    type: string
+  type:
+    description: Type of the cylinder
+    $ref: "./cylinderTypeEnum.yaml"
+  size:
+    description: Size of the cylinder
+    $ref: "./cylinderSizeEnum.yaml"
+  purchaseDate:
+    description: Purchase date of the cylinder
+    type: string
+    format: date-time
+  active:
+    description: Status of the customer
+    type: boolean
+    default: true

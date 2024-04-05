@@ -1,0 +1,21 @@
+type: object
+required:
+  - pageIndex
+  - pageSize
+  - totalItemCount
+  - items
+properties:
+  pageIndex:
+    description: Page number
+    type: integer
+  pageSize:
+    description: Number of items per page
+    type: integer
+  totalItemCount:
+    description: Total number of items
+    type: integer
+  items:
+    description: List of customers
+    type: array
+    items:
+      $ref: "./../../schemas/cylinder/cylinder.yaml"

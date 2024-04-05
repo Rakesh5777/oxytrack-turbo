@@ -1,0 +1,96 @@
+post: 
+  tags:
+    - Cylinder
+  summary: Create Cylinder
+  operationId: createCylinder
+  security:
+    - bearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "./../../schemas/cylinder/writableCylinder.yaml"
+  responses:
+    "201":
+      description: added cylinder details
+      content:
+        application/json:
+          schema:
+            $ref: "./../../schemas/cylinder/cylinder.yaml"
+    "400":
+      $ref: "./../../responses.yaml#/BadRequest"
+    "403":
+      $ref: "./../../responses.yaml#/Forbidden"
+    "408":
+      $ref: "./../../responses.yaml#/RequestTimeout"
+    "409":
+      $ref: "./../../responses.yaml#/Conflict"
+    "500":
+      $ref: "./../../responses.yaml#/InternalServerError"
+get:
+  tags:
+    - Cylinder
+  summary: Get all cylinders
+  operationId: getAllCylinders
+  security:
+    - bearerAuth: []
+  parameters:
+    - name: pageSize
+      in: query
+      description: Number of items per page
+      required: true
+      schema:
+        type: integer
+    - name: pageIndex
+      in: query
+      description: Page number
+      required: true
+      schema:
+        type: integer
+        minimum: 0
+    - name: query
+      in: query
+      description: Search by cylinder type and size
+      required: false
+      schema:
+        type: string
+      allowEmptyValue: true
+      allowReserved: true
+    - name: type
+      in: query
+      description: type of cylinder
+      required: false
+      schema:
+        type: array
+        items:
+          $ref: "./../../schemas/cylinder/cylinderTypeEnum.yaml"
+      allowEmptyValue: true
+      allowReserved: true
+    - name: size
+      in: query
+      description: size of cylinder
+      required: false
+      schema:
+        type: array
+        items:
+          $ref: "./../../schemas/cylinder/cylinderSizeEnum.yaml"
+      allowEmptyValue: true
+      allowReserved: true
+  responses:
+    "200":
+      description: List of cylinders
+      content:
+        application/json:
+          schema:
+            $ref: "./../../schemas/cylinder/cylinderPage.yaml"
+    "400":
+      $ref: "./../../responses.yaml#/BadRequest"
+    "403":
+      $ref: "./../../responses.yaml#/Forbidden"
+    "408":
+      $ref: "./../../responses.yaml#/RequestTimeout"
+    "409":
+      $ref: "./../../responses.yaml#/Conflict"
+    "500":
+      $ref: "./../../responses.yaml#/InternalServerError"

@@ -1,0 +1,5 @@
+type: string
+enum:
+  - OXYGEN
+  - NITRUOUS_OXIDE
+  - CARBON_DIOXIDE

@@ -259,6 +259,118 @@ export interface CustomerPage {
 /**
  * 
  * @export
+ * @interface Cylinder
+ */
+export interface Cylinder {
+    /**
+     * unique id of record
+     * @type {string}
+     * @memberof Cylinder
+     */
+    'id'?: string;
+    /**
+     * Id of the cylinder
+     * @type {string}
+     * @memberof Cylinder
+     */
+    'cylinderId': string;
+    /**
+     * 
+     * @type {CylinderTypeEnum}
+     * @memberof Cylinder
+     */
+    'type': CylinderTypeEnum;
+    /**
+     * 
+     * @type {CylinderSizeEnum}
+     * @memberof Cylinder
+     */
+    'size': CylinderSizeEnum;
+    /**
+     * Purchase date of the cylinder
+     * @type {Date}
+     * @memberof Cylinder
+     */
+    'purchaseDate'?: Date;
+    /**
+     * Created date of the customer
+     * @type {Date}
+     * @memberof Cylinder
+     */
+    'createdAt'?: Date;
+    /**
+     * Status of the customer
+     * @type {boolean}
+     * @memberof Cylinder
+     */
+    'active'?: boolean;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface CylinderPage
+ */
+export interface CylinderPage {
+    /**
+     * Page number
+     * @type {number}
+     * @memberof CylinderPage
+     */
+    'pageIndex': number;
+    /**
+     * Number of items per page
+     * @type {number}
+     * @memberof CylinderPage
+     */
+    'pageSize': number;
+    /**
+     * Total number of items
+     * @type {number}
+     * @memberof CylinderPage
+     */
+    'totalItemCount': number;
+    /**
+     * List of customers
+     * @type {Array<Cylinder>}
+     * @memberof CylinderPage
+     */
+    'items': Array<Cylinder>;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const CylinderSizeEnum = {
+    A: 'TYPE_A',
+    B: 'TYPE_B',
+    D: 'TYPE_D'
+} as const;
+
+export type CylinderSizeEnum = typeof CylinderSizeEnum[keyof typeof CylinderSizeEnum];
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const CylinderTypeEnum = {
+    Oxygen: 'OXYGEN',
+    NitruousOxide: 'NITRUOUS_OXIDE',
+    CarbonDioxide: 'CARBON_DIOXIDE'
+} as const;
+
+export type CylinderTypeEnum = typeof CylinderTypeEnum[keyof typeof CylinderTypeEnum];
+
+
+/**
+ * 
+ * @export
  * @interface EntityRequirements
  */
 export interface EntityRequirements {
@@ -559,6 +671,45 @@ export const WritableCustomerTypeEnum = {
 } as const;
 
 export type WritableCustomerTypeEnum = typeof WritableCustomerTypeEnum[keyof typeof WritableCustomerTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface WritableCylinder
+ */
+export interface WritableCylinder {
+    /**
+     * Id of the cylinder
+     * @type {string}
+     * @memberof WritableCylinder
+     */
+    'cylinderId': string;
+    /**
+     * 
+     * @type {CylinderTypeEnum}
+     * @memberof WritableCylinder
+     */
+    'type': CylinderTypeEnum;
+    /**
+     * 
+     * @type {CylinderSizeEnum}
+     * @memberof WritableCylinder
+     */
+    'size': CylinderSizeEnum;
+    /**
+     * Purchase date of the cylinder
+     * @type {Date}
+     * @memberof WritableCylinder
+     */
+    'purchaseDate'?: Date;
+    /**
+     * Status of the customer
+     * @type {boolean}
+     * @memberof WritableCylinder
+     */
+    'active'?: boolean;
+}
+
 
 
 /**
@@ -980,6 +1131,230 @@ export class CustomerApi extends BaseAPI {
      */
     public getCustomers(pageSize: number, pageIndex: number, query?: string, type?: Array<string>, options?: RawAxiosRequestConfig) {
         return CustomerApiFp(this.configuration).getCustomers(pageSize, pageIndex, query, type, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * CylinderApi - axios parameter creator
+ * @export
+ */
+export const CylinderApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @summary Create Cylinder
+         * @param {WritableCylinder} writableCylinder 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createCylinder: async (writableCylinder: WritableCylinder, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'writableCylinder' is not null or undefined
+            assertParamExists('createCylinder', 'writableCylinder', writableCylinder)
+            const localVarPath = `/cylinder`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(writableCylinder, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get all cylinders
+         * @param {number} pageSize Number of items per page
+         * @param {number} pageIndex Page number
+         * @param {string} [query] Search by cylinder type and size
+         * @param {Array<CylinderTypeEnum>} [type] type of cylinder
+         * @param {Array<CylinderSizeEnum>} [size] size of cylinder
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllCylinders: async (pageSize: number, pageIndex: number, query?: string, type?: Array<CylinderTypeEnum>, size?: Array<CylinderSizeEnum>, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'pageSize' is not null or undefined
+            assertParamExists('getAllCylinders', 'pageSize', pageSize)
+            // verify required parameter 'pageIndex' is not null or undefined
+            assertParamExists('getAllCylinders', 'pageIndex', pageIndex)
+            const localVarPath = `/cylinder`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+            if (pageIndex !== undefined) {
+                localVarQueryParameter['pageIndex'] = pageIndex;
+            }
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
+            }
+
+            if (type) {
+                localVarQueryParameter['type'] = type;
+            }
+
+            if (size) {
+                localVarQueryParameter['size'] = size;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * CylinderApi - functional programming interface
+ * @export
+ */
+export const CylinderApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = CylinderApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @summary Create Cylinder
+         * @param {WritableCylinder} writableCylinder 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createCylinder(writableCylinder: WritableCylinder, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Cylinder>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createCylinder(writableCylinder, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CylinderApi.createCylinder']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get all cylinders
+         * @param {number} pageSize Number of items per page
+         * @param {number} pageIndex Page number
+         * @param {string} [query] Search by cylinder type and size
+         * @param {Array<CylinderTypeEnum>} [type] type of cylinder
+         * @param {Array<CylinderSizeEnum>} [size] size of cylinder
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllCylinders(pageSize: number, pageIndex: number, query?: string, type?: Array<CylinderTypeEnum>, size?: Array<CylinderSizeEnum>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CylinderPage>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllCylinders(pageSize, pageIndex, query, type, size, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CylinderApi.getAllCylinders']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * CylinderApi - factory interface
+ * @export
+ */
+export const CylinderApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = CylinderApiFp(configuration)
+    return {
+        /**
+         * 
+         * @summary Create Cylinder
+         * @param {WritableCylinder} writableCylinder 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createCylinder(writableCylinder: WritableCylinder, options?: any): AxiosPromise<Cylinder> {
+            return localVarFp.createCylinder(writableCylinder, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get all cylinders
+         * @param {number} pageSize Number of items per page
+         * @param {number} pageIndex Page number
+         * @param {string} [query] Search by cylinder type and size
+         * @param {Array<CylinderTypeEnum>} [type] type of cylinder
+         * @param {Array<CylinderSizeEnum>} [size] size of cylinder
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllCylinders(pageSize: number, pageIndex: number, query?: string, type?: Array<CylinderTypeEnum>, size?: Array<CylinderSizeEnum>, options?: any): AxiosPromise<CylinderPage> {
+            return localVarFp.getAllCylinders(pageSize, pageIndex, query, type, size, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * CylinderApi - object-oriented interface
+ * @export
+ * @class CylinderApi
+ * @extends {BaseAPI}
+ */
+export class CylinderApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create Cylinder
+     * @param {WritableCylinder} writableCylinder 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CylinderApi
+     */
+    public createCylinder(writableCylinder: WritableCylinder, options?: RawAxiosRequestConfig) {
+        return CylinderApiFp(this.configuration).createCylinder(writableCylinder, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get all cylinders
+     * @param {number} pageSize Number of items per page
+     * @param {number} pageIndex Page number
+     * @param {string} [query] Search by cylinder type and size
+     * @param {Array<CylinderTypeEnum>} [type] type of cylinder
+     * @param {Array<CylinderSizeEnum>} [size] size of cylinder
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CylinderApi
+     */
+    public getAllCylinders(pageSize: number, pageIndex: number, query?: string, type?: Array<CylinderTypeEnum>, size?: Array<CylinderSizeEnum>, options?: RawAxiosRequestConfig) {
+        return CylinderApiFp(this.configuration).getAllCylinders(pageSize, pageIndex, query, type, size, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

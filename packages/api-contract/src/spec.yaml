@@ -34,3 +34,5 @@ paths:
     $ref: "./paths/contact/contact.yaml"
   /customer:
     $ref: "./paths/customers/customers.yaml"
+  /cylinder:
+    $ref: "./paths/cylinder/cylinder.yaml"

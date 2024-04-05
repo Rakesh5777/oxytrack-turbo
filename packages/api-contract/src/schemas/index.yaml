@@ -26,3 +26,13 @@ AmbulanceRequirement:
   $ref: "./customers/customerType/ambulance.yaml"
 laboratoryRequirement:
   $ref: "./customers/customerType/laboratory.yaml"
+Cylinder:
+  $ref: "./cylinder/cylinder.yaml"
+WritableCylinder:
+  $ref: "./cylinder/writableCylinder.yaml"
+CylinderPage:
+  $ref: "./cylinder/cylinderPage.yaml"
+CylinderSizeEnum:
+  $ref: "./cylinder/cylinderSizeEnum.yaml"
+CylinderTypeEnum:
+  $ref: "./cylinder/cylinderTypeEnum.yaml"
