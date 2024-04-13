@@ -16,9 +16,9 @@ const sideNavList = [
     path: "/customers",
   },
   {
-    name: "Inventory",
+    name: "Cylinders",
     icon: ArchiveIcon,
-    path: "/inventory",
+    path: "/cylinders",
   },
 ];
 

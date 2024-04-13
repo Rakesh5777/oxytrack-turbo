@@ -21,6 +21,9 @@
       "dependsOn": ["^db:generate", "^check-and-build-contract"],
       "cache": false
     },
+    "db:studio": {
+      "cache": false
+    },
     "lint": {
       "dependsOn": ["^lint"]
     }

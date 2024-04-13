@@ -24,7 +24,7 @@ export const getCylinders = async (
   let where = {};
   if (query) {
     where = {
-      type: {
+      cylinderId: {
         contains: query,
         mode: "insensitive",
       },
@@ -60,7 +60,10 @@ export const getCylindersCount = async (query?: string, type?: CylinderTypeEnum[
   let where = {};
   if (query) {
     where = {
-      type: query,
+      cylinderId: {
+        contains: query,
+        mode: "insensitive",
+      },
     };
   }
 

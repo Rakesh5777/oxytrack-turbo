@@ -93,7 +93,10 @@ export const getCustomersCount = async (query?: string, type?: string[]): Promis
   let where = {};
   if (query) {
     where = {
-      name: query,
+      name: {
+        contains: query,
+        mode: "insensitive",
+      },
     };
   }
   if (type) {

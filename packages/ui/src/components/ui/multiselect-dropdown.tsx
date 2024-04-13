@@ -16,14 +16,21 @@ import {
 } from "../index";
 import { CheckIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 
-type MultiSelectDropdownProps = {
+type MultiSelectDropdownProps<T = string> = {
   title: string;
-  options: { label: string; value: string; icon?: any }[];
-  selectedValues: string[];
-  setSelectedValues: (selectedValues: string[]) => void;
+  options: { label: string; value: T; icon?: any }[];
+  selectedLength?: number;
+  selectedValues: T[];
+  setSelectedValues: (selectedValues: T[]) => void;
 };
 
-export const MultiSelectDropdown = ({ title, options, selectedValues, setSelectedValues }: MultiSelectDropdownProps) => {
+export const MultiSelectDropdown = <T extends string>({
+  title,
+  options,
+  selectedLength = 2,
+  selectedValues,
+  setSelectedValues,
+}: MultiSelectDropdownProps<T>) => {
   const selectedValuesSet = new Set(selectedValues);
   return (
     <Popover>
@@ -35,9 +42,9 @@ export const MultiSelectDropdown = ({ title, options, selectedValues, setSelecte
             <>
               <Separator orientation="vertical" className="mx-2 h-4" />
               <div className="space-x-1 lg:flex">
-                {selectedValuesSet.size > 2 ? (
+                {selectedValuesSet.size > selectedLength ? (
                   <Badge variant="secondary" className="rounded-sm px-1 font-normal">
-                    {selectedValuesSet.size} selected
+                    {selectedValuesSet.size}
                   </Badge>
                 ) : (
                   options
