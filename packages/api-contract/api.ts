@@ -287,6 +287,12 @@ export interface Cylinder {
      */
     'size': CylinderSizeEnum;
     /**
+     * Id of the customer
+     * @type {string}
+     * @memberof Cylinder
+     */
+    'customerId'?: string;
+    /**
      * Purchase date of the cylinder
      * @type {Date}
      * @memberof Cylinder
@@ -696,6 +702,12 @@ export interface WritableCylinder {
      * @memberof WritableCylinder
      */
     'size': CylinderSizeEnum;
+    /**
+     * Id of the customer
+     * @type {string}
+     * @memberof WritableCylinder
+     */
+    'customerId'?: string;
     /**
      * Purchase date of the cylinder
      * @type {Date}

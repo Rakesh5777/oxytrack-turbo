@@ -18,7 +18,7 @@ function isRawAxiosRequestConfig(obj: any): obj is RawAxiosRequestConfig {
   return typeof obj === "object" && obj !== null && !Array.isArray(obj);
 }
 
-const fetcher = async <T extends keyof typeof functionKeyMap>({ key, args }: FetcherArgs<T>, cancelTokenSource?: CancelTokenSource): Promise<any> => {
+const fetcher = async <T extends keyof typeof functionKeyMap>({ key, args }: FetcherArgs<T>, cancelTokenSource?: CancelTokenSource) => {
   const fetchDataFunction = functionKeyMap[key];
   let options = args?.[args?.length - 1];
   if (args && isRawAxiosRequestConfig(options)) {

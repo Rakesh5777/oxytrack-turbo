@@ -2,6 +2,7 @@ import apis from "@/services/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CylinderSizeEnum, CylinderTypeEnum } from "@oxytrack/api-contract";
 import {
+  AutoComplete,
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
@@ -26,7 +27,10 @@ import {
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { z } from "zod";
+import { custom, z } from "zod";
+import useCustomSWR from "@/hooks/useCustomSWR";
+import usePaginationParams from "@/hooks/usePaginationParams";
+import { useState } from "react";
 
 const createCylinderSchema = z.object({
   cylinderId: z.string().min(1, "Kindly enter id").max(255),
@@ -37,7 +41,10 @@ const createCylinderSchema = z.object({
 
 export const CreateCylinder = () => {
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const { pagination, searchTerm, handleSetSearchTerm, setPagination } = usePaginationParams({ pageIndex: 0, pageSize: 50 });
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { data: customers, error, isInitialLoading } = useCustomSWR({ key: "getCustomers" }, pagination.pageSize, pagination.pageIndex, searchTerm);
 
   const form = useForm({
     resolver: zodResolver(createCylinderSchema),
@@ -45,9 +52,18 @@ export const CreateCylinder = () => {
       cylinderId: "",
       type: CylinderTypeEnum.Oxygen,
       size: CylinderSizeEnum.A,
+      customerId: "",
       purchaseDate: new Date(),
     },
   });
+
+  if (isInitialLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error</div>;
+  }
 
   const onSubmit = async (values: z.infer<typeof createCylinderSchema>) => {
     setIsLoading(true);
@@ -130,11 +146,31 @@ export const CreateCylinder = () => {
                       <SelectItem key={CylinderSizeEnum.B} value={CylinderSizeEnum.B}>
                         Type B
                       </SelectItem>
-                      <SelectItem key={CylinderSizeEnum.C} value={CylinderSizeEnum.D}>
+                      <SelectItem key={CylinderSizeEnum.D} value={CylinderSizeEnum.D}>
                         Type D
                       </SelectItem>
                     </SelectContent>
                   </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="customerId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Customers</FormLabel>
+                <FormControl>
+                  <AutoComplete
+                    placeholder="Search customers..."
+                    options={customers?.items || []}
+                    valueKey="id"
+                    labelKey="name"
+                    selectedValue={field.value}
+                    setSelectedValue={field.onChange}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -24,6 +24,17 @@ model MasterUsers {
   active       Boolean @default(true)
 }
 
+model Employees {
+  id                  String                @id @unique @default(dbgenerated("gen_random_uuid()"))
+  name                String
+  email               String                @unique
+  mobileNumber        String                @unique
+  password            String
+  active              Boolean               @default(true)
+  createdAt           DateTime              @default(now())
+  cylinderTransaction CylinderTransaction[]
+}
+
 enum CustomerType {
   HOSPITAL
   AMBULANCE
@@ -42,6 +53,8 @@ model Customers {
   contacts           CustomerContact[]
   entityRequirements EntityRequirment[]
   additionalRecords  AdditionalRecord[]
+  cylinders          Cylinders[]
+  locations          Location[]
   active             Boolean            @default(true)
   createdAt          DateTime           @default(now())
 }
@@ -70,7 +83,6 @@ model Contact {
   active       Boolean           @default(true)
 }
 
-// Join table for many-to-many relationship between Customer and Contact
 model CustomerContact {
   customerId String
   contactId  String
@@ -92,12 +104,70 @@ enum CylinderSize {
   TYPE_D
 }
 
+enum CylinderState {
+  FULL
+  EMPTY
+  IN_USE
+  IN_SERVICE
+  IN_REPAIR
+}
+
 model Cylinders {
-  id           String       @id @unique @default(dbgenerated("gen_random_uuid()"))
-  cylinderId   String       @unique
-  type         CylinderType
-  size         CylinderSize
-  purchaseDate DateTime
-  active       Boolean      @default(true)
-  createdAt    DateTime     @default(now())
+  id                  String                @id @unique @default(dbgenerated("gen_random_uuid()"))
+  cylinderId          String                @unique
+  type                CylinderType
+  size                CylinderSize
+  isOwn               Boolean               @default(true)
+  customer_id         String?
+  customers           Customers?            @relation(fields: [customer_id], references: [id])
+  cylinderState       CylinderState         @default(FULL)
+  currentLocationId   String
+  currentLocation     Location              @relation(fields: [currentLocationId], references: [id])
+  purchaseDate        DateTime
+  active              Boolean               @default(true)
+  createdAt           DateTime              @default(now())
+  cylinderTransaction CylinderTransaction[]
+}
+
+enum LocationEntityTypes {
+  CUSTOMER
+  WAREHOUSE
+}
+
+model Location {
+  id            String                @id @unique @default(dbgenerated("gen_random_uuid()"))
+  latitude      Float
+  longitude     Float
+  entityId      String
+  entityType    LocationEntityTypes
+  customer      Customers             @relation(fields: [entityId], references: [id])
+  active        Boolean               @default(true)
+  createdAt     DateTime              @default(now())
+  cylinders     Cylinders[]
+  fromLocations CylinderTransaction[] @relation("fromLocation")
+  toLocations   CylinderTransaction[] @relation("toLocation")
+}
+
+enum TransactionType {
+  INWARDS
+  OUTWARDS
+  TRANSFER
+  REFILL
+}
+
+model CylinderTransaction {
+  id              String    @id @unique @default(dbgenerated("gen_random_uuid()"))
+  employeeId      String
+  employee        Employees @relation(fields: [employeeId], references: [id])
+  cylinderId      String
+  cylinder        Cylinders @relation(fields: [cylinderId], references: [id])
+  cylinderState   CylinderState
+  fromLocationId  String
+  fromLocation    Location  @relation("fromLocation", fields: [fromLocationId], references: [id])
+  toLocationId    String
+  toLocation      Location  @relation("toLocation", fields: [toLocationId], references: [id])
+  transactionDate DateTime
+  transactionType TransactionType
+  active          Boolean   @default(true)
+  createdAt       DateTime  @default(now())
 }

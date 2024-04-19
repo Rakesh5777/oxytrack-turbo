@@ -15,3 +15,4 @@ export * from "./ui/dropdown-menu";
 export * from "./ui/command";
 export * from "./ui/multiselect-dropdown";
 export * from "./ui/badge";
+export * from "./ui/autocomplete";

@@ -3,6 +3,7 @@ import { prisma } from "../index";
 
 export const createCylinder = async (cylinderData: WritableCylinder): Promise<Cylinder> => {
   const cylinder = await prisma.cylinders.create({
+    // @ts-ignore TODO: need to remove this ts-ignore
     data: {
       cylinderId: cylinderData.cylinderId,
       type: cylinderData.type,
