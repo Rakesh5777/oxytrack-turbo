@@ -24,6 +24,14 @@ model MasterUsers {
   active       Boolean @default(true)
 }
 
+model WareHouse {
+  id        String     @id @unique @default(dbgenerated("gen_random_uuid()"))
+  name      String     @unique
+  address   String
+  active    Boolean    @default(true)
+  createdAt DateTime   @default(now())
+}
+
 model Employees {
   id                  String                @id @unique @default(dbgenerated("gen_random_uuid()"))
   name                String
@@ -54,7 +62,6 @@ model Customers {
   entityRequirements EntityRequirment[]
   additionalRecords  AdditionalRecord[]
   cylinders          Cylinders[]
-  locations          Location[]
   active             Boolean            @default(true)
   createdAt          DateTime           @default(now())
 }
@@ -139,7 +146,6 @@ model Location {
   longitude     Float
   entityId      String
   entityType    LocationEntityTypes
-  customer      Customers             @relation(fields: [entityId], references: [id])
   active        Boolean               @default(true)
   createdAt     DateTime              @default(now())
   cylinders     Cylinders[]
