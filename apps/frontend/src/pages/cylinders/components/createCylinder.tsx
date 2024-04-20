@@ -1,6 +1,8 @@
+import useCustomSWR from "@/hooks/useCustomSWR";
+import usePaginationParams from "@/hooks/usePaginationParams";
 import apis from "@/services/api";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CylinderSizeEnum, CylinderTypeEnum } from "@oxytrack/api-contract";
+import { Customer, CylinderSizeEnum, CylinderTypeEnum } from "@oxytrack/api-contract";
 import {
   AutoComplete,
   Breadcrumb,
@@ -24,13 +26,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@ui/components";
-import React from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { custom, z } from "zod";
-import useCustomSWR from "@/hooks/useCustomSWR";
-import usePaginationParams from "@/hooks/usePaginationParams";
-import { useState } from "react";
+import { z } from "zod";
+export { AutoComplete };
 
 const createCylinderSchema = z.object({
   cylinderId: z.string().min(1, "Kindly enter id").max(255),
@@ -56,6 +56,10 @@ export const CreateCylinder = () => {
       purchaseDate: new Date(),
     },
   });
+
+  useEffect(() => {
+    console.log(customers?.items);
+  }, [customers?.items]);
 
   if (isInitialLoading) {
     return <div>Loading...</div>;
@@ -163,12 +167,13 @@ export const CreateCylinder = () => {
               <FormItem>
                 <FormLabel>Customers</FormLabel>
                 <FormControl>
-                  <AutoComplete
-                    placeholder="Search customers..."
-                    options={customers?.items || []}
+                  <AutoComplete<Customer>
+                    placeholder="Select Customer"
+                    options={(customers?.items as Customer[]) || []}
                     valueKey="id"
                     labelKey="name"
-                    selectedValue={field.value}
+                    selectedValue={(customers?.items.find((customer) => customer.id === field.value) as Customer) || null}
+                    setSearchTerm={handleSetSearchTerm}
                     setSelectedValue={field.onChange}
                   />
                 </FormControl>

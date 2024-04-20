@@ -1,61 +1,83 @@
-import { Key, useState } from "react";
-import { Button } from "./button";
-import { Popover, PopoverContent, PopoverTrigger } from "./popover";
-import { Command, CommandEmpty, CommandGroup, CommandItem, CommandInput } from "./command";
 import { cn } from "@ui/lib/utils";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check } from "lucide-react";
+import { Key, useRef, useState } from "react";
+import { Button } from "./button";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "./command";
+import { Popover, PopoverContent, PopoverTrigger } from "./popover";
 
-type AutoCompleteProps<T> = {
+type AutoCompleteProps<T = any> = {
+  searchPlaceholder?: string;
   placeholder?: string;
   emptyMessage?: string;
   options: T[];
   valueKey: keyof T;
   labelKey: keyof T;
   selectedValue: T;
+  searchTerm?: string;
+  setSearchTerm: (searchTerm: string) => void;
   setSelectedValue: (selectedValue: T) => void;
 };
 
+const getWidthOfComponent = (element: HTMLElement | null) => {
+  if (!element) return "";
+  const style = window.getComputedStyle(element);
+  const width = element.offsetWidth;
+  const margin = parseFloat(style.marginLeft) + parseFloat(style.marginRight);
+  return `${width + margin}px`;
+};
+
 const AutoComplete = <T extends any>({
-  placeholder = "Search...",
+  searchPlaceholder = "Search...",
+  placeholder = "Select",
   emptyMessage = "No results found.",
   options,
   valueKey,
   labelKey,
   selectedValue,
+  setSearchTerm,
   setSelectedValue,
 }: AutoCompleteProps<T>) => {
   const [open, setOpen] = useState(false);
-  const value = (option: T): string => option[valueKey] as string;
+  const value = (option: T): string => option?.[valueKey] as string;
+  const ref = useRef<HTMLButtonElement>(null);
+  const [popOverWidth, setPopOverWidth] = useState<string>();
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover
+      open={open}
+      onOpenChange={(open) => {
+        setPopOverWidth(getWidthOfComponent(ref.current));
+        setOpen(open);
+      }}
+    >
       <PopoverTrigger asChild>
-        <Button variant="outline" role="combobox" aria-expanded={open} className="w-[200px] justify-between">
-          {selectedValue ? String(options.find((option) => value(option) === value(selectedValue))?.[labelKey]) : "Select framework..."}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        <Button ref={ref} variant="outline" role="combobox" aria-expanded={open} className="flex w-full justify-between">
+          {selectedValue ? (options.find((option) => value(option) === value(selectedValue))?.[labelKey] as string) : placeholder}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
-        <Command>
-          <CommandInput placeholder={placeholder} />
-          <CommandEmpty>{emptyMessage}</CommandEmpty>
-          <CommandGroup>
-            {options.map((option) => (
-              <CommandItem
-                key={value(option) as Key}
-                value={value(option) as string}
-                onSelect={() => {
-                  setSelectedValue(option);
-                  setOpen(false);
-                }}
-              >
-                <Check className={cn("mr-2 h-4 w-4", value(selectedValue) === value(option) ? "opacity-100" : "opacity-0")} />
-                {option[labelKey] as string}
-              </CommandItem>
-            ))}
-          </CommandGroup>
-        </Command>
-      </PopoverContent>
+      {!!popOverWidth && (
+        <PopoverContent style={{ width: popOverWidth }} className={"p-0"}>
+          <Command shouldFilter={false}>
+            <CommandInput placeholder={searchPlaceholder} onInput={(event) => setSearchTerm(event?.currentTarget?.value || "")} />
+            <CommandEmpty>{emptyMessage}</CommandEmpty>
+            <CommandGroup>
+              {options.map((option) => (
+                <CommandItem
+                  key={value(option) as Key}
+                  value={value(option) as string}
+                  onSelect={(value: any) => {
+                    setSelectedValue(value);
+                    setOpen(false);
+                  }}
+                >
+                  <Check className={cn("mr-2 h-4 w-4", value(selectedValue) === value(option) ? "opacity-100" : "opacity-0")} />
+                  {option[labelKey] as string}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </Command>
+        </PopoverContent>
+      )}
     </Popover>
   );
 };

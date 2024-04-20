@@ -1,11 +1,11 @@
 import { NoDataFound } from "@/components/noDataFound";
 import useCustomSWR from "@/hooks/useCustomSWR";
-import { Customer } from "@oxytrack/api-contract";
-import { CustomersDataTable } from "./customersDataTable";
-import { Button } from "@ui/components";
-import { Link } from "react-router-dom";
 import usePaginationParams from "@/hooks/usePaginationParams";
+import { Customer } from "@oxytrack/api-contract";
+import { Button } from "@ui/components";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { CustomersDataTable } from "./customersDataTable";
 
 export const CustomerDashboard = () => {
   const { pagination, searchTerm, fromFilter, handleSetSearchTerm, setPagination } = usePaginationParams();

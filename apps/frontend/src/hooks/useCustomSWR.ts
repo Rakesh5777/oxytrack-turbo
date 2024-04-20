@@ -69,6 +69,7 @@ const useCustomSWR = <T extends keyof typeof functionKeyMap>(
   ...args: ApiFunctionParams<T>
 ) => {
   const [firstTimeLoader, setFirstTimeLoader] = useState(true);
+  const [responseData, setResponseData] = useState<ResponseType<T> | undefined>();
 
   const fetcherWithCancelToken = async (fetcherArgs: FetcherArgs<T>) => {
     // If there's an active request for this key, cancel it
@@ -92,7 +93,13 @@ const useCustomSWR = <T extends keyof typeof functionKeyMap>(
     }
   }, [result.isLoading]);
 
-  return { ...result, isInitialLoading: firstTimeLoader };
+  useEffect(() => {
+    if (result.data && !result.error && !result.isLoading) {
+      setResponseData(result.data);
+    }
+  }, [result.data]);
+
+  return { ...result, isInitialLoading: firstTimeLoader, data: responseData };
 };
 
 export default useCustomSWR;
