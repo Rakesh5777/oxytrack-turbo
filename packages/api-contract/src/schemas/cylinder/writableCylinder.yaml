@@ -16,6 +16,9 @@ properties:
   customerId:
     description: Id of the customer
     type: string
+  cylinderState:
+    description: State of the cylinder
+    $ref: "./cylinderStateEnum.yaml"
   purchaseDate:
     description: Purchase date of the cylinder
     type: string

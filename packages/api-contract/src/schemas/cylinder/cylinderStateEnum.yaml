@@ -1,0 +1,7 @@
+type: string
+enum:
+  - FULL
+  - EMPTY
+  - IN_USE
+  - IN_SERVICE
+  - IN_REPAIR

@@ -36,3 +36,5 @@ CylinderSizeEnum:
   $ref: "./cylinder/cylinderSizeEnum.yaml"
 CylinderTypeEnum:
   $ref: "./cylinder/cylinderTypeEnum.yaml"
+CylinderStateEnum:
+  $ref: "./cylinder/cylinderStateEnum.yaml"

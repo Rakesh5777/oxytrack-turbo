@@ -117,12 +117,11 @@ model Cylinders {
   cylinderId          String                @unique
   type                CylinderType
   size                CylinderSize
-  isOwn               Boolean               @default(true)
-  customer_id         String?
-  customers           Customers?            @relation(fields: [customer_id], references: [id])
+  customerId          String?
+  customers           Customers?            @relation(fields: [customerId], references: [id])
   cylinderState       CylinderState         @default(FULL)
-  currentLocationId   String
-  currentLocation     Location              @relation(fields: [currentLocationId], references: [id])
+  currentLocationId   String?
+  currentLocation     Location?             @relation(fields: [currentLocationId], references: [id])
   purchaseDate        DateTime
   active              Boolean               @default(true)
   createdAt           DateTime              @default(now())
@@ -156,18 +155,18 @@ enum TransactionType {
 }
 
 model CylinderTransaction {
-  id              String    @id @unique @default(dbgenerated("gen_random_uuid()"))
+  id              String          @id @unique @default(dbgenerated("gen_random_uuid()"))
   employeeId      String
-  employee        Employees @relation(fields: [employeeId], references: [id])
+  employee        Employees       @relation(fields: [employeeId], references: [id])
   cylinderId      String
-  cylinder        Cylinders @relation(fields: [cylinderId], references: [id])
+  cylinder        Cylinders       @relation(fields: [cylinderId], references: [id])
   cylinderState   CylinderState
   fromLocationId  String
-  fromLocation    Location  @relation("fromLocation", fields: [fromLocationId], references: [id])
+  fromLocation    Location        @relation("fromLocation", fields: [fromLocationId], references: [id])
   toLocationId    String
-  toLocation      Location  @relation("toLocation", fields: [toLocationId], references: [id])
+  toLocation      Location        @relation("toLocation", fields: [toLocationId], references: [id])
   transactionDate DateTime
   transactionType TransactionType
-  active          Boolean   @default(true)
-  createdAt       DateTime  @default(now())
+  active          Boolean         @default(true)
+  createdAt       DateTime        @default(now())
 }

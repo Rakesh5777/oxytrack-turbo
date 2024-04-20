@@ -27,12 +27,8 @@ export const cylindersTableColumns: ColumnDef<Cylinder>[] = [
     header: "Size",
   },
   {
-    accessorKey: "purchaseDate",
-    header: "Purchase Date",
-    cell: ({ row }) => {
-      const value = row.getValue("createdAt") as string;
-      return new Date(value).toLocaleDateString("en-GB");
-    },
+    accessorKey: "cylinderState",
+    header: "State",
   },
   {
     accessorKey: "createdAt",

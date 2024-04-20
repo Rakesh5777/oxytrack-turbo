@@ -3,12 +3,13 @@ import { getCylinderPage } from "../services/cylinder.service";
 import { Responses, TypedRequest, TypedResponse } from "../types/express";
 
 export const createCylinderHandler = async (req: TypedRequest["createCylinder"], res: TypedResponse<Responses["createCylinder"]>) => {
-  const { type, size, purchaseDate, cylinderId } = req.body;
+  const { type, size, purchaseDate, cylinderId, cylinderState } = req.body;
   const createdCylinder = await createCylinder({
     type,
     size,
     purchaseDate,
     cylinderId,
+    cylinderState,
   });
   return res.status(201).json({ ...createdCylinder });
 };

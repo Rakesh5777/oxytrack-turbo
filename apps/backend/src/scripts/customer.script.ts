@@ -1,32 +1,43 @@
-import { CustomerType } from "@oxytrack/database";
-import { AdditionalRecordKey, EntityRequirementsKeyEnum } from "@oxytrack/api-contract";
+import { AdditionalRecordKey, Customer, EntityRequirementsKeyEnum, WritableCustomer } from "@oxytrack/api-contract";
+import { CustomerType, LocationEntityTypes } from "@oxytrack/database";
 import { prisma } from "../index";
-import { Customer, WritableCustomer } from "@oxytrack/api-contract";
 import { CustomError } from "../utils/middlewares";
 
 //TODO: need to handle contacts and entityRequirements
 export const createCustomerTransaction = async (customerData: WritableCustomer): Promise<Customer> => {
-  const customer = await prisma.customers.create({
-    data: {
-      type: customerData.type,
-      name: customerData.name,
-      number: customerData.number,
-      emailAddress: customerData.emailAddress,
-      address: customerData.address,
-      description: customerData.description,
-      contacts: {
-        create: customerData.contactIds?.map((id) => ({ contactId: id })),
+  let createdCustomer;
+  await prisma.$transaction(async (prismaClient) => {
+    createdCustomer = await prismaClient.customers.create({
+      data: {
+        type: customerData.type,
+        name: customerData.name,
+        number: customerData.number,
+        emailAddress: customerData.emailAddress,
+        address: customerData.address,
+        description: customerData.description,
+        contacts: {
+          create: customerData.contactIds?.map((id) => ({ contactId: id })),
+        },
+        entityRequirements: {
+          create: customerData.entityRequirement?.map((entity) => entity),
+        },
+        additionalRecords: {
+          create: customerData.additionalRecord?.map((record) => record),
+        },
       },
-      entityRequirements: {
-        create: customerData.entityRequirement?.map((entity) => entity),
+    });
+
+    await prismaClient.location.create({
+      data: {
+        entityId: createdCustomer.id,
+        entityType: LocationEntityTypes.CUSTOMER,
+        latitude: 0,
+        longitude: 0,
       },
-      additionalRecords: {
-        create: customerData.additionalRecord?.map((record) => record),
-      },
-    },
+    });
   });
 
-  return await getCustomerDetailsById(customer.id);
+  return await getCustomerDetailsById(createdCustomer!.id);
 };
 
 export const getCustomerDetailsById = async (customerId: string): Promise<Customer> => {

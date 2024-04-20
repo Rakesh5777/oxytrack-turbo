@@ -2,7 +2,7 @@ import useCustomSWR from "@/hooks/useCustomSWR";
 import usePaginationParams from "@/hooks/usePaginationParams";
 import apis from "@/services/api";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Customer, CylinderSizeEnum, CylinderTypeEnum } from "@oxytrack/api-contract";
+import { Customer, CylinderSizeEnum, CylinderStateEnum, CylinderTypeEnum } from "@oxytrack/api-contract";
 import {
   AutoComplete,
   Breadcrumb,
@@ -36,6 +36,7 @@ const createCylinderSchema = z.object({
   cylinderId: z.string().min(1, "Kindly enter id").max(255),
   type: z.nativeEnum(CylinderTypeEnum),
   size: z.nativeEnum(CylinderSizeEnum),
+  cylinderState: z.nativeEnum(CylinderStateEnum),
   purchaseDate: z.date().optional(),
 });
 
@@ -52,6 +53,7 @@ export const CreateCylinder = () => {
       cylinderId: "",
       type: CylinderTypeEnum.Oxygen,
       size: CylinderSizeEnum.A,
+      cylinderState: CylinderStateEnum.Full,
       customerId: "",
       purchaseDate: new Date(),
     },
@@ -162,10 +164,37 @@ export const CreateCylinder = () => {
           />
           <FormField
             control={form.control}
+            name="cylinderState"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Cylinder State</FormLabel>
+                <FormControl>
+                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem key={CylinderStateEnum.Full} value={CylinderStateEnum.Full}>
+                        Full
+                      </SelectItem>
+                      <SelectItem key={CylinderStateEnum.Empty} value={CylinderStateEnum.Empty}>
+                        Empty
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="customerId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Customers</FormLabel>
+                <FormLabel>Customer</FormLabel>
                 <FormControl>
                   <AutoComplete<Customer>
                     placeholder="Select Customer"

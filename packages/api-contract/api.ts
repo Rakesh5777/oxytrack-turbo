@@ -287,11 +287,23 @@ export interface Cylinder {
      */
     'size': CylinderSizeEnum;
     /**
+     * 
+     * @type {CylinderStateEnum}
+     * @memberof Cylinder
+     */
+    'cylinderState': CylinderStateEnum;
+    /**
      * Id of the customer
      * @type {string}
      * @memberof Cylinder
      */
-    'customerId'?: string;
+    'customerId'?: string | null;
+    /**
+     * Id of the current location
+     * @type {string}
+     * @memberof Cylinder
+     */
+    'currentLocationId'?: string | null;
     /**
      * Purchase date of the cylinder
      * @type {Date}
@@ -357,6 +369,23 @@ export const CylinderSizeEnum = {
 } as const;
 
 export type CylinderSizeEnum = typeof CylinderSizeEnum[keyof typeof CylinderSizeEnum];
+
+
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const CylinderStateEnum = {
+    Full: 'FULL',
+    Empty: 'EMPTY',
+    InUse: 'IN_USE',
+    InService: 'IN_SERVICE',
+    InRepair: 'IN_REPAIR'
+} as const;
+
+export type CylinderStateEnum = typeof CylinderStateEnum[keyof typeof CylinderStateEnum];
 
 
 /**
@@ -708,6 +737,12 @@ export interface WritableCylinder {
      * @memberof WritableCylinder
      */
     'customerId'?: string;
+    /**
+     * 
+     * @type {CylinderStateEnum}
+     * @memberof WritableCylinder
+     */
+    'cylinderState'?: CylinderStateEnum;
     /**
      * Purchase date of the cylinder
      * @type {Date}

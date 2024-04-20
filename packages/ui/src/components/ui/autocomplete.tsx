@@ -1,6 +1,6 @@
 import { cn } from "@ui/lib/utils";
 import { Check } from "lucide-react";
-import { Key, useRef, useState } from "react";
+import { Key, useEffect, useRef, useState } from "react";
 import { Button } from "./button";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "./command";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
@@ -41,6 +41,12 @@ const AutoComplete = <T extends any>({
   const value = (option: T): string => option?.[valueKey] as string;
   const ref = useRef<HTMLButtonElement>(null);
   const [popOverWidth, setPopOverWidth] = useState<string>();
+
+  useEffect(() => {
+    if (!open) {
+      setSearchTerm("");
+    }
+  }, [open]);
 
   return (
     <Popover
